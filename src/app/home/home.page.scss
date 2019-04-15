@@ -2,3 +2,110 @@
   max-height: 35vh;
   overflow: hidden;
 }
+
+.chat-content {
+  background-image: url("../../assets/images/chat-background.jpg");
+}
+
+/* CSS talk bubble */
+.talk-bubble {
+  color: black;
+	margin: 40px;
+  display: inline-block;
+  position: relative;
+	width: 200px;
+  height: auto;
+  background-color: lightyellow;
+  &.mine {
+    background-color: lightcyan;
+  }
+}
+
+.round {
+  border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+}
+
+/* Right triangle, right side slightly down*/
+.tri-right.border.right-in:before {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: auto;
+	right: -40px;
+  top: 30px;
+	bottom: auto;
+	border: 20px solid;
+	border-color: #666 transparent transparent #666;
+}
+.tri-right.right-in:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: auto;
+	right: -20px;
+  top: 38px;
+	bottom: auto;
+	border: 12px solid;
+	border-color: lightcyan transparent transparent lightcyan;
+}
+
+/* Left triangle, left side slightly down*/
+.tri-left.border.left-in:before {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: -40px;
+	right: auto;
+  top: 30px;
+	bottom: auto;
+	border: 20px solid;
+	border-color:#666 #666 transparent transparent;
+}
+.tri-left.left-in:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: -20px;
+	right: auto;
+  top: 38px;
+	bottom: auto;
+	border: 12px solid;
+	border-color: lightyellow lightyellow transparent transparent;
+}
+
+/* talk bubble contents */
+.talktext{
+  padding: 1em;
+	text-align: left;
+  line-height: 1.5em;
+}
+.talktext p{
+  /* remove webkit p margins */
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+}
+
+/* Buble Hour Right */
+.bubble-hour-right {
+  text-align: right;
+  width: 100%;
+  padding-right: 20px;
+}
+
+/* Buble Hour Left */
+.bubble-hour-left {
+  text-align: left;
+  width: 100%;
+  padding-left: 20px;
+}
+
+.b-hour {
+  color: gray;
+  margin-bottom: 10px;
+}
