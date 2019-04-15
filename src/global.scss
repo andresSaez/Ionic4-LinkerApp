@@ -9,3 +9,29 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+.sidemenu-header {
+    height: 30%;
+    overflow: visible;
+    z-index: 1;
+    .sidemenu-toolbar {
+        height: 100%;
+        z-index: 2;
+        .sidemenu-avatar {
+            height: 150px;
+            width: 150px;
+            margin: 0px auto;
+            z-index: 3;
+            
+            img {
+                position: relative;
+                top: 50%;
+                z-index: 3;
+            }
+        }
+    }
+}
+
+.sidemnu-content {
+    z-index: 3;
+}

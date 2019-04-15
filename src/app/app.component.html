@@ -1,12 +1,15 @@
 <ion-app>
   <ion-split-pane>
     <ion-menu>
-      <ion-header>
-        <ion-toolbar>
+      <ion-header class="sidemenu-header">
+        <ion-toolbar color="dark" class="sidemenu-toolbar">
+            <ion-avatar class="sidemenu-avatar">
+              <img src="../assets/images/avatar.jpg">
+            </ion-avatar>
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
+      <ion-content class="sidemenu-content">
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
