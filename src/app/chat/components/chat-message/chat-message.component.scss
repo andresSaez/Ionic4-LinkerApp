@@ -1,0 +1,43 @@
+// :host {
+//     width: 50%;
+//     height: inherit;
+//     div {
+//         display: inline-block;
+//         .message-avatar, .message-void {
+//             width: 50px;
+//             display: block;
+//         }
+//         .message-text {
+//             display: inline-block;
+//         }
+//     }
+    
+// }
+
+.content {
+    display: table;
+    padding: 0px;
+    .message-avatar, .message-void {
+        width: 50px;
+        display: table-cell;
+        vertical-align: top;
+    }
+    .message-text {
+        display: table-cell;
+        position: relative;
+        left: -30px;
+        &.mine{
+            left: unset;
+            right: -15px;
+        }
+    }
+}
+
+// .message-avatar, .message-void {
+//     width: 50px;
+//     display: inline-block;
+// }
+
+// .message-text {
+//     width: 100%;
+// }
