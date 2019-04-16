@@ -1,13 +1,23 @@
 .chat-content {
     padding: 5px;
-    padding-top: 25px; 
+	padding-top: 25px; 
+	padding-bottom: 60px;
 	height: 100%;
 	width: 100%;
 	background-image: url("../../assets/images/chat-background.jpg");
-	background-size: contain;
+	background-size: cover;
+	overflow-y: scroll;
 }
 
 .message-bar {
 	position: fixed;
 	bottom: 5px;
+}
+
+.date-container {
+	width: 100%;
+	text-align: center;
+	.date {
+		margin: 10px auto;
+	}
 }

@@ -26,13 +26,15 @@
         display: table-cell;
         width: 100%;
         position: relative;
-        left: -30px;
+        left: -20px;
         &.mine{
             left: unset;
             right: -15px;
         }
     }
 }
+
+
 
 // .message-avatar, .message-void {
 //     width: 50px;

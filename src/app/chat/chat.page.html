@@ -4,7 +4,7 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>
-        Home
+        Chat
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -19,6 +19,15 @@
         <img src="../assets/images/avatar.jpg">
       </ion-avatar> -->
 
+      <div class="date-container">
+        <ion-chip color="light" class="date">
+          <ion-label>Junio 2019</ion-label>
+        </ion-chip>
+      </div>
+      
+      <app-chat-message [mine]="false"></app-chat-message>
+      <app-chat-message [mine]="true"></app-chat-message>
+      <app-chat-message [mine]="true"></app-chat-message>
       <app-chat-message [mine]="false"></app-chat-message>
       <app-chat-message [mine]="true"></app-chat-message>
 

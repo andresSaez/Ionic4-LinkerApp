@@ -12,7 +12,7 @@ export class AppComponent {
   public appPages = [
     {
       title: 'Profile',
-      url: '/profile',
+      url: '/register',
       icon: 'person'
     },
     {
