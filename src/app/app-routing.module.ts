@@ -14,7 +14,9 @@ const routes: Routes = [
   {
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
-  },  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' }
+  },  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' },
+  { path: 'login', loadChildren: './auth/pages/login/login.module#LoginPageModule' },
+  { path: 'register', loadChildren: './auth/pages/register/register.module#RegisterPageModule' }
 
 ];
 

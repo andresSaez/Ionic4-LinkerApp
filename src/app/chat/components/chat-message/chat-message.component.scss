@@ -24,6 +24,7 @@
     }
     .message-text {
         display: table-cell;
+        width: 100%;
         position: relative;
         left: -30px;
         &.mine{

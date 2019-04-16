@@ -19,6 +19,11 @@
     }
 }
 
+.username {
+    display: flex;
+    z-index: 2;
+}
+
 .sidemenu-avatar {
     height: 150px;
     width: 150px;
@@ -29,5 +34,12 @@
 }
 
 .sidemnu-content {
+    overflow: hidden;
+}
 
+.logout-item {
+    margin: 0px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
 }
