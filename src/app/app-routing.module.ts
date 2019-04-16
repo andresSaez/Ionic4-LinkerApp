@@ -16,7 +16,8 @@ const routes: Routes = [
     loadChildren: './list/list.module#ListPageModule'
   },  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' },
   { path: 'login', loadChildren: './auth/pages/login/login.module#LoginPageModule' },
-  { path: 'register', loadChildren: './auth/pages/register/register.module#RegisterPageModule' }
+  { path: 'register', loadChildren: './auth/pages/register/register.module#RegisterPageModule' },
+  { path: 'user-profile', loadChildren: './users/pages/user-profile/user-profile.module#UserProfilePageModule' }
 
 ];
 

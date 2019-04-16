@@ -22,7 +22,7 @@ export class AppComponent {
     },
     {
       title: 'Settings',
-      url: '/settings',
+      url: '/user-profile',
       icon: 'settings'
     }
   ];
