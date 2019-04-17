@@ -1,9 +1,17 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>public-rooms</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
+<ion-content color="dark">
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="secondary">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-list class="list-group">
+
+        <app-contact-item [group]="true" [sliding]="true"></app-contact-item>
+        <app-contact-item [group]="true" [sliding]="true"></app-contact-item>
+
+    </ion-list>
 
 </ion-content>

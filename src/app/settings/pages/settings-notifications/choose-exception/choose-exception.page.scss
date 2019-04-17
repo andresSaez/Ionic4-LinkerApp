@@ -3,3 +3,16 @@
     right: 10px;
     top: 5px;
 }
+
+ion-list {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+ion-searchbar {
+    border-style: none;
+    box-shadow: none;
+    &:focus {
+        --background: yellow;
+    }
+}

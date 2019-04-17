@@ -1,4 +1,4 @@
-<ion-header>
+  <ion-header>
     <ion-toolbar color="primary">
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/settings/notifications" text=""></ion-back-button>
@@ -10,26 +10,11 @@
   <ion-content color="dark">
 
     <ion-toolbar color="primary">
-      <ion-searchbar showCancelButton cancelButtonIcon="close"></ion-searchbar>
+      <ion-searchbar showCancelButton color="light" mode="ios"></ion-searchbar>
     </ion-toolbar>
 
     <ion-list class="list-group">
-        <ion-item color="dark" >
-          <ion-avatar slot="start">
-            <img src="../../../../../assets/images/avatar.jpg">
-          </ion-avatar>
-          <ion-label text-wrap>
-            <ion-text>
-              <h3>User 1</h3>
-            </ion-text>
-            <ion-text class="float-right" color="medium">
-              <small>13 Feb 2019</small>
-            </ion-text>
-            <ion-text color="light">
-              <p><ion-text color="success"><small>Andres:</small></ion-text><small>Silenced</small></p>
-            </ion-text>
-          </ion-label>
-        </ion-item>
+        <app-contact-item [group]="false" [sliding]="false"></app-contact-item>
     </ion-list>
   
   </ion-content>

@@ -1,0 +1,46 @@
+<ion-item color="dark" *ngIf="!sliding; else slidingItem">
+    <ion-avatar slot="start">
+    <img src="../../../../../assets/images/avatar.jpg">
+    </ion-avatar>
+    <ion-label text-wrap>
+    <ion-text>
+        <h3>User 1</h3>
+    </ion-text>
+    <ion-text class="float-right" color="medium">
+        <small>13 Feb 2019</small>
+    </ion-text>
+    <ion-text color="light">
+        <p><ion-text color="success"><small>Andres:</small></ion-text><small>Silenced</small></p>
+    </ion-text>
+    </ion-label>
+    <ion-badge *ngIf="group" color="tertiary" slot="end" class="users">22</ion-badge>
+</ion-item>
+
+<ng-template #slidingItem>
+    <ion-item-sliding>
+        <ion-item color="dark" >
+            <ion-avatar slot="start">
+            <img src="../../../../../assets/images/avatar.jpg">
+            </ion-avatar>
+            <ion-label text-wrap>
+            <ion-text>
+                <h3>User 1</h3>
+            </ion-text>
+            <ion-text class="float-right" color="medium">
+                <small>13 Feb 2019</small>
+            </ion-text>
+            <ion-text color="light">
+                <p><ion-text color="success"><small>Andres:</small></ion-text><small>Silenced</small></p>
+            </ion-text>
+            </ion-label>
+            <ion-badge *ngIf="group" color="tertiary" slot="end" class="users">22</ion-badge>
+        </ion-item>
+
+        <ion-item-options side="end">
+            <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+        </ion-item-options>
+    </ion-item-sliding>
+        
+</ng-template>
