@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/settings" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+  <ion-item-group  lines="none">
+    <ion-item color="dark" lines="none">
+      <ion-text color="secondary">
+        Notifications for chats
+      </ion-text>
+    </ion-item>
+  
+    <ion-item color="medium" [routerLink]="['/settings/notifications/private-chats']" detail="false">
+      <ion-label text-wrap>
+        <ion-text>
+          <h3>Private chats</h3>
+        </ion-text>
+        <ion-text color="light">
+          <p><small>Yes, 1 exception</small></p>
+        </ion-text>
+      </ion-label>
+      <ion-toggle slot="end" mode="md" color="success"></ion-toggle>
+    </ion-item>
+
+    <ion-item color="medium" [routerLink]="['/settings/notifications/rooms']" detail="false">
+      <ion-label text-wrap>
+        <ion-text>
+          <h3>Rooms</h3>
+        </ion-text>
+        <ion-text color="light">
+          <p><small>Touch to change</small></p>
+        </ion-text>
+      </ion-label>
+      <ion-toggle slot="end" mode="md" color="success"></ion-toggle>
+    </ion-item>
+
+  </ion-item-group>
+
+</ion-content>

@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/settings/notifications" text=""></ion-back-button>
+      </ion-buttons>
+      <ion-title>Notifications</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content color="dark">
+
+    <ion-item-group  lines="none">
+      <ion-item color="medium" [routerLink]="['/settings/notifications/private-chats']" detail="false">
+        <ion-label text-wrap>
+          <ion-text>
+            <h3>Rooms</h3>
+          </ion-text>
+          <ion-text color="light">
+            <p><small>No</small></p>
+          </ion-text>
+        </ion-label>
+        <ion-toggle slot="end" mode="md" color="success"></ion-toggle>
+      </ion-item>
+    </ion-item-group>
+
+
+
+    <ion-list class="list-group">
+        <ion-item color="medium" [routerLink]="['/settings/notifications/choose-exception']" detail="false">
+          <ion-icon slot="start" color="secondary" name="person-add"></ion-icon>
+          <ion-label>
+              <ion-text color="secondary">
+                Add a exception
+              </ion-text>
+          </ion-label>
+        </ion-item>
+
+        <ion-item color="medium" >
+          <ion-avatar slot="start">
+            <img src="../../../../../assets/images/avatar.jpg">
+          </ion-avatar>
+          <ion-label text-wrap>
+            <ion-text>
+              <h3>Grupo1</h3>
+            </ion-text>
+            <ion-text color="light">
+              <p><small>Silenced</small></p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+    </ion-list>
+  
+  </ion-content>
+  
