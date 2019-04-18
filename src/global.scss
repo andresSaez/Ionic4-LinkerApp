@@ -54,3 +54,26 @@
     bottom: 0px;
     width: 100%;
 }
+
+.btn-success {
+    color: #cddc39 !important;
+    span {
+        color: #cddc39 !important;
+    }
+}
+
+.custom-modal {
+    width: 90%;
+    border-radius: 15px;
+    margin: auto auto;
+    overflow: auto;
+}
+
+.eliminate-account-modal {
+    height: 350px;
+}
+
+.modal-content {
+    padding: 1em;
+}
+

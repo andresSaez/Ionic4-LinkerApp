@@ -1,9 +1,40 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>settings-language</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/settings" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Language</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="dark">
+  <ion-radio-group  lines="none">
+    <ion-item color="dark" lines="none">
+      <ion-text color="secondary">
+        Select language
+      </ion-text>
+    </ion-item>
+  
+    <ion-item color="medium">
+      <ion-avatar slot="start">
+        <img src="../../../../assets/images/spain-logo.png">
+      </ion-avatar>
+      <ion-label>
+        Spanish
+      </ion-label>
+      <ion-radio slot="end" mode="md" color="success"></ion-radio>
+    </ion-item>
+
+    <ion-item color="medium">
+      <ion-avatar slot="start">
+        <img src="../../../../assets/images/united-kingdom-logo.png">
+      </ion-avatar>
+      <ion-label>
+        English
+      </ion-label>
+      <ion-radio slot="end" mode="md" color="success"></ion-radio>
+    </ion-item>
+
+  </ion-radio-group>
 
 </ion-content>

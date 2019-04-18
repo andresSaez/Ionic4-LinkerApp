@@ -1,9 +1,51 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>settings-privacity</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/settings" text=""></ion-back-button>
+      </ion-buttons>
+      <ion-title>Privacity</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content color="dark">
 
-<ion-content>
+    <ion-item-group>
+      <ion-item color="dark">
+        <ion-text color="secondary">
+          Privacity options
+        </ion-text>
+      </ion-item>
+    
+      <ion-item color="medium" [routerLink]="['/settings/privacity/blocked-users']" detail="false">
+        <ion-label>
+          Blocked users
+        </ion-label>
+        <ion-badge color="tertiary" slot="end" class="users">2</ion-badge>
+      </ion-item>
 
-</ion-content>
+      <ion-item color="medium" [routerLink]="['/settings/privacity/last-connection']" detail="false">
+        <ion-label>
+          Last connection 
+        </ion-label>
+        <ion-text slot="end" color="secondary">All</ion-text>
+      </ion-item>
+
+      <ion-item color="medium" [routerLink]="['/settings/privacity/profile-photo']" detail="false">
+        <ion-label>
+          Profile photo 
+        </ion-label>
+        <ion-text slot="end" color="secondary">All</ion-text>
+      </ion-item>
+
+      <ion-item color="medium" [routerLink]="['/settings/privacity/profile-data']" detail="false">
+        <ion-label>
+          Profile data 
+        </ion-label>
+        <ion-text slot="end" color="secondary">All</ion-text>
+      </ion-item>
+
+    </ion-item-group>
+  
+  </ion-content>
+
+  

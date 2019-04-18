@@ -1,9 +1,42 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>settings-security</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/settings" text=""></ion-back-button>
+      </ion-buttons>
+      <ion-title>Security</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content color="dark">
 
-<ion-content>
+    <ion-item-group>
+      <ion-item color="dark">
+        <ion-text color="secondary">
+          Password
+        </ion-text>
+      </ion-item>
+    
+      <ion-item color="medium" (click)="changePassword()">
+        <ion-label>
+          Change password
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
 
-</ion-content>
+    <ion-item-group class="mt" (click)="eliminateAccount()">
+      <ion-item color="dark">
+        <ion-text color="secondary">
+          Account
+        </ion-text>
+      </ion-item>
+    
+      <ion-item color="medium">
+        <ion-label>
+          Eliminate account
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+  
+  </ion-content>
+
+  

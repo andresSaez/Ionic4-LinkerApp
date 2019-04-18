@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SettingsSecurityPage } from './settings-security.page';
+import { EliminateAccountComponent } from './modals/eliminate-account/eliminate-account.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SettingsSecurityPage]
+  declarations: [SettingsSecurityPage, EliminateAccountComponent ],
+  entryComponents: [ EliminateAccountComponent ]
 })
 export class SettingsSecurityPageModule {}

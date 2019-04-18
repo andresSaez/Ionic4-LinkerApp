@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()"><ion-icon name="arrow-back" slot="icon-only"></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-title>Choose the chat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+
+  <ion-toolbar color="primary">
+    <ion-searchbar showCancelButton color="light" mode="ios"></ion-searchbar>
+  </ion-toolbar>
+
+  <ion-list class="list-group">
+      <app-contact-item [group]="false" [sliding]="false" (click)="selectChat()"></app-contact-item>
+  </ion-list>
+
+</ion-content>

@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     loadChildren: './pages/settings-home/settings-home.module#SettingsHomePageModule',
     pathMatch: 'full',
-  },
+  }
 ];
 
 @NgModule({
