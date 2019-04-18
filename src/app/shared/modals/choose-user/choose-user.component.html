@@ -13,8 +13,11 @@
       <ion-searchbar showCancelButton color="light" mode="ios"></ion-searchbar>
     </ion-toolbar>
   
-    <ion-list class="list-group">
-        <app-contact-item [group]="false" [sliding]="false" (click)="selectUser()"></app-contact-item>
-    </ion-list>
+    <div class="list-container">
+      <ion-list class="list-group">
+        <app-user-item (click)="selectUser()"></app-user-item>
+      </ion-list>
+    </div>
+    
   
   </ion-content>

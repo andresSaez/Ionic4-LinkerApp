@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-private-rooms',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivateRoomsPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private nav: NavController
+  ) { }
 
   ngOnInit() {
+  }
+
+  openChat() {
+    this.nav.navigateForward(['/chat']);
   }
 
 }

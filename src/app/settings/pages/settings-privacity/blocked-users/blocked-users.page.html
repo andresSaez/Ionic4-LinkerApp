@@ -4,10 +4,25 @@
       <ion-back-button defaultHref="/settings/privacity" text=""></ion-back-button>
     </ion-buttons>
     <ion-title>Blocked users</ion-title>
+    <ion-button slot="end" (click)="openModal()">
+      <ion-icon slot="icon-only" name="add"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
   
-<ion-content color="dark">
+<ion-content color="dark" padding>
+
+  <ion-list class="list-group">
+
+      <app-user-item (click)="openAlert()"></app-user-item>
+
+  </ion-list>
+
+  <div class="text-center">
+    <ion-text color="medium">
+      <p>No users blocked</p>
+    </ion-text>
+  </div>
 
 </ion-content>
   
