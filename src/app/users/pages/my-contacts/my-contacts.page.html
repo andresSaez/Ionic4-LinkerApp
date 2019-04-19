@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home/private-rooms" text=""></ion-back-button>
+      </ion-buttons>
+    <ion-title>My contacts</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+
+  <ion-toolbar color="primary">
+    <ion-searchbar showCancelButton color="light" mode="ios"></ion-searchbar>
+  </ion-toolbar>
+
+  <div class="list-container">
+    <ion-list class="list-group">
+      <app-user-item [routerLink]="['/chat']" ></app-user-item>
+    </ion-list>
+  </div>
+  
+
+</ion-content>

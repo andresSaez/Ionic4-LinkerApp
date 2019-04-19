@@ -18,6 +18,10 @@ const routes: Routes = [
     loadChildren: './settings/settings.module#SettingsModule'
   },
   {
+    path: 'rooms',
+    loadChildren: './rooms/rooms.module#RoomsModule'
+  },
+  {
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
   },

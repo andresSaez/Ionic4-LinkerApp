@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Rooms
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+  <ion-toolbar color="primary">
+    <ion-searchbar showCancelButton color="light" mode="ios"></ion-searchbar>
+  </ion-toolbar>
+
+  <div class="list-container">
+      <ion-slides pager="true" [options]="slideOpts">
+          <ion-slide>
+            <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
+          </ion-slide>
+
+          <ion-slide>
+              <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
+            </ion-slide>
+
+            <ion-slide>
+                <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
+              </ion-slide>
+
+              <ion-slide>
+                  <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
+                </ion-slide>
+       
+        </ion-slides>
+    <!-- <ion-list class="list-group">
+      <app-user-item [routerLink]="['/chat']" ></app-user-item>
+    </ion-list> -->
+  </div>
+
+
+</ion-content>
+  

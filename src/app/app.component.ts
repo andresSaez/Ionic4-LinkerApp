@@ -25,7 +25,7 @@ export class AppComponent {
     },
     {
       title: 'Search room',
-      url: '/chat',
+      url: '/rooms',
       icon: 'chatboxes'
     },
     {

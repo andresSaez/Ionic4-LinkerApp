@@ -1,6 +1,12 @@
 
 <ion-content color="dark">
 
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="secondary" [routerLink]="['/users/my-contacts']">
+            <ion-icon name="chatbubbles" mode="ios"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
     <ion-list class="list-group">
 
         <app-contact-item [group]="false" [sliding]="true" (click)="openChat()"></app-contact-item>
