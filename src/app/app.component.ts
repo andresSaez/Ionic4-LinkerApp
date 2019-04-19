@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { myEnterAnimation } from './animations/modal-animations/enter';
+import { myLeaveAnimation } from './animations/modal-animations/leave';
+import { ShowImageComponent } from './shared/modals/show-image/show-image.component';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +38,8 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private modalCtrl: ModalController
   ) {
     this.initializeApp();
   }
@@ -45,5 +49,19 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  async showImage() {
+    const modal = await this.modalCtrl.create({
+      component: ShowImageComponent,
+      componentProps: {},
+      // cssClass: ['custom-modal', 'eliminate-account-modal'],
+      showBackdrop: true,
+      backdropDismiss: false,
+      enterAnimation: myEnterAnimation,
+      leaveAnimation: myLeaveAnimation
+    });
+
+    await modal.present();
   }
 }

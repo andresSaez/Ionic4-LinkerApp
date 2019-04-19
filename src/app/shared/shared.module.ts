@@ -5,11 +5,12 @@ import { IonicModule } from '@ionic/angular';
 import { ChooseChatComponent } from './modals/choose-chat/choose-chat.component';
 import { ChooseUserComponent } from './modals/choose-user/choose-user.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
+import { ShowImageComponent } from './modals/show-image/show-image.component';
 
 
 @NgModule({
-  declarations: [ ContactItemComponent, ChooseChatComponent, ChooseUserComponent, UserItemComponent ],
-  entryComponents: [ ChooseChatComponent, ChooseUserComponent ],
+  declarations: [ ContactItemComponent, ChooseChatComponent, ChooseUserComponent, UserItemComponent, ShowImageComponent ],
+  entryComponents: [ ChooseChatComponent, ChooseUserComponent, ShowImageComponent ],
   imports: [
     CommonModule,
     IonicModule,
@@ -18,7 +19,8 @@ import { UserItemComponent } from './components/user-item/user-item.component';
       ContactItemComponent,
       ChooseChatComponent,
       ChooseUserComponent,
-      UserItemComponent
+      UserItemComponent,
+      ShowImageComponent
   ]
 })
 export class SharedModule { }

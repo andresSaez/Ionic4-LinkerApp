@@ -12,8 +12,8 @@
   <ion-content>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button color="secondary" class="edit">
-        <ion-icon name="create"></ion-icon>
+      <ion-fab-button color="secondary" class="edit" [routerLink]="['/users/edit-profile']">
+        <ion-icon name="create" mode="ios"></ion-icon>
       </ion-fab-button>
     </ion-fab>
 
@@ -21,9 +21,9 @@
       
     </div>
     <ion-avatar class="sidemenu-avatar">
-      <img src="../assets/images/avatar.jpg">
+      <img src="../assets/images/avatar.jpg" (click)="showImage()">
     </ion-avatar>
-    <ion-fab-button size="small" shape="round" fill="solid" color="light" class="camera">
+    <ion-fab-button size="small" shape="round" fill="solid" color="light" class="camera" (click)="openActionSheet()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
       
@@ -33,6 +33,13 @@
       <ion-text color="secondary">
         <h1>Andres90</h1>
       </ion-text>
+
+      <ion-button color="light" class="linker-btn" size="small" mode="ios">
+        <ion-icon name="beer" slot="start"></ion-icon>
+        <ion-label>
+          Linker!
+        </ion-label>
+      </ion-button>
 
       <ion-text>
         <h3>Biography</h3>
@@ -63,7 +70,7 @@
           </ion-chip>
       </div>
 
-      <div>
+      <div class="personal-info-container">
           <ion-text>
             <h3>Personal information</h3>
           </ion-text>

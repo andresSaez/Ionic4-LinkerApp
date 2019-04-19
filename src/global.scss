@@ -77,3 +77,14 @@
     padding: 1em;
 }
 
+.text-dark {
+    --color: black;
+}
+
+ion-toolbar.no-border-toolbar {
+    --border-style: none;
+    --border-width: none;
+    --box-shadow: none;
+}
+
+

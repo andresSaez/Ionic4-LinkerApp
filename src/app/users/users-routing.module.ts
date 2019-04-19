@@ -9,7 +9,9 @@ const routes: Routes = [
   {
     path: 'profile/:id',
     loadChildren: './pages/user-profile/user-profile.module#UserProfilePageModule'
-  }
+  },
+  { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule' }
+
 ];
 
 @NgModule({

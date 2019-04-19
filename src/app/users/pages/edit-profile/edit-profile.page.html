@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/users/profile" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content color="dark" padding>
+
+  <form (ngSubmit)="submitEditProfileForm()" #editProfileForm="ngForm" novalidate>
+
+      <ion-item color="dark">
+        <ion-label position="floating">Nick</ion-label>
+        <ion-input type="text" name="nick" [(ngModel)]="user.nick" #nickModel="ngModel" required></ion-input>
+        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="nickModel.dirty && nickModel.valid"></ion-icon>
+      </ion-item>
+
+      <ion-item color="dark">
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text" name="nameUser" [(ngModel)]="user.name" #nameModel="ngModel" required></ion-input>
+        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="nameModel.dirty && nameModel.valid"></ion-icon>
+      </ion-item>
+
+      <ion-item color="dark">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" name="email" [(ngModel)]="user.email" #emailModel="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></ion-input>
+        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="emailModel.dirty && emailModel.valid"></ion-icon>
+      </ion-item>
+
+      <ion-item color="dark">
+        <ion-label position="floating">Biography</ion-label>
+        <ion-textarea name="biography" maxlength="100" rows="4" [(ngModel)]="user.biography" #biographyModel="ngModel" required></ion-textarea>
+        <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="biographyModel.dirty && biographyModel.valid"></ion-icon>
+      </ion-item>
+
+      <div class="interest-container">
+          <ion-chip *ngFor="let skill of user.interests; let i = index" color="light">
+            <ion-label>{{ skill }}</ion-label>
+            <ion-icon name="close" (click)="deleteSkill( skill )"></ion-icon>
+          </ion-chip>
+      </div>
+
+      <ion-item color="dark">
+        <ion-label position="floating">Interests</ion-label>
+        <ion-input type="text" name="skills" [(ngModel)]="skills" #nameModel="ngModel" (keyup.enter)="addSkill()"></ion-input>
+      </ion-item>
+
+    <ion-button expand="full" color="success" fill="solid" class="register-button" shape="round" [disabled]="editProfileForm.invalid">
+      UPDATE
+    </ion-button>
+    
+  </form>
+
+</ion-content>
