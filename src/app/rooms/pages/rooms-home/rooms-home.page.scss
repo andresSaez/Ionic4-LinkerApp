@@ -1,3 +1,8 @@
+.container {
+    height: 100%;
+    width: 100%;
+}
+
 .float-right {
     position: absolute;
     right: 10px;
@@ -19,8 +24,6 @@ ion-searchbar {
 
 .list-container {
     width: 100%;
-    position: absolute;
-    bottom: 1em;
     padding: 16px;
 }
 

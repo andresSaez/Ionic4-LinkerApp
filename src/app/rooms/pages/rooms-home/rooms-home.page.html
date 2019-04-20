@@ -10,33 +10,38 @@
 </ion-header>
 
 <ion-content color="dark">
-  <ion-toolbar color="primary">
-    <ion-searchbar showCancelButton color="light" mode="ios"></ion-searchbar>
-  </ion-toolbar>
-
-  <div class="list-container">
-      <ion-slides pager="true" [options]="slideOpts" class="slide-items">
-          <ion-slide>
-            <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
-          </ion-slide>
-
-          <ion-slide>
-              <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
-            </ion-slide>
-
-            <ion-slide>
-                <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
-              </ion-slide>
-
-              <ion-slide>
+  <div class="container">
+    <div class="toolbar-container">
+        <ion-toolbar color="primary">
+          <ion-searchbar showCancelButton color="light" mode="ios"></ion-searchbar>
+        </ion-toolbar>
+    </div>
+    
+        <div class="list-container">
+            <ion-slides pager="true" [options]="slideOpts" class="slide-items">
+                <ion-slide>
                   <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
                 </ion-slide>
-       
-        </ion-slides>
-    <!-- <ion-list class="list-group">
-      <app-user-item [routerLink]="['/chat']" ></app-user-item>
-    </ion-list> -->
+      
+                <ion-slide>
+                    <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
+                  </ion-slide>
+      
+                  <ion-slide>
+                      <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
+                    </ion-slide>
+      
+                    <ion-slide>
+                        <app-room-slide-item (click)="openAlert()"></app-room-slide-item>
+                      </ion-slide>
+             
+              </ion-slides>
+          <!-- <ion-list class="list-group">
+            <app-user-item [routerLink]="['/chat']" ></app-user-item>
+          </ion-list> -->
+        </div>
   </div>
+  
 
 
 </ion-content>
