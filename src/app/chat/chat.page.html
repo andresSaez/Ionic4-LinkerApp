@@ -1,12 +1,32 @@
 <ion-header>
-    <ion-toolbar color="primary">
+    <ion-toolbar color="primary" *ngIf="room; else private">
       <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <ion-back-button defaultHref="/home/rooms" text=""></ion-back-button>
       </ion-buttons>
-      <ion-title>
-        Chat
+      <ion-buttons slot="end">
+        <ion-button (click)="showPopover( $event )"><ion-icon slot="icon-only" name="more"></ion-icon></ion-button>
+      </ion-buttons>
+      <ion-avatar>
+        <img src="../../assets/images/avatar.jpg">
+      </ion-avatar>
+      <ion-title text-wrap>
+        Grupo1
       </ion-title>
     </ion-toolbar>
+
+    <ng-template #private>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/home/private-rooms" text=""></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button (click)="showPopover( $event )"><ion-icon slot="icon-only" name="more"></ion-icon></ion-button>
+        </ion-buttons>
+
+        <ion-title>Daniel</ion-title>
+      </ion-toolbar>
+    </ng-template>
+    
   </ion-header>
   
   <ion-content>

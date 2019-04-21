@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+import { PrivateChatMenuPopoverComponent } from './popovers/private-chat-menu-popover/private-chat-menu-popover.component';
 
 @Component({
   selector: 'app-chat',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatPage implements OnInit {
 
-  constructor() { }
+  room: boolean;
+
+  constructor(
+    private popoverCtrl: PopoverController
+  ) { }
 
   ngOnInit() {
+    this.room = true;
+  }
+
+  async showPopover( event: any ) {
+    const popover = await this.popoverCtrl.create({
+      component: PrivateChatMenuPopoverComponent,
+      componentProps: {},
+      event: event
+    });
+
+    await popover.present();
   }
 
 }
