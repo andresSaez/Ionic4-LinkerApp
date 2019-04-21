@@ -10,6 +10,7 @@ import { TalkBubbleComponent } from './components/talk-bubble/talk-bubble.compon
 import { ChatMessageComponent } from './components/chat-message/chat-message.component';
 import { MessageInputComponent } from './components';
 import { PrivateChatMenuPopoverComponent } from './popovers/private-chat-menu-popover/private-chat-menu-popover.component';
+import { RoomChatMenuPopoverComponent } from './popovers/room-chat-menu-popover/room-chat-menu-popover.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ChatPage, TalkBubbleComponent, ChatMessageComponent, MessageInputComponent, PrivateChatMenuPopoverComponent ],
-  entryComponents: [ PrivateChatMenuPopoverComponent]
+  declarations: [ChatPage, TalkBubbleComponent, ChatMessageComponent, MessageInputComponent, PrivateChatMenuPopoverComponent,
+  RoomChatMenuPopoverComponent ],
+  entryComponents: [ PrivateChatMenuPopoverComponent, RoomChatMenuPopoverComponent]
 })
 export class ChatPageModule {}

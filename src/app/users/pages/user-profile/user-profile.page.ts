@@ -11,12 +11,15 @@ import { myLeaveAnimation } from 'src/app/animations/modal-animations/leave';
 })
 export class UserProfilePage implements OnInit {
 
+  mine: boolean;
+
   constructor(
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
+    this.mine = true;
   }
 
   async openActionSheet() {

@@ -17,7 +17,7 @@ export class PrivateChatMenuPopoverComponent implements OnInit {
   }
 
   close() {
-    this.popoverCtrl.dismiss();
+    this.popoverCtrl.dismiss('profile');
   }
 
 }

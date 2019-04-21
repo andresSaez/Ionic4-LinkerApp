@@ -22,3 +22,24 @@
 		margin: 10px auto;
 	}
 }
+
+.table {
+	display: table;
+}
+
+.cell {
+	display: table-cell;
+	vertical-align: middle;
+	height: 100%;
+}
+
+.avatar-room {
+	height: 48px;
+	width: 48px;
+	display: inline-block;
+}
+
+
+ion-title.float-right {
+	width: 100%;
+}

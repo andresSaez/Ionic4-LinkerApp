@@ -1,9 +1,63 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>rooms-details</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/chat" text=""></ion-back-button>
+        </ion-buttons>
+      <ion-title>Room details</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
 
-<ion-content>
+<ion-content padding color="dark">
+
+  <div class="room-details-container">
+    <h3>Nombre sala</h3>
+    
+  
+    <img src="../../../../assets/images/avatar.jpg" class="room-img" (click)="showImage()">
+    <ion-fab  vertical="top" horizontal="end">
+      <ion-fab-button size="small" shape="round" fill="solid" color="light" class="camera" (click)="openActionSheet()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    
+    <!-- <div class="creator-container">
+  
+    </div> -->
+  
+    <ion-item no-border color="dark">
+      <ion-label><ion-text color="success">Andres</ion-text></ion-label>
+      <ion-badge slot="end" color="tertiary" slot="end" class="users"><ion-icon size="small" name="people"></ion-icon> 22 </ion-badge>
+    </ion-item>
+  
+    <ion-item no-border color="dark">
+      <ion-label color="medium">12 km</ion-label>
+    </ion-item>
+  
+  
+    <p><small>ahagagafaaaabababasssvvsvsvshhsgsgsgsgsfsfsghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhf</small></p>
+  
+    <div class="interest-container">
+        <ion-chip color="light">
+          <ion-label>Icon Chip</ion-label>
+          <ion-icon name="heart"></ion-icon>
+        </ion-chip>
+        <ion-chip color="light">
+          <ion-label>Icon</ion-label>
+          <ion-icon name="heart"></ion-icon>
+        </ion-chip>
+        <ion-chip color="light">
+          <ion-label>Icon Chip</ion-label>
+          <ion-icon name="heart"></ion-icon>
+        </ion-chip>
+    </div>
+  </div>
+
+  <div class="list-container">
+    <h4><ion-text color="secondary">Members:</ion-text></h4>
+    <ion-list class="list-group">
+      <app-user-item (click)="viewProfile()"></app-user-item>
+    </ion-list>
+  </div>
 
 </ion-content>
