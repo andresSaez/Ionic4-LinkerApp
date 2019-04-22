@@ -55,9 +55,10 @@
         <ion-item color="dark">
           <ion-label position="floating">Hastags</ion-label>
           <ion-input type="text" name="hastags" [(ngModel)]="hastag" #nameModel="ngModel" (keyup.enter)="addHastag()"></ion-input>
+          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="newRoom.hastags.length"></ion-icon>
         </ion-item>
   
-      <ion-button expand="full" color="success" fill="solid" class="register-button" shape="round" [disabled]="createRoomForm.invalid">
+      <ion-button expand="full" color="success" fill="solid" class="register-button" shape="round" [disabled]="createRoomForm.invalid || !newRoom.hastags.length">
         CREATE 
       </ion-button>
       

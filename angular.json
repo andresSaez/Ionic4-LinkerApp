@@ -37,9 +37,13 @@
               },
               {
                 "input": "src/global.scss"
-              }
+              },
+              "./node_modules/mapbox-gl/dist/mapbox-gl.css",
+              "./node_modules/@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/mapbox-gl/dist/mapbox-gl.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

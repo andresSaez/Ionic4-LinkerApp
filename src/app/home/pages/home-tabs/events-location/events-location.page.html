@@ -1,3 +1,10 @@
 <ion-content color="dark">
 
+    <mgl-map [style]="'mapbox://styles/mapbox/streets-v11'"
+        [zoom]="[zoom]" [center]="[loguedUser.lng, loguedUser.lat]">
+
+        <mgl-marker *ngFor="let room of rooms" [lngLat]="[room.lng, room.lat]"></mgl-marker>
+        
+    </mgl-map>
+
 </ion-content>

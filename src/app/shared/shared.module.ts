@@ -7,6 +7,7 @@ import { ChooseUserComponent } from './modals/choose-user/choose-user.component'
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { ShowImageComponent } from './modals/show-image/show-image.component';
 import { SelectLocationComponent } from './modals/select-location/select-location.component';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { SelectLocationComponent } from './modals/select-location/select-locatio
   imports: [
     CommonModule,
     IonicModule,
+    NgxMapboxGLModule
   ],
   exports: [
       ContactItemComponent,

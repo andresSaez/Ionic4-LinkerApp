@@ -1,6 +1,23 @@
-<p>
-  select-location works!
-</p>
-<ion-button color="danger" (click)="cancel()" expand="block">
-    <ion-label>Cancel</ion-label>
-  </ion-button>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()"><ion-icon name="arrow-back" slot="icon-only"></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-title>Select location</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="selectPosition()" color="success">
+      <ion-icon name="flag"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <mgl-map #map [style]="'mapbox://styles/mapbox/streets-v11'"
+  [zoom]="[zoom]" [center]="[position.lng, position.lat]">
+  <mgl-marker [lngLat]="[position.lng, position.lat]"></mgl-marker>
+  <!-- <mgl-control mglGeocoder (result)="changePosition($event.result)"></mgl-control> -->
+  </mgl-map>
+</ion-content>

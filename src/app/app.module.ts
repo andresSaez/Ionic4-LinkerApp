@@ -11,6 +11,17 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 
+// MapBox
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+
+// Cordova plugins
+import { Camera } from '@ionic-native/camera/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Vibration } from '@ionic-native/vibration/ngx';
+
+
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -19,12 +30,18 @@ import { SharedModule } from './shared/shared.module';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken: 'pk.eyJ1IjoiYW5kc2MiLCJhIjoiY2p1c2k4cHl5MGp4eDQzcDVxMTUzdHQ5cSJ9.rCgKIFzn2MwFBb0RweW56A'
+    })
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Camera,
+    Geolocation,
+    Vibration
   ],
   bootstrap: [AppComponent]
 })
