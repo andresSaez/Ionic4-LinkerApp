@@ -14,7 +14,7 @@
     <div class="register-content">
       <div class="logo-container">
         <ion-avatar class="logo">
-          <img src="../assets/images/avatar.jpg">
+          <img src="../assets/images/default-profile2.jpg">
         </ion-avatar>
       </div>
   
@@ -25,19 +25,19 @@
         <div class="social-network-buttons table">
   
           <div class="cell">
-            <ion-button size="small" shape="round" fill="solid" class="facebook">
+            <ion-button size="small" shape="round" fill="solid" class="facebook" (click)="loginFB()">
               <ion-icon name="logo-facebook"></ion-icon>
             </ion-button>
           </div>
   
           <div class="cell">
-              <ion-button size="small" shape="round" fill="solid" class="googleplus">
+              <ion-button size="small" shape="round" fill="solid" class="googleplus" (click)="loginGoogle()">
                 <ion-icon name="logo-googleplus"></ion-icon>
               </ion-button>
           </div>
   
           <div class="cell">
-              <ion-button size="small" shape="round" fill="solid" class="twitter">
+              <ion-button size="small" shape="round" fill="solid" class="twitter" (click)="loginTwitter()">
                 <ion-icon name="logo-twitter"></ion-icon>
               </ion-button>
           </div>
@@ -51,41 +51,65 @@
                 OR
             </ion-text>
         </div>
-        <ion-item color="dark">
-          <ion-label position="floating" color="medium">Nick</ion-label>
-          <ion-input></ion-input>
-        </ion-item>
-        <ion-item color="dark">
-          <ion-label position="floating" color="medium">Name</ion-label>
-          <ion-input></ion-input>
-        </ion-item>
-        <ion-item color="dark">
-          <ion-label position="floating" color="medium">Email</ion-label>
-          <ion-input type="email"></ion-input>
-        </ion-item>
-        <ion-item color="dark">
-          <ion-label position="floating" color="medium">Repeat email</ion-label>
-          <ion-input type="email"></ion-input>
-        </ion-item>
-        <ion-item color="dark">
-          <ion-label position="floating" color="medium">Password</ion-label>
-          <ion-input type="password"></ion-input>
-        </ion-item>
-        <ion-item color="dark">
-          <ion-label position="floating" color="medium">Repeat password</ion-label>
-          <ion-input type="password"></ion-input>
-        </ion-item>
-  
-        <ion-button expand="full" color="success" fill="solid" class="register-button" shape="round">
-          REGISTER
-        </ion-button>
+
+        <form (ngSubmit)="submitRegisterForm()" #registerForm="ngForm" novalidate>
+
+          <ion-item color="dark">
+            <ion-label position="floating" color="medium">Nick</ion-label>
+            <ion-input type="text" name="nick" [(ngModel)]="newUser.nick" #nickModel="ngModel" required></ion-input>
+            <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="nickModel.dirty && nickModel.valid"></ion-icon>
+          </ion-item>
+
+          <ion-item color="dark">
+            <ion-label position="floating" color="medium">Name</ion-label>
+            <ion-input type="text" name="name" [(ngModel)]="newUser.name" #nameModel="ngModel" required></ion-input>
+            <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="nameModel.dirty && nameModel.valid"></ion-icon>
+          </ion-item>
+
+          <div ngModelGroup="emailGroup" #emailGroupModel="ngModelGroup" appMatch="email,email2">
+
+            <ion-item color="dark">
+              <ion-label position="floating" color="medium">Email</ion-label>
+              <ion-input type="email" name="email" [(ngModel)]="newUser.email" #emailModel="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></ion-input>
+              <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="emailModel.dirty && emailModel.valid"></ion-icon>
+            </ion-item>
+
+            <ion-item color="dark">
+              <ion-label position="floating" color="medium">Repeat email</ion-label>
+              <ion-input type="email" name="email2" [(ngModel)]="email2" #email2Model="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></ion-input>
+              <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="email2Model.dirty && emailGroupModel.valid"></ion-icon>
+            </ion-item>
+
+          </div>
+
+          <div ngModelGroup="passGroup" #passGroupModel="ngModelGroup" appMatch="password,password2">
+
+            <ion-item color="dark">
+              <ion-label position="floating" color="medium">Password</ion-label>
+              <ion-input type="password" name="password" [(ngModel)]="newUser.password" #passwordModel="ngModel" required></ion-input>
+              <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="passwordModel.dirty && passwordModel.valid"></ion-icon>
+            </ion-item>
+
+            <ion-item color="dark">
+              <ion-label position="floating" color="medium">Repeat password</ion-label>
+              <ion-input type="password" name="password2" [(ngModel)]="password2" #password2Model="ngModel" required></ion-input>
+              <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="password2Model.dirty && passGroupModel.valid"></ion-icon>
+            </ion-item>
+    
+          </div>
+
+          <ion-button type="submit" expand="full" color="success" fill="solid" class="register-button" shape="round"
+            [disabled]="registerForm.invalid || (password2 != newUser.password) || (email2 != newUser.email)">
+            REGISTER
+          </ion-button>
+
+        </form>
         <div class="login-link">
           <small>Do you have an account?  </small>
           <a [routerLink]="['/auth/login']">Login</a>
         </div>
       </div>
           
-  
     </div>
   
   </ion-content>

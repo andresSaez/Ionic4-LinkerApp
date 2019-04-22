@@ -52,7 +52,7 @@ export class RoomsCreatePage implements OnInit {
     this.newRoom = {
       name: '',
       description: '',
-      image: '../../../../assets/images/default-image.jpg',
+      image: '../../../../assets/images/default-image.jpg', // mirar lo de la imagen
       hastags: [],
       date: new Date().toDateString(),
       lat: null,
@@ -98,9 +98,6 @@ export class RoomsCreatePage implements OnInit {
     });
 
     await actionSheet.present();
-
-    const result = await actionSheet.onDidDismiss();
-    console.log(result);
   }
 
   async openSelectLocation() {

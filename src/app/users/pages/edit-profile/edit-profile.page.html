@@ -47,7 +47,7 @@
         <ion-input type="text" name="skills" [(ngModel)]="skills" #nameModel="ngModel" (keyup.enter)="addSkill()"></ion-input>
       </ion-item>
 
-    <ion-button expand="full" color="success" fill="solid" class="register-button" shape="round" [disabled]="editProfileForm.invalid">
+    <ion-button type="submit" expand="full" color="success" fill="solid" class="register-button" shape="round" [disabled]="editProfileForm.invalid">
       UPDATE
     </ion-button>
     

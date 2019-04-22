@@ -14,7 +14,7 @@
   <ion-content>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button color="secondary" class="edit" [routerLink]="['/users/edit-profile']">
+      <ion-fab-button color="secondary" class="edit" (click)="editProfile()">
         <ion-icon name="create" mode="ios"></ion-icon>
       </ion-fab-button>
     </ion-fab>

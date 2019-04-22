@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { IUser } from 'src/app/interfaces/i-user.interface';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { NavController, AlertController } from '@ionic/angular';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+// import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+// import { ILoginGoogleFbRequest } from '../../interfaces/ilogin-google-fb-request';
+// import { GooglePlus } from '@ionic-native/google-plus/ngx';
+// import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +16,73 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  user: IUser;
+  accessToken = '';
+  response = null;
+
+  constructor(
+    private _authService: AuthService,
+    private navCtrl: NavController,
+    private alertCtrl: AlertController,
+    private geolocation: Geolocation
+  ) { }
 
   ngOnInit() {
+    this.resetForm();
+    this.geolocate();
+  }
+
+  async submitLoginForm() {
+    // try {
+    //   const oneSignalId = (await this.oneSignal.getIds()).userId;
+    //   this.user.oneSignalId = oneSignalId;
+    // } catch (e) {
+    //   console.log(e);
+    // }
+
+    // console.log('haciendo login');
+
+    this._authService.login(this.user).subscribe(
+      () => this.navCtrl.navigateForward(['/home']),
+      async error => {
+        (await this.alertCtrl.create({
+          header: 'Login error',
+          message: 'Incorrect email and/or password',
+          buttons: ['Ok']
+        })).present();
+      }
+    );
+
+  }
+
+  async loginGoogle() {
+
+  }
+
+  async loginFB() {
+
+  }
+
+  async loginTwitter() {
+
+  }
+
+  geolocate() {
+    this.geolocation.getCurrentPosition().then((data) => {
+      this.user.lat = data.coords.latitude;
+      this.user.lng = data.coords.longitude;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+  }
+
+  resetForm() {
+    this.user = {
+      email: '',
+      password: '',
+      lat: 0,
+      lng: 0
+    };
   }
 
 }

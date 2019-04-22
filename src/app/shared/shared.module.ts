@@ -8,6 +8,7 @@ import { UserItemComponent } from './components/user-item/user-item.component';
 import { ShowImageComponent } from './modals/show-image/show-image.component';
 import { SelectLocationComponent } from './modals/select-location/select-location.component';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { MatchDirective } from './validators/match-validator/match.directive';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
                   ChooseUserComponent,
                   UserItemComponent,
                   ShowImageComponent,
-                  SelectLocationComponent
+                  SelectLocationComponent,
+                  MatchDirective
                 ],
   entryComponents: [ ChooseChatComponent, ChooseUserComponent, ShowImageComponent, SelectLocationComponent ],
   imports: [
@@ -30,7 +32,8 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
       ChooseUserComponent,
       UserItemComponent,
       ShowImageComponent,
-      SelectLocationComponent
+      SelectLocationComponent,
+      MatchDirective
   ]
 })
 export class SharedModule { }

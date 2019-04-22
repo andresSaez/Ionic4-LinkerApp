@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 
-import { Platform, ModalController } from '@ionic/angular';
+import { Platform, ModalController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { myEnterAnimation } from './animations/modal-animations/enter';
 import { myLeaveAnimation } from './animations/modal-animations/leave';
 import { ShowImageComponent } from './shared/modals/show-image/show-image.component';
+import { AuthService } from './services/auth-service/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  menuDisabled = true;
   public appPages = [
     {
       title: 'Home',
@@ -39,7 +41,9 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private _authService: AuthService,
+    private nav: NavController,
   ) {
     this.initializeApp();
   }
@@ -49,6 +53,11 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  async logout() {
+    await this._authService.logout();
+    this.nav.navigateRoot(['/auth/login']);
   }
 
   async showImage() {

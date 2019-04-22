@@ -58,7 +58,7 @@
           <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="newRoom.hastags.length"></ion-icon>
         </ion-item>
   
-      <ion-button expand="full" color="success" fill="solid" class="register-button" shape="round" [disabled]="createRoomForm.invalid || !newRoom.hastags.length">
+      <ion-button type="submit" expand="full" color="success" fill="solid" class="register-button" shape="round" [disabled]="createRoomForm.invalid || !newRoom.hastags.length">
         CREATE 
       </ion-button>
       
