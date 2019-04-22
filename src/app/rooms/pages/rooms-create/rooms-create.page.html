@@ -10,41 +10,51 @@
   <ion-content color="dark" padding>
   
     <form (ngSubmit)="submitCreateRoomForm()" #createRoomForm="ngForm" novalidate>
+
+        <ion-fab  vertical="top" horizontal="end">
+          <ion-fab-button size="small" shape="round" fill="solid" color="light" class="camera" (click)="openActionSheet()">
+            <ion-icon name="camera"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+        <div class="image-container">
+          <ion-img [src]="newRoom.image" *ngIf="newRoom.image" class="image"></ion-img>
+        </div>
   
         <ion-item color="dark">
-          <ion-label position="floating">Nick</ion-label>
-          <ion-input type="text" name="nick" [(ngModel)]="user.nick" #nickModel="ngModel" required></ion-input>
-          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="nickModel.dirty && nickModel.valid"></ion-icon>
+          <ion-label position="inset" *ngIf="latModel.invalid || lngModel.invalid">Locate on the map</ion-label>
+          <ion-input type="text" hidden name="lat" [(ngModel)]="newRoom.lat" #latModel="ngModel" required></ion-input>
+          <ion-input type="text" hidden name="lat" [(ngModel)]="newRoom.lng" #lngModel="ngModel" required></ion-input>
+          <ion-button size="default" color="success" (click)="openSelectLocation()" slot="start">
+              <ion-icon name="pin"></ion-icon>
+          </ion-button>
+          <ion-text color="secondary" *ngIf="latModel.valid && lngModel.valid">Located!</ion-text>
+
+          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="latModel.dirty && latModel.valid && latModel.dirty && latModel.valid"></ion-icon>
         </ion-item>
   
         <ion-item color="dark">
           <ion-label position="floating">Name</ion-label>
-          <ion-input type="text" name="nameUser" [(ngModel)]="user.name" #nameModel="ngModel" required></ion-input>
+          <ion-input type="text" name="nameRoom" [(ngModel)]="newRoom.name" #nameModel="ngModel" required></ion-input>
           <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="nameModel.dirty && nameModel.valid"></ion-icon>
         </ion-item>
   
         <ion-item color="dark">
-          <ion-label position="floating">Email</ion-label>
-          <ion-input type="email" name="email" [(ngModel)]="user.email" #emailModel="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></ion-input>
-          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="emailModel.dirty && emailModel.valid"></ion-icon>
+          <ion-label position="floating">Description</ion-label>
+          <ion-textarea name="description" maxlength="150" rows="4" [(ngModel)]="newRoom.description" #descriptionModel="ngModel" required></ion-textarea>
+          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="descriptionModel.dirty && descriptionModel.valid"></ion-icon>
         </ion-item>
   
-        <ion-item color="dark">
-          <ion-label position="floating">Biography</ion-label>
-          <ion-textarea name="biography" maxlength="100" rows="4" [(ngModel)]="user.biography" #biographyModel="ngModel" required></ion-textarea>
-          <ion-icon name="checkmark-circle" slot="end" color="success" *ngIf="biographyModel.dirty && biographyModel.valid"></ion-icon>
-        </ion-item>
-  
-        <div class="interest-container">
-            <ion-chip *ngFor="let hastag of user.interests; let i = index" color="light">
+        <div class="hastags-container">
+            <ion-chip *ngFor="let hastag of newRoom.hastags; let i = index" color="light">
               <ion-label>{{ hastag }}</ion-label>
               <ion-icon name="close" (click)="deleteHastag( hastag )"></ion-icon>
             </ion-chip>
         </div>
   
         <ion-item color="dark">
-          <ion-label position="floating">Interests</ion-label>
-          <ion-input type="text" name="skills" [(ngModel)]="hastag" #nameModel="ngModel" (keyup.enter)="addHastag()"></ion-input>
+          <ion-label position="floating">Hastags</ion-label>
+          <ion-input type="text" name="hastags" [(ngModel)]="hastag" #nameModel="ngModel" (keyup.enter)="addHastag()"></ion-input>
         </ion-item>
   
       <ion-button expand="full" color="success" fill="solid" class="register-button" shape="round" [disabled]="createRoomForm.invalid">

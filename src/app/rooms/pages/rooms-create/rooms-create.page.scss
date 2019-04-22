@@ -11,3 +11,21 @@ ion-item {
 ion-label {
     --color: #607d8b !important;
 }
+
+ion-fab-button.camera {
+    height: 40px;
+    --color: white;
+    // z-index: 4;
+    // position: relative;
+    // top: -20px;
+    // left: 200px;
+}
+
+.image-container {
+    background-color: #263238;
+    height: 180px;
+}
+
+.image {
+    margin: auto auto;
+}
