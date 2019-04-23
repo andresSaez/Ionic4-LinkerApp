@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IRoom } from 'src/app/interfaces/i-room.interface';
-import { ActionSheetController, ModalController, NavController, ToastController } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController, ToastController, AlertController } from '@ionic/angular';
 import { SelectLocationComponent } from 'src/app/shared/modals/select-location/select-location.component';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { RoomService } from 'src/app/services/room-service/room.service';
@@ -21,6 +21,7 @@ export class RoomsCreatePage implements OnInit {
   constructor(
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     private navCtrl: NavController,
     private toastCtrl: ToastController,
     private _roomService: RoomService,
@@ -44,7 +45,19 @@ export class RoomsCreatePage implements OnInit {
             message: 'Room created!'
           })).present();
           this.navCtrl.navigateBack(['/home/rooms']);
-        }
+        },
+        async (error) => {
+          (await this.alertCtrl.create({
+            header: 'Oops, something has gone wrong ...',
+            message: 'Please, try again',
+            buttons: [
+              {
+                text: 'Ok',
+                role: 'ok'
+              }
+            ]
+          })).present();
+         }
       );
   }
 

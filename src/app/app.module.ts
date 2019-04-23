@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -18,6 +18,10 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { Camera } from '@ionic-native/camera/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
+
+// Interceptors
+import { AuthTokenInterceptor } from './interceptors/auth-token/auth-token.interceptor';
+import { BaseUrlInterceptor } from './interceptors/base-url/base-url.interceptor';
 
 
 
@@ -39,6 +43,16 @@ import { Vibration } from '@ionic-native/vibration/ngx';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthTokenInterceptor,
+    //   multi: true,
+    // },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: BaseUrlInterceptor,
+    //   multi: true,
+    // },
     Camera,
     Geolocation,
     Vibration
