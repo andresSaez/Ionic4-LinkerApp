@@ -13,8 +13,7 @@
   <div class="room-details-container">
     <h3>Nombre sala</h3>
     
-  
-    <img src="../../../../assets/images/avatar.jpg" class="room-img" (click)="showImage()">
+    <img [src]="room.image" class="room-img" (click)="showImage()">
     <ion-fab  vertical="top" horizontal="end">
       <ion-fab-button size="small" shape="round" fill="solid" color="light" class="camera" (click)="openActionSheet()">
         <ion-icon name="camera"></ion-icon>

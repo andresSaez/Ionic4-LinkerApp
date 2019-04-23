@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController, AlertController } from '@ionic/angular';
+import { NavController, ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -20,7 +20,8 @@ export class RegisterPage implements OnInit {
     private navCtrl: NavController,
     private toastCtrl: ToastController,
     private geolocation: Geolocation,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -28,9 +29,17 @@ export class RegisterPage implements OnInit {
     this.geolocate();
   }
 
-  submitRegisterForm() {
+  async submitRegisterForm() {
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
+
     this._authService.register(this.newUser)
       .subscribe( async () => {
+        await loading.dismiss();
         ( await this.toastCtrl.create({
           duration: 3000,
           position: 'bottom',
@@ -39,6 +48,7 @@ export class RegisterPage implements OnInit {
         this.navCtrl.navigateRoot(['/auth/login']);
       },
         async (error) => {
+          await loading.dismiss();
           (await this.alertCtrl.create({
             header: 'Oops, something has gone wrong ...',
             message: 'Please, try again',

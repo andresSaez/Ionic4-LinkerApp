@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController, NavController, ToastController, Events, AlertController } from '@ionic/angular';
+import { ActionSheetController, ModalController,
+  NavController, ToastController, Events, AlertController, LoadingController } from '@ionic/angular';
 import { ShowImageComponent } from 'src/app/shared/modals/show-image/show-image.component';
 import { myEnterAnimation } from 'src/app/animations/modal-animations/enter';
 import { myLeaveAnimation } from 'src/app/animations/modal-animations/leave';
@@ -29,7 +30,8 @@ export class UserProfilePage implements OnInit {
     private geolocation: Geolocation,
     private camera: Camera,
     private _usersService: UsersService,
-    private events: Events
+    private events: Events,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -51,14 +53,22 @@ export class UserProfilePage implements OnInit {
   }
 
   editProfile(event) {
-    this.events.publish('user', this.user);
+    this.events.publish('user', this.user); // ESTO NO FUNCIONA, MIRAR!!!!!
     console.log('object', this.user);
     this.navCtrl.navigateForward(['/users/edit-profile']);
   }
 
-  addFriend() {
+  async addFriend() {
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
+
     this._usersService.addFriend( this.user )
       .subscribe( async () => {
+        await loading.dismiss();
         (await this.toastCtrl.create({
           duration: 3000,
           position: 'bottom',
@@ -67,6 +77,7 @@ export class UserProfilePage implements OnInit {
         this.user.friend = true;
       },
        async (error) => {
+        await loading.dismiss();
         (await this.alertCtrl.create({
           header: 'Oops, something has gone wrong ...',
           message: 'Please, try again',
@@ -156,9 +167,17 @@ export class UserProfilePage implements OnInit {
     this.editAvatar(); // En este caso es especial
   }
 
-  private editAvatar() {
+  private async editAvatar() {
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
+
     this._usersService.saveAvatar( this.newAvatarTemp ).subscribe(
       async () => {
+        await loading.dismiss();
         (await this.toastCtrl.create({
           duration: 3000,
           position: 'bottom',
@@ -168,6 +187,7 @@ export class UserProfilePage implements OnInit {
         this.newAvatarTemp = '';
       },
       async (error) => {
+        await loading.dismiss();
         (await this.alertCtrl.create({
           header: 'Oops, something has gone wrong ...',
           message: 'Please, try again',

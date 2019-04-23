@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IRoom } from 'src/app/interfaces/i-room.interface';
-import { ActionSheetController, ModalController, NavController, ToastController, AlertController } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController, ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { SelectLocationComponent } from 'src/app/shared/modals/select-location/select-location.component';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { RoomService } from 'src/app/services/room-service/room.service';
@@ -25,7 +25,8 @@ export class RoomsCreatePage implements OnInit {
     private navCtrl: NavController,
     private toastCtrl: ToastController,
     private _roomService: RoomService,
-    private camera: Camera
+    private camera: Camera,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -34,11 +35,19 @@ export class RoomsCreatePage implements OnInit {
     console.log(this.newRoom);
   }
 
-  submitCreateRoomForm() {
+  async submitCreateRoomForm() {
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
+
     // this.newRoom.creator = this.logguedUser;
     this._roomService.newRoom( this.newRoom )
       .subscribe(
         async () => {
+          await loading.dismiss();
           (await this.toastCtrl.create({
             duration: 3000,
             position: 'bottom',
@@ -47,6 +56,7 @@ export class RoomsCreatePage implements OnInit {
           this.navCtrl.navigateBack(['/home/rooms']);
         },
         async (error) => {
+          await loading.dismiss();
           (await this.alertCtrl.create({
             header: 'Oops, something has gone wrong ...',
             message: 'Please, try again',

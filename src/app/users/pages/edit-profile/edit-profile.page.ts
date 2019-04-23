@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController, AlertController, Events } from '@ionic/angular';
+import { NavController, ToastController, AlertController, Events, LoadingController } from '@ionic/angular';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { UsersService } from 'src/app/services/users-service/users.service';
@@ -21,7 +21,8 @@ export class EditProfilePage implements OnInit {
     private alertCtrl: AlertController,
     private geolocation: Geolocation,
     private _usersService: UsersService,
-    private events: Events
+    private events: Events,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -33,9 +34,16 @@ export class EditProfilePage implements OnInit {
     });
   }
 
-  submitEditProfileForm() {
+  async submitEditProfileForm() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
+
     this._usersService.saveProfile( this.user )
       .subscribe( async () => {
+        await loading.dismiss();
         ( await this.toastCtrl.create({
           duration: 3000,
           position: 'bottom',
@@ -44,6 +52,7 @@ export class EditProfilePage implements OnInit {
         this.navCtrl.navigateBack(['/users/profile']);
       },
       async (error) => {
+        await loading.dismiss();
         (await this.alertCtrl.create({
           header: 'Oops, something has gone wrong ...',
           message: 'Please, try again',

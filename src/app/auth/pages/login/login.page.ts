@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 // import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
@@ -24,7 +24,8 @@ export class LoginPage implements OnInit {
     private _authService: AuthService,
     private navCtrl: NavController,
     private alertCtrl: AlertController,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -33,6 +34,7 @@ export class LoginPage implements OnInit {
   }
 
   async submitLoginForm() {
+    console.log('login');
     // try {
     //   const oneSignalId = (await this.oneSignal.getIds()).userId;
     //   this.user.oneSignalId = oneSignalId;
@@ -41,10 +43,19 @@ export class LoginPage implements OnInit {
     // }
 
     // console.log('haciendo login');
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
 
     this._authService.login(this.user).subscribe(
-      () => this.navCtrl.navigateForward(['/home']),
+      async () => {
+        await loading.dismiss();
+        this.navCtrl.navigateForward(['/home']);
+      },
       async error => {
+        await loading.dismiss();
         (await this.alertCtrl.create({
           header: 'Login error',
           message: 'Incorrect email and/or password',
@@ -84,5 +95,6 @@ export class LoginPage implements OnInit {
       lng: 0
     };
   }
+
 
 }

@@ -13,4 +13,6 @@ export interface IRoom {
     lng?: number;
     members?: IUser[]; // Or string[]
     chat?: IChat; // or string?
+    mine?: boolean;
+    distance?: number;
 }

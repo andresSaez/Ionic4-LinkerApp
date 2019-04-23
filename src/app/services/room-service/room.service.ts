@@ -25,4 +25,11 @@ export class RoomService {
       }));
   }
 
+  saveImage(image: string, id: string ): Observable<string> {
+    return this.http.put<{image: string}>(`${this.BASE_URL}/${id}/image`, {image: image})
+      .pipe(map(resp => {
+        return resp.image;
+      }));
+  }
+
 }
