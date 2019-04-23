@@ -11,7 +11,7 @@
 <ion-content padding color="dark">
 
   <div class="room-details-container">
-    <h3>Nombre sala</h3>
+    <h3>{{ room.name }}</h3>
     
     <img [src]="room.image" class="room-img" (click)="showImage()">
     <ion-fab  vertical="top" horizontal="end">
@@ -25,28 +25,20 @@
     </div> -->
   
     <ion-item no-border color="dark">
-      <ion-label><ion-text color="success">Andres</ion-text></ion-label>
-      <ion-badge slot="end" color="tertiary" slot="end" class="users"><ion-icon size="small" name="people"></ion-icon> 22 </ion-badge>
+      <ion-label><ion-text color="success">{{ room.creator.nick }}</ion-text></ion-label>
+      <ion-badge slot="end" color="tertiary" slot="end" class="users"><ion-icon size="small" name="people"></ion-icon> {{ room.members.length }} </ion-badge>
     </ion-item>
   
     <ion-item no-border color="dark">
-      <ion-label color="medium">12 km</ion-label>
+      <ion-label color="medium">{{ room.distance }} km</ion-label>
     </ion-item>
   
   
-    <p><small>ahagagafaaaabababasssvvsvsvshhsgsgsgsgsfsfsghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhf</small></p>
+    <p><small>{{ room.description }}</small></p>
   
     <div class="interest-container">
-        <ion-chip color="light">
-          <ion-label>Icon Chip</ion-label>
-          <ion-icon name="heart"></ion-icon>
-        </ion-chip>
-        <ion-chip color="light">
-          <ion-label>Icon</ion-label>
-          <ion-icon name="heart"></ion-icon>
-        </ion-chip>
-        <ion-chip color="light">
-          <ion-label>Icon Chip</ion-label>
+        <ion-chip *ngFor="let hastag of room.hastags" color="light">
+          <ion-label>{{ hastag }}</ion-label>
           <ion-icon name="heart"></ion-icon>
         </ion-chip>
     </div>
@@ -55,7 +47,7 @@
   <div class="list-container">
     <h4><ion-text color="secondary">Members:</ion-text></h4>
     <ion-list class="list-group">
-      <app-user-item (click)="viewProfile()"></app-user-item>
+      <app-user-item (click)="viewProfile( member.id )" *ngFor="let member of room.members" [user]="member"></app-user-item>
     </ion-list>
   </div>
 

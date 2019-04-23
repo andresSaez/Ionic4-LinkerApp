@@ -1,13 +1,13 @@
 <ion-item color="dark">
     <ion-avatar slot="start">
-    <img src="../../../../../assets/images/avatar.jpg">
+    <img [src]="user.avatar">
     </ion-avatar>
     <ion-label text-wrap>
       <ion-text>
-          <h3>User 1</h3>
+          <h3>{{ user.nick }}</h3>
       </ion-text>
       <ion-text color="medium">
-          <p>Andres</p>
+          <p>{{ user.name }}</p>
       </ion-text>
     </ion-label>
 </ion-item>

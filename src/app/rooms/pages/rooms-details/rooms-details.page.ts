@@ -33,6 +33,18 @@ export class RoomsDetailsPage implements OnInit {
 
     /** Esto se debe de quitar cuando cargue la información con el servicio. Para pruebas lo estoy hardcodeando */
     this.room = {
+      creator: {
+        id: '1',
+        nick: 'Andres90',
+        biography: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+        interests: [ 'Beach', 'Gym', 'Movies' ],
+        name: 'Andrés Sáez Cases',
+        email: 'andsc@email.com',
+        avatar: '../../../../assets/images/avatar.jpg',
+        friend: true,
+      },
       name: 'DAW 2019',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
       image: '../../../../assets/images/default-image.jpg', // mirar lo de la imagen

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { IRoom } from 'src/app/interfaces/i-room.interface';
 
 @Component({
   selector: 'app-room-slide-item',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./room-slide-item.component.scss'],
 })
 export class RoomSlideItemComponent implements OnInit {
+
+  @Input() room: IRoom;
 
   constructor() { }
 
