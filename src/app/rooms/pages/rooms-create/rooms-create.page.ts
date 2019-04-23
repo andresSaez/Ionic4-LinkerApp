@@ -4,7 +4,7 @@ import { ActionSheetController, ModalController, NavController, ToastController 
 import { SelectLocationComponent } from 'src/app/shared/modals/select-location/select-location.component';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { RoomService } from 'src/app/services/room-service/room.service';
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-rooms-create',

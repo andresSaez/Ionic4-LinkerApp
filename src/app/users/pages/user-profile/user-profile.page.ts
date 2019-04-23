@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController, NavController, ToastController, Events } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController, ToastController, Events, AlertController } from '@ionic/angular';
 import { ShowImageComponent } from 'src/app/shared/modals/show-image/show-image.component';
 import { myEnterAnimation } from 'src/app/animations/modal-animations/enter';
 import { myLeaveAnimation } from 'src/app/animations/modal-animations/leave';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { UsersService } from 'src/app/services/users-service/users.service';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { ActivatedRoute } from '@angular/router';
@@ -17,6 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 export class UserProfilePage implements OnInit {
 
   user: IUser;
+  newAvatarTemp: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +25,7 @@ export class UserProfilePage implements OnInit {
     private modalCtrl: ModalController,
     private navCtrl: NavController,
     private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
     private geolocation: Geolocation,
     private camera: Camera,
     private _usersService: UsersService,
@@ -32,6 +34,50 @@ export class UserProfilePage implements OnInit {
 
   ngOnInit() {
     this.user = this.route.snapshot.data.user;
+    /** Esto va fuera cuando tenga los servicios implementados*/
+    this.user = {
+      nick: 'Andres90',
+      biography: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
+      interests: [ 'Beach', 'Gym', 'Movies' ],
+      name: 'Andrés Sáez Cases',
+      email: 'andsc@email.com',
+      avatar: '../assets/images/avatar.jpg',
+      friend: true,
+      me: true
+    };
+    ///////////////////////////////////////////////
+  }
+
+  editProfile(event) {
+    this.events.publish('user', this.user);
+    console.log('object', this.user);
+    this.navCtrl.navigateForward(['/users/edit-profile']);
+  }
+
+  addFriend() {
+    this._usersService.addFriend( this.user )
+      .subscribe( async () => {
+        (await this.toastCtrl.create({
+          duration: 3000,
+          position: 'bottom',
+          message: `${this.user.nick} and you are friends`
+        })).present();
+        this.user.friend = true;
+      },
+       async (error) => {
+        (await this.alertCtrl.create({
+          header: 'Oops, something has gone wrong ...',
+          message: 'Please, try again',
+          buttons: [
+            {
+              text: 'Ok',
+              role: 'ok'
+            }
+          ]
+        })).present();
+       });
   }
 
   async openActionSheet() {
@@ -79,11 +125,6 @@ export class UserProfilePage implements OnInit {
     await modal.present();
   }
 
-  editProfile() {
-    this.events.publish('user', this.user);
-    this.navCtrl.navigateForward(['/users/edit-profile']);
-  }
-
   // Camera functions
 
   async takePhoto() {
@@ -111,7 +152,34 @@ export class UserProfilePage implements OnInit {
 
   private async getPicture(options: CameraOptions) {
     const imageData = await this.camera.getPicture(options);
-    this.user.avatar = 'data:image/jpeg;base64,' + imageData;
+    this.newAvatarTemp = 'data:image/jpeg;base64,' + imageData;
+    this.editAvatar(); // En este caso es especial
+  }
+
+  private editAvatar() {
+    this._usersService.saveAvatar( this.newAvatarTemp ).subscribe(
+      async () => {
+        (await this.toastCtrl.create({
+          duration: 3000,
+          position: 'bottom',
+          message: 'Avatar changed!'
+        })).present();
+        this.user.avatar = this.newAvatarTemp;
+        this.newAvatarTemp = '';
+      },
+      async (error) => {
+        (await this.alertCtrl.create({
+          header: 'Oops, something has gone wrong ...',
+          message: 'Please, try again',
+          buttons: [
+            {
+              text: 'Ok',
+              role: 'ok'
+            }
+          ]
+        })).present();
+      }
+    );
   }
 
 }

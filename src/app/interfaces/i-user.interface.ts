@@ -9,7 +9,7 @@ export interface IUser {
     email?: string;
     password?: string;
     avatar?: string;
-    biograpghy?: string;
+    biography?: string;
     interests?: string[];
     lat?: number;
     lng?: number;

@@ -1,8 +1,8 @@
   <ion-header>
     <ion-toolbar color="primary">
       <ion-buttons slot="start">
-        <ion-menu-button *ngIf="mine"></ion-menu-button>
-        <ion-back-button defaultHref="/chat" text="" *ngIf="!mine"></ion-back-button>
+        <ion-menu-button *ngIf="user.me"></ion-menu-button>
+        <ion-back-button defaultHref="/chat" text="" *ngIf="!user.me"></ion-back-button>
       </ion-buttons>
    
       <ion-title>
@@ -14,7 +14,7 @@
   <ion-content>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button color="secondary" class="edit" (click)="editProfile()">
+      <ion-fab-button color="secondary" class="edit" (click)="editProfile($event)" *ngIf="user.me">
         <ion-icon name="create" mode="ios"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -23,9 +23,9 @@
       
     </div>
     <ion-avatar class="sidemenu-avatar">
-      <img src="../assets/images/avatar.jpg" (click)="showImage()">
+      <img [src]="user.avatar" (click)="showImage()">
     </ion-avatar>
-    <ion-fab-button size="small" shape="round" fill="solid" color="light" class="camera" (click)="openActionSheet()">
+    <ion-fab-button *ngIf="user.me" size="small" shape="round" fill="solid" color="light" class="camera" (click)="openActionSheet()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
       
@@ -33,24 +33,31 @@
     <div class="profile-content">
 
       <ion-text color="secondary">
-        <h1>Andres90</h1>
+        <h1>{{ user.nick }}</h1>
       </ion-text>
 
-      <ion-button color="light" class="linker-btn" size="small" mode="ios">
+      <ion-button color="light" class="linker-btn" size="small" mode="ios" *ngIf="!user.me && !user.friend"
+        (click)="addFriend()">
         <ion-icon name="beer" slot="start"></ion-icon>
         <ion-label>
           Linker!
         </ion-label>
       </ion-button>
 
+      <p *ngIf="!user.me && user.friend">
+        <ion-badge>
+          <ion-label>
+            Friends
+          </ion-label>
+        </ion-badge>
+      </p>
+      
       <ion-text>
         <h3>Biography</h3>
       </ion-text>
 
       <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          {{ user.biography }}
       </p>
 
       <ion-text>
@@ -58,17 +65,9 @@
       </ion-text>
 
       <div class="interest-container">
-          <ion-chip>
-            <ion-label>Icon Chip</ion-label>
-            <ion-icon name="close"></ion-icon>
-          </ion-chip>
-          <ion-chip>
-            <ion-label>Icon</ion-label>
-            <ion-icon name="close"></ion-icon>
-          </ion-chip>
-          <ion-chip>
-            <ion-label>Icon Chip</ion-label>
-            <ion-icon name="close"></ion-icon>
+          <ion-chip *ngFor="let interest of user.interests">
+            <ion-label>{{ interest }}</ion-label>
+            <ion-icon name="heart"></ion-icon>
           </ion-chip>
       </div>
 
@@ -81,20 +80,18 @@
             <ion-text color="medium"><small>Email: </small></ion-text>
           </p>
           <p>
-            anshsgs@email.com
+            {{ user.email }}
           </p>
 
           <p>
             <ion-text color="medium"><small>Name: </small></ion-text>
           </p>
           <p>
-            Andres Saez
+            {{ user.name }}
           </p>
 
       </div>
       
-  
-
     </div>
   
   </ion-content>

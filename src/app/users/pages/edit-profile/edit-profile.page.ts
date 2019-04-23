@@ -29,6 +29,7 @@ export class EditProfilePage implements OnInit {
     this.geolocate();
     this.events.subscribe('user', us => {
       this.user = us;
+      console.log(this.user); // quitar
     });
   }
 
@@ -41,6 +42,18 @@ export class EditProfilePage implements OnInit {
           message: 'Profile updated!'
         })).present();
         this.navCtrl.navigateBack(['/users/profile']);
+      },
+      async (error) => {
+        (await this.alertCtrl.create({
+          header: 'Oops, something has gone wrong ...',
+          message: 'Please, try again',
+          buttons: [
+            {
+              text: 'Ok',
+              role: 'ok'
+            }
+          ]
+        })).present();
       });
   }
 
@@ -67,7 +80,7 @@ export class EditProfilePage implements OnInit {
       name: '',
       nick: '',
       email: '',
-      biograpghy: '',
+      biography: '',
       interests: []
     };
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController } from '@ionic/angular';
+import { NavController, ToastController, AlertController } from '@ionic/angular';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -19,7 +19,8 @@ export class RegisterPage implements OnInit {
     private _authService: AuthService,
     private navCtrl: NavController,
     private toastCtrl: ToastController,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
@@ -36,7 +37,19 @@ export class RegisterPage implements OnInit {
           message: 'User registered'
         })).present();
         this.navCtrl.navigateRoot(['/auth/login']);
-      } );
+      },
+        async (error) => {
+          (await this.alertCtrl.create({
+            header: 'Oops, something has gone wrong ...',
+            message: 'Please, try again',
+            buttons: [
+              {
+                text: 'Ok',
+                role: 'ok'
+              }
+            ]
+          })).present(); }
+        );
   }
 
   async loginGoogle() {
@@ -66,7 +79,7 @@ export class RegisterPage implements OnInit {
       name: '',
       email: '',
       avatar: '../../../../assets/images/default-profile.png',
-      biograpghy: '',
+      biography: '',
       interests: [],
       lat: 0,
       lng: 0

@@ -55,4 +55,13 @@ export class UsersService {
       }));
   }
 
+  addFriend( user: IUser ): Observable<IUser> {
+    return this.http.post<{ user: IUser }>(`${this.BASE_URL}/me/friends`, user )
+      .pipe(map(resp => {
+        const u = resp.user;
+        u.avatar = environment.baseUrl + '/' +u.avatar;
+        return u;
+      }));
+  }
+
 }
