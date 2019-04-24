@@ -23,8 +23,15 @@ import { Vibration } from '@ionic-native/vibration/ngx';
 import { AuthTokenInterceptor } from './interceptors/auth-token/auth-token.interceptor';
 import { BaseUrlInterceptor } from './interceptors/base-url/base-url.interceptor';
 
+// NgRx
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from './store/app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { effectsArray } from './store/effects';
 
-
+// Environtment
+import { environment } from '../environments/environment'; // Angular CLI environemnt
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +41,12 @@ import { BaseUrlInterceptor } from './interceptors/base-url/base-url.interceptor
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    StoreModule.forRoot( appReducers ),
+    EffectsModule.forRoot( effectsArray ),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
     SharedModule,
     NgxMapboxGLModule.withConfig({
       accessToken: 'pk.eyJ1IjoiYW5kc2MiLCJhIjoiY2p1c2k4cHl5MGp4eDQzcDVxMTUzdHQ5cSJ9.rCgKIFzn2MwFBb0RweW56A'

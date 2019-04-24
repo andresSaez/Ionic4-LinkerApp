@@ -4,6 +4,7 @@ import { IUser } from 'src/app/interfaces/i-user.interface';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ISettings } from 'src/app/interfaces/i-settings.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class UsersService {
       }));
   }
 
-  getUserProfile(id: number): Observable<IUser> {
+  getUserProfile(id: string ): Observable<IUser> {
     return this.http.get<{user: IUser}>(`${this.BASE_URL}/${id}`)
       .pipe(map(resp => {
         const u = resp.user;
@@ -59,8 +60,24 @@ export class UsersService {
     return this.http.post<{ user: IUser }>(`${this.BASE_URL}/me/friends`, user )
       .pipe(map(resp => {
         const u = resp.user;
-        u.avatar = environment.baseUrl + '/' +u.avatar;
+        u.avatar = environment.baseUrl + '/' + u.avatar;
         return u;
+      }));
+  }
+
+  getSettingsMine(): Observable<ISettings> {
+    return this.http.get<{settings: ISettings}>(`${this.BASE_URL}/me/settings`)
+      .pipe(map(resp => {
+        const s = resp.settings;
+        return s;
+      }));
+  }
+
+  getUserSettings( id: string ): Observable<ISettings> {
+    return this.http.get<{settings: ISettings}>(`${this.BASE_URL}/${id}/settings`)
+      .pipe(map(resp => {
+        const s = resp.settings;
+        return s;
       }));
   }
 
