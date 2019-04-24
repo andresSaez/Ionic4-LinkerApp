@@ -15,8 +15,8 @@ export class RoomsHomePage implements OnInit {
     speed: 400
   };
 
-  rooms: IRoom[];
-  filteredRooms: IRoom[];
+  rooms: IRoom[] = [];
+  filteredRooms: IRoom[] = [];
   loadingFail = false;
 
   constructor(

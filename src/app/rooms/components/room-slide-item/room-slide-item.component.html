@@ -1,30 +1,22 @@
 <div class="room-slide-container">
-  <h3>Nombre sala</h3>
+  <h3>{{ room.name }}</h3>
   
-  <img src="../../../../assets/images/avatar.jpg" class="room-img">
+  <img [src]="room.image" class="room-img">
 
   <ion-item no-border color="dark">
-    <ion-label><ion-text color="success">Andres</ion-text></ion-label>
-    <ion-badge slot="end" color="tertiary" slot="end" class="users"><ion-icon size="small" name="people"></ion-icon> 22 </ion-badge>
+    <ion-label><ion-text color="success">{{ room.creator }}</ion-text></ion-label>
+    <ion-badge slot="end" color="tertiary" slot="end" class="users"><ion-icon size="small" name="people"></ion-icon> {{ room.members.length }} </ion-badge>
   </ion-item>
 
   <ion-item no-border color="dark">
-    <ion-label color="medium">12 km</ion-label>
+    <ion-label color="medium">{{ room.distance.toFixed(2) }} km</ion-label>
   </ion-item>
 
-  <p><small>ahagagafaaaabababasssvvsvsvshhsgsgsgsgsfsfsghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhf</small></p>
+  <p><small>{{ room.description }}</small></p>
 
   <div class="interest-container">
-      <ion-chip color="light">
-        <ion-label>Icon Chip</ion-label>
-        <ion-icon name="heart"></ion-icon>
-      </ion-chip>
-      <ion-chip color="light">
-        <ion-label>Icon</ion-label>
-        <ion-icon name="heart"></ion-icon>
-      </ion-chip>
-      <ion-chip color="light">
-        <ion-label>Icon Chip</ion-label>
+      <ion-chip color="light" *ngFor="let hastag of room.hastags">
+        <ion-label>{{ hastag }}</ion-label>
         <ion-icon name="heart"></ion-icon>
       </ion-chip>
   </div>
