@@ -61,11 +61,11 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     //   useClass: AuthTokenInterceptor,
     //   multi: true,
     // },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: BaseUrlInterceptor,
-    //   multi: true,
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BaseUrlInterceptor,
+      multi: true,
+    },
     Camera,
     Geolocation,
     Vibration

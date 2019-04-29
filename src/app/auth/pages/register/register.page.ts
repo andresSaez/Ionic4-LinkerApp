@@ -38,14 +38,28 @@ export class RegisterPage implements OnInit {
     await loading.present();
 
     this._authService.register(this.newUser)
-      .subscribe( async () => {
-        await loading.dismiss();
-        ( await this.toastCtrl.create({
-          duration: 3000,
-          position: 'bottom',
-          message: 'User registered'
-        })).present();
-        this.navCtrl.navigateRoot(['/auth/login']);
+      .subscribe( async (resp: any) => {
+        if (!resp.error) {
+            await loading.dismiss();
+          ( await this.toastCtrl.create({
+            duration: 3000,
+            position: 'bottom',
+            message: 'User registered'
+          })).present();
+          this.navCtrl.navigateRoot(['/auth/login']);
+        } else {
+            await loading.dismiss();
+            (await this.alertCtrl.create({
+              header: 'Oops, something has gone wrong ...',
+              message: resp.errorMessage,
+              buttons: [
+                {
+                  text: 'Ok',
+                  role: 'ok'
+                }
+              ]
+            })).present();
+        }
       },
         async (error) => {
           await loading.dismiss();
@@ -88,7 +102,7 @@ export class RegisterPage implements OnInit {
       nick: '',
       name: '',
       email: '',
-      avatar: '../../../../assets/images/default-profile.png',
+      avatar: '',
       biography: '',
       interests: [],
       lat: 0,

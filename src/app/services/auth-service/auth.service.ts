@@ -6,11 +6,18 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 export interface ResponseLogin {
+  error: boolean;
   accessToken: string;
 }
 
 export interface ResponseValidate {
   ok: boolean;
+}
+
+export interface ILoginGoogleFbRequest {
+  token: string;
+  lat?: number;
+  lng?: number;
 }
 
 @Injectable({
@@ -70,30 +77,28 @@ export class AuthService {
 
   register(userInfo: IUser): Observable<void> {
     return this.http.post<any>(`${this.BASE_URL}/register`, userInfo )
+      .pipe(map(resp => resp)
+      );
+  }
+
+  loginGoogle(peticion: ILoginGoogleFbRequest): Observable<void> {
+    return this.http.post<ResponseLogin>(`${this.BASE_URL}/google`, peticion)
       .pipe(map(resp => {
+        localStorage.setItem(environment.TOKEN, resp.accessToken);
+        this.logged = true;
+        this.loginChange$.emit(true);
       }
       ));
   }
 
-  // loginGoogle(peticion: ILoginGoogleFbRequest): Observable<void> {
-  //   return this.http.post<ResponseLogin>(`${this.BASE_URL}/google`, peticion)
-  //     .pipe(map(resp => {
-  //       localStorage.setItem(environment.TOKEN, resp.accessToken);
-  //       this.logged = true;
-  //       this.loginChange$.emit(true);
-  //     }
-  //     ));
-  // }
-
-  // loginFacebook(peticion: ILoginGoogleFbRequest): Observable<void> {
-  //   return this.http.post<ResponseLogin>(`${this.BASE_URL}/facebook`, peticion)
-  //     .pipe(map(resp => {
-  //       localStorage.setItem(environment.TOKEN, resp.accessToken);
-  //       this.logged = true;
-  //       this.loginChange$.emit(true);
-  //     }
-  //     ));
-  // }
-
+  loginFacebook(peticion: ILoginGoogleFbRequest): Observable<void> {
+    return this.http.post<ResponseLogin>(`${this.BASE_URL}/facebook`, peticion)
+      .pipe(map(resp => {
+        localStorage.setItem(environment.TOKEN, resp.accessToken);
+        this.logged = true;
+        this.loginChange$.emit(true);
+      }
+      ));
+  }
 
 }

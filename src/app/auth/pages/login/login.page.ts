@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
-import { NavController, AlertController, LoadingController } from '@ionic/angular';
+import { NavController, AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 // import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
@@ -24,6 +24,7 @@ export class LoginPage implements OnInit {
     private _authService: AuthService,
     private navCtrl: NavController,
     private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
     private geolocation: Geolocation,
     private loadingCtrl: LoadingController
   ) { }
@@ -52,6 +53,11 @@ export class LoginPage implements OnInit {
     this._authService.login(this.user).subscribe(
       async () => {
         await loading.dismiss();
+        ( await this.toastCtrl.create({
+          duration: 3000,
+          position: 'bottom',
+          message: 'Welcome!'
+        })).present();
         this.navCtrl.navigateForward(['/home']);
       },
       async error => {
