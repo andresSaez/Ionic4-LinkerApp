@@ -14,6 +14,8 @@ import * as fromActions from '../../../store/actions';
 export class SettingsLanguagePage implements OnInit, OnDestroy {
   settings: ISettings;
 
+  lang = 'ENG';
+
   subscription: Subscription = new Subscription();
 
   constructor(
@@ -24,7 +26,6 @@ export class SettingsLanguagePage implements OnInit, OnDestroy {
     this.subscription = this.store.select('settings').subscribe(
       settingsState => {
         this.settings = settingsState.settings;
-        console.log(this.settings);
       }
     );
   }
@@ -34,10 +35,10 @@ export class SettingsLanguagePage implements OnInit, OnDestroy {
   }
 
   changeSettings() {
-    const newSettings: ISettings = {...this.settings, language: LanguageOptions.SPA };
-
-    let action = new fromActions.SetSettings(newSettings);
-    this.store.dispatch( action);
+    console.log(this.settings.language);
+    console.log('object');
+    // const newSettings: ISettings = {...this.settings};
+    // this.store.dispatch( new fromActions.SetSettings(newSettings) );
   }
 
 }
