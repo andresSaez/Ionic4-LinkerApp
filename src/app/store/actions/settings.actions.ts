@@ -5,6 +5,7 @@ export const LOAD_SETTINGS = '[Settings] Load settings';
 export const LOAD_SETTINGS_FAIL = '[Settings] Load settings FAIL';
 export const LOAD_SETTINGS_SUCCESS = '[Settings] Load settings SUCCESS';
 export const LOAD_SETTINGS_MINE = '[Settings] Load settings mine';
+export const SET_SETTINGS = '[Settings] Set settings';
 
 export class LoadSettingsMine implements Action {
     readonly type = LOAD_SETTINGS_MINE;
@@ -28,7 +29,14 @@ export class LoadSettingsSuccess implements Action {
     constructor( public settings: ISettings ) {}
 }
 
+export class SetSettings implements Action {
+    readonly type = SET_SETTINGS;
+
+    constructor( public settings: ISettings ) {}
+}
+
 export type settingsActions = LoadSettingsMine |
                             LoadSettings |
                             LoadSettingsFail |
-                            LoadSettingsSuccess;
+                            LoadSettingsSuccess |
+                            SetSettings;

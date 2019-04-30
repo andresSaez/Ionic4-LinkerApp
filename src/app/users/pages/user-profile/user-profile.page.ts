@@ -19,7 +19,7 @@ export class UserProfilePage implements OnInit {
 
   user: IUser;
   newAvatarTemp: string;
-
+  andres: IUser;
   constructor(
     private route: ActivatedRoute,
     private actionSheetCtrl: ActionSheetController,
@@ -35,6 +35,12 @@ export class UserProfilePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this._usersService.getMyProfile().subscribe(
+    //   user => { this.andres = user;
+    //     console.log(this.andres);
+    //   }
+    // );
+
     this.user = this.route.snapshot.data.user;
     /** Esto va fuera cuando tenga los servicios implementados*/
     this.user = {

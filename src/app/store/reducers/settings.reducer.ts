@@ -5,7 +5,7 @@ export interface SettingsState {
     settings: ISettings;
     loaded: boolean;
     loading: boolean;
-    error: boolean;
+    error: any;
 }
 
 const initialState: SettingsState = {
@@ -18,6 +18,46 @@ const initialState: SettingsState = {
 export function settingsReducer( state = initialState, action: fromSettings.settingsActions ): SettingsState {
 
     switch ( action.type ) {
+
+        case fromSettings.LOAD_SETTINGS:
+            return {
+                ...state,
+                loading: true,
+                error: null
+            };
+
+        case fromSettings.LOAD_SETTINGS_MINE:
+        return {
+            ...state,
+            loading: true,
+            error: null
+        };
+
+        case fromSettings.LOAD_SETTINGS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                loaded: true,
+                settings: {...action.settings}
+            };
+
+        case fromSettings.LOAD_SETTINGS_FAIL:
+            return {
+                ...state,
+                loaded: false,
+                loading: false,
+                error: {
+                    status: action.payload.status,
+                    message: action.payload.message,
+                    url: action.payload.url
+                }
+            };
+
+        case fromSettings.SET_SETTINGS:
+            return {
+                ...state,
+                settings: {...action.settings}
+            };
 
         default:
             return state;

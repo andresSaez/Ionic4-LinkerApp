@@ -17,6 +17,14 @@ export class UsersService {
     private http: HttpClient
   ) { }
 
+  getUsers(): Observable<IUser[]> {
+    return this.http.get<{users: IUser[]}>(this.BASE_URL)
+      .pipe(map(resp => resp.users.map(r => {
+        r.avatar = environment.baseUrl + '/' + r.avatar;
+        return r;
+      })));
+  }
+
   getMyProfile(): Observable<IUser> {
     return this.http.get<{user: IUser}>(`${this.BASE_URL}/me`)
       .pipe(map(resp => {
@@ -35,8 +43,35 @@ export class UsersService {
       }));
   }
 
-  saveProfile(user: IUser): Observable<boolean> {
-    return this.http.put<{ ok: boolean }>(`${this.BASE_URL}/me`, user )
+  getMyFriends(): Observable<IUser[]> {
+    return this.http.get<{result: IUser[]}>(`${this.BASE_URL}/me/friends`)
+      .pipe(map(resp => resp.result.map( r => {
+        r.avatar = environment.baseUrl + '/' + r.avatar;
+        return r;
+      })));
+  }
+
+  getSettingsMine(): Observable<ISettings> {
+    return this.http.get<{result: ISettings}>(`${this.BASE_URL}/me/settings`)
+      .pipe(map(resp => {
+        const s = resp.result;
+        return s;
+      }));
+  }
+
+  /**
+   * ESTE SERVICIO NO ESTÁ IMPLEMENTADO TODAVÍA
+   */
+  getUserSettings( id: string ): Observable<ISettings> {
+    return this.http.get<{settings: ISettings}>(`${this.BASE_URL}/${id}/settings`)
+      .pipe(map(resp => {
+        const s = resp.settings;
+        return s;
+      }));
+  }
+
+  saveProfile(user: IUser): Observable<Boolean> {
+    return this.http.put<{ ok: Boolean }>(`${this.BASE_URL}/me`, user )
     .pipe(map(resp => {
       return resp.ok;
      }));
@@ -56,29 +91,23 @@ export class UsersService {
       }));
   }
 
-  addFriend( user: IUser ): Observable<IUser> {
-    return this.http.post<{ user: IUser }>(`${this.BASE_URL}/me/friends`, user )
+  saveSettings( settings: ISettings ): Observable<ISettings> {
+    return this.http.put<{result: ISettings}>(`${this.BASE_URL}/me/settings`, settings )
       .pipe(map(resp => {
-        const u = resp.user;
-        u.avatar = environment.baseUrl + '/' + u.avatar;
-        return u;
+        return resp.result;
       }));
   }
 
-  getSettingsMine(): Observable<ISettings> {
-    return this.http.get<{settings: ISettings}>(`${this.BASE_URL}/me/settings`)
+  addFriend( user: IUser ): Observable<Boolean> {
+    return this.http.put<{ ok: Boolean }>(`${this.BASE_URL}/me/friends`, user )
       .pipe(map(resp => {
-        const s = resp.settings;
-        return s;
+        return resp.ok;
       }));
   }
 
-  getUserSettings( id: string ): Observable<ISettings> {
-    return this.http.get<{settings: ISettings}>(`${this.BASE_URL}/${id}/settings`)
-      .pipe(map(resp => {
-        const s = resp.settings;
-        return s;
-      }));
+  deleteAccount(): Observable<Boolean> {
+    return this.http.delete<{ ok: Boolean}>(`${this.BASE_URL}/me`)
+      .pipe(map(resp => resp.ok));
   }
 
 }

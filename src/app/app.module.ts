@@ -56,11 +56,11 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthTokenInterceptor,
-    //   multi: true,
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: BaseUrlInterceptor,

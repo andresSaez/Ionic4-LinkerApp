@@ -7,6 +7,9 @@ import { myEnterAnimation } from './animations/modal-animations/enter';
 import { myLeaveAnimation } from './animations/modal-animations/leave';
 import { ShowImageComponent } from './shared/modals/show-image/show-image.component';
 import { AuthService } from './services/auth-service/auth.service';
+import { Store } from '@ngrx/store';
+import { AppState } from './store/app.reducer';
+import * as fromActions from './store/actions';
 
 @Component({
   selector: 'app-root',
@@ -44,8 +47,20 @@ export class AppComponent {
     private modalCtrl: ModalController,
     private _authService: AuthService,
     private nav: NavController,
+    private store: Store<AppState>
   ) {
     this.initializeApp();
+    this._authService.loginChange$.subscribe(
+      loggued => {
+
+        this.menuDisabled = !loggued;
+
+        if (loggued) {
+          this.store.dispatch( new fromActions.LoadLogguedUser() );
+          this.store.dispatch( new fromActions.LoadSettingsMine() );
+        }
+      }
+    );
   }
 
   initializeApp() {

@@ -5,7 +5,7 @@ export interface UserState {
     user: IUser;
     loaded: boolean;
     loading: boolean;
-    error: boolean;
+    error: any;
 }
 
 const initialState: UserState = {
@@ -18,6 +18,40 @@ const initialState: UserState = {
 export function userReducer( state = initialState, action: fromUser.userActions ): UserState {
 
     switch ( action.type ) {
+
+        case fromUser.LOAD_USER:
+            return {
+                ...state,
+                loading: true,
+                error: null
+            };
+
+        case fromUser.LOAD_LOGGUED_USER:
+        return {
+            ...state,
+            loading: true,
+            error: null
+        };
+
+        case fromUser.LOAD_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                loaded: true,
+                user: {...action.user}
+            };
+
+        case fromUser.LOAD_USER_FAIL:
+            return {
+                ...state,
+                loaded: false,
+                loading: false,
+                error: {
+                    status: action.payload.status,
+                    message: action.payload.message,
+                    url: action.payload.url
+                }
+            };
 
         default:
             return state;

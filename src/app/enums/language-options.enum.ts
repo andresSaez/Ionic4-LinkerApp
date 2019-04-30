@@ -1,4 +1,4 @@
 export enum LanguageOptions {
-    SPA,
-    ENG
+    SPA = 'SPA',
+    ENG = 'ENG'
 }
