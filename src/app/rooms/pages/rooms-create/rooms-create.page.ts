@@ -5,6 +5,11 @@ import { SelectLocationComponent } from 'src/app/shared/modals/select-location/s
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { RoomService } from 'src/app/services/room-service/room.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.reducer';
+import * as fromActions from '../../../store/actions';
+
 
 @Component({
   selector: 'app-rooms-create',
@@ -14,7 +19,10 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 export class RoomsCreatePage implements OnInit {
 
   newRoom: IRoom;
-  logguedUser: IUser;
+  logguedUser: IUser = {
+    lat: 0,
+    lng: 0
+  };
   hastag = '';
   hastagList: string[] = [];
 
@@ -26,13 +34,14 @@ export class RoomsCreatePage implements OnInit {
     private toastCtrl: ToastController,
     private _roomService: RoomService,
     private camera: Camera,
-    private loadingCtrl: LoadingController
+    private geolocation: Geolocation,
+    private loadingCtrl: LoadingController,
+    private store: Store<AppState>
   ) { }
 
   ngOnInit() {
-    // primero recupero el usuario logueado 'logguedUser' del store
+    this.geolocate();
     this.resetForm();
-    console.log(this.newRoom);
   }
 
   async submitCreateRoomForm() {
@@ -43,7 +52,6 @@ export class RoomsCreatePage implements OnInit {
 
     await loading.present();
 
-    // this.newRoom.creator = this.logguedUser;
     this._roomService.newRoom( this.newRoom )
       .subscribe(
         async () => {
@@ -53,6 +61,7 @@ export class RoomsCreatePage implements OnInit {
             position: 'bottom',
             message: 'Room created!'
           })).present();
+          this.store.dispatch( new fromActions.LoadRoomsMine() );
           this.navCtrl.navigateBack(['/home/rooms']);
         },
         async (error) => {
@@ -166,5 +175,13 @@ export class RoomsCreatePage implements OnInit {
     this.newRoom.image = 'data:image/jpeg;base64,' + imageData;
   }
 
+  geolocate() {
+    this.geolocation.getCurrentPosition().then((data) => {
+      this.logguedUser.lat = data.coords.latitude;
+      this.logguedUser.lng = data.coords.longitude;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+  }
 
 }

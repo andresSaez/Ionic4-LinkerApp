@@ -7,10 +7,9 @@
         </ion-fab-button>
     </ion-fab>
 
-    <ion-list class="list-group">
+    <ion-list class="list-group" *ngIf="myRooms.length">
 
-        <app-contact-item [group]="true" [sliding]="true"></app-contact-item>
-        <app-contact-item [group]="true" [sliding]="true"></app-contact-item>
+        <app-contact-item [group]="true" [sliding]="true" *ngFor="let room of myRooms" [room]="room"></app-contact-item>
 
     </ion-list>
 

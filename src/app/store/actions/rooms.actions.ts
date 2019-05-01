@@ -5,6 +5,9 @@ export const LOAD_ROOMS = '[Rooms] Load rooms';
 export const LOAD_ROOMS_FAIL = '[Rooms] Load rooms FAIL';
 export const LOAD_ROOMS_SUCCESS = '[Rooms] Load rooms SUCCESS';
 export const LOAD_ROOMS_MINE = '[Rooms] Load rooms';
+export const UNSET_ALL_ROOMS = '[Rooms] Unset all rooms';
+export const SET_ROOM = '[Rooms] Set room';
+export const UNSET_ROOM = '[Rooms] Unset room';
 
 export class LoadRoomsMine implements Action {
     readonly type = LOAD_ROOMS_MINE;
@@ -26,7 +29,26 @@ export class LoadRoomsSuccess implements Action {
     constructor( public rooms: IRoom[] ) {}
 }
 
+export class UnsetAllRooms implements Action {
+    readonly type = UNSET_ALL_ROOMS;
+}
+
+export class SetRoom implements Action {
+    readonly type = SET_ROOM;
+
+    constructor(public room: IRoom) {}
+}
+
+export class UnsetRoom implements Action {
+    readonly type = UNSET_ROOM;
+
+    constructor(public id: any) {}
+}
+
 export type roomsActions = LoadRoomsMine |
                         LoadRooms |
                         LoadRoomsFail |
-                        LoadRoomsSuccess;
+                        LoadRoomsSuccess |
+                        UnsetAllRooms |
+                        SetRoom |
+                        UnsetRoom;

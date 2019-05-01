@@ -81,6 +81,7 @@ export class AuthService {
     await this.storage.remove(environment.TOKEN);
     this.store.dispatch(new fromActions.UnsetSettings());
     this.store.dispatch(new fromActions.UnsetUser());
+    this.store.dispatch(new fromActions.UnsetAllRooms());
     this.setLogged(false);
   }
 

@@ -58,6 +58,7 @@ export class AppComponent {
         if (loggued) {
           this.store.dispatch( new fromActions.LoadLogguedUser() );
           this.store.dispatch( new fromActions.LoadSettingsMine() );
+          this.store.dispatch( new fromActions.LoadRoomsMine() );
         }
       }
     );

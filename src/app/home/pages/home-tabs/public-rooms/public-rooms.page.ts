@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { IRoom } from 'src/app/interfaces/i-room.interface';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.reducer';
 
 @Component({
   selector: 'app-public-rooms',
@@ -7,9 +11,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PublicRoomsPage implements OnInit {
 
-  constructor() { }
+  myRooms: IRoom[];
+  subscription: Subscription = new Subscription();
+
+  constructor(
+    private store: Store<AppState>
+  ) { }
 
   ngOnInit() {
+    this.subscription = this.store.select('rooms').subscribe(
+      roomsState => {
+        this.myRooms = roomsState.rooms;
+      }
+    );
   }
 
 }

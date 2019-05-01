@@ -24,7 +24,7 @@
         <ion-item color="dark">
           <ion-label position="inset" *ngIf="latModel.invalid || lngModel.invalid">Locate on the map</ion-label>
           <ion-input type="text" hidden name="lat" [(ngModel)]="newRoom.lat" #latModel="ngModel" required></ion-input>
-          <ion-input type="text" hidden name="lat" [(ngModel)]="newRoom.lng" #lngModel="ngModel" required></ion-input>
+          <ion-input type="text" hidden name="lng" [(ngModel)]="newRoom.lng" #lngModel="ngModel" required></ion-input>
           <ion-button size="default" color="success" (click)="openSelectLocation()" slot="start">
               <ion-icon name="pin"></ion-icon>
           </ion-button>
