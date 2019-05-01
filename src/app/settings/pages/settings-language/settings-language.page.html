@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content color="dark">
-  <ion-radio-group  lines="none" *ngIf="settings">
+  <ion-radio-group  lines="none" *ngIf="settings" [(ngModel)]="settings.language" name="language" (ionChange)="changeSettings($event)">
     <ion-item color="dark" lines="none">
       <ion-text color="secondary">
         Select language
@@ -21,7 +21,7 @@
       <ion-label>
         Spanish
       </ion-label>
-      <ion-radio slot="end" mode="md" color="success" value="SPA" name="language" [ngModel]="lang" (change)="changeSettings()"></ion-radio>
+      <ion-radio slot="end" mode="md" color="success" value="SPA"></ion-radio>
     </ion-item>
 
     <ion-item color="medium">
@@ -31,7 +31,7 @@
       <ion-label>
         English
       </ion-label>
-      <ion-radio slot="end" mode="md" color="success" value="ENG" name="language" [ngModel]="lang" (change)="changeSettings()"></ion-radio>
+      <ion-radio slot="end" mode="md" color="success" value="ENG"></ion-radio>
     </ion-item>
   
   </ion-radio-group>

@@ -53,6 +53,15 @@ export function userReducer( state = initialState, action: fromUser.userActions 
                 }
             };
 
+        case fromUser.UNSET_USER:
+            return {
+                ...state,
+                loaded: false,
+                loading: false,
+                error: null,
+                user: null
+            };
+
         default:
             return state;
     }

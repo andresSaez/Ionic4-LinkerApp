@@ -59,6 +59,15 @@ export function settingsReducer( state = initialState, action: fromSettings.sett
                 settings: {...action.settings}
             };
 
+        case fromSettings.UNSET_SETTINGS:
+            return {
+                ...state,
+                settings: null,
+                loaded: false,
+                loading: false,
+                error: null
+            };
+
         default:
             return state;
     }

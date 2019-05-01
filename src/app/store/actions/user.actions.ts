@@ -5,6 +5,7 @@ export const LOAD_USER = '[User] Load user';
 export const LOAD_USER_FAIL = '[User] Load user FAIL';
 export const LOAD_USER_SUCCESS = '[User] Load user SUCCESS';
 export const LOAD_LOGGUED_USER = '[User] Load loggued user';
+export const UNSET_USER = '[User] Unset loggued user';
 
 export class LoadLogguedUser implements Action {
     readonly type = LOAD_LOGGUED_USER;
@@ -28,7 +29,12 @@ export class LoadUserSuccess implements Action {
     constructor( public user: IUser ) {}
 }
 
+export class UnsetUser implements Action {
+    readonly type = UNSET_USER;
+}
+
 export type userActions = LoadLogguedUser |
                         LoadUser |
                         LoadUserFail |
-                        LoadUserSuccess;
+                        LoadUserSuccess |
+                        UnsetUser;
