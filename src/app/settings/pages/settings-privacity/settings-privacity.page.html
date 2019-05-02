@@ -9,7 +9,7 @@
   
   <ion-content color="dark">
 
-    <ion-item-group>
+    <ion-item-group *ngIf="settings">
       <ion-item color="dark">
         <ion-text color="secondary">
           Privacity options
@@ -20,28 +20,28 @@
         <ion-label>
           Blocked users
         </ion-label>
-        <ion-badge color="tertiary" slot="end" class="users">2</ion-badge>
+        <ion-badge color="tertiary" slot="end" class="users">{{ settings.privacity.blockedusers.length }}</ion-badge>
       </ion-item>
 
       <ion-item color="medium" [routerLink]="['/settings/privacity/last-connection']" detail="false">
         <ion-label>
           Last connection 
         </ion-label>
-        <ion-text slot="end" color="secondary">All</ion-text>
+        <ion-text slot="end" color="secondary">{{ settings.privacity.lastconnection }}</ion-text>
       </ion-item>
 
       <ion-item color="medium" [routerLink]="['/settings/privacity/profile-photo']" detail="false">
         <ion-label>
           Profile photo 
         </ion-label>
-        <ion-text slot="end" color="secondary">All</ion-text>
+        <ion-text slot="end" color="secondary">{{ settings.privacity.profilephoto }}</ion-text>
       </ion-item>
 
       <ion-item color="medium" [routerLink]="['/settings/privacity/profile-data']" detail="false">
         <ion-label>
           Profile data 
         </ion-label>
-        <ion-text slot="end" color="secondary">All</ion-text>
+        <ion-text slot="end" color="secondary">{{ settings.privacity.profiledata.show }}</ion-text>
       </ion-item>
 
     </ion-item-group>

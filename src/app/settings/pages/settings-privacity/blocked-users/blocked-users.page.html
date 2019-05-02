@@ -12,13 +12,13 @@
   
 <ion-content color="dark" padding>
 
-  <ion-list class="list-group">
+  <ion-list class="list-group" *ngIf="settings && settings.privacity.blockedusers.length">
 
-      <app-user-item (click)="openAlert()"></app-user-item>
+      <app-user-item (click)="openAlert(blockeduser)" *ngFor="let blockeduser of settings.privacity.blockedusers" [user]="blockeduser"></app-user-item>
 
   </ion-list>
 
-  <div class="text-center">
+  <div class="text-center" *ngIf="settings && settings.privacity.blockedusers.length === 0">
     <ion-text color="medium">
       <p>No users blocked</p>
     </ion-text>

@@ -78,4 +78,12 @@ export class RoomService {
       }));
   }
 
+  leaveRoom( id: string ): Observable<void> {
+    return this.http.put<{result: any}>(`${this.BASE_URL}/${id}/delete-member`, {})
+      .pipe(map(resp => {
+        const r = resp.result;
+        return r;
+      }));
+  }
+
 }

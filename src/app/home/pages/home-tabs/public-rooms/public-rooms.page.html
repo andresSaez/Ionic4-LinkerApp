@@ -7,9 +7,9 @@
         </ion-fab-button>
     </ion-fab>
 
-    <ion-list class="list-group" *ngIf="myRooms.length">
+    <ion-list class="list-group" *ngIf="loaded">
 
-        <app-contact-item [group]="true" [sliding]="true" *ngFor="let room of myRooms" [room]="room"></app-contact-item>
+        <app-contact-item [group]="true" [sliding]="true" *ngFor="let room of myRooms" [room]="room" (deleted)="delete(room)"></app-contact-item>
 
     </ion-list>
 

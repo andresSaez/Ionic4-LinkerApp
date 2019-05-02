@@ -1,9 +1,9 @@
 import { PrivacityOptions } from '../enums/privacity-options.enum';
 import { LanguageOptions } from '../enums/language-options.enum';
+import { IUser } from './i-user.interface';
 
 export interface ISettings {
     id?: string;
-    userid?: string;
     privacity?: IPrivacitySettings;
     notifications?: INotificationsSettings;
     language?: LanguageOptions;

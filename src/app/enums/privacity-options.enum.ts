@@ -1,5 +1,5 @@
 export enum PrivacityOptions {
-    ALL,
-    CONTACTS,
-    ANYONE
+    ALL = 'ALL',
+    CONTACTS = 'CONTACTS',
+    ANYONE = 'ANYONE'
 }

@@ -10,13 +10,23 @@
   <ion-content color="dark">
   
     <ion-toolbar color="primary">
-      <ion-searchbar showCancelButton color="light" mode="ios"></ion-searchbar>
+      <ion-searchbar showCancelButton color="light" mode="ios" (ionChange)="filterItems($event)"></ion-searchbar>
     </ion-toolbar>
   
     <div class="list-container">
-      <ion-list class="list-group">
-        <app-user-item (click)="selectUser()"></app-user-item>
+      <ion-list class="list-group" *ngIf="!loadingFail && filteredUsers.length">
+        <app-user-item (click)="selectUser(user)" *ngFor="let user of filteredUsers" [user]="user"></app-user-item>
       </ion-list>
+
+      <div class="text-center" *ngIf="loadingFail">
+        <ion-button color="medium" fill="clear" (click)="chargeUsers()" class="btn-refresh"><ion-icon slot="icon-only" name="refresh"></ion-icon></ion-button>
+      </div>
+
+      <div class="text-center" *ngIf="!filteredUsers.length && !loadingFail">
+        <ion-text color="medium">
+          <p>No users to show</p>
+        </ion-text>
+      </div>
     </div>
     
   

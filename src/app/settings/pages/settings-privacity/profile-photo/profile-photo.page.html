@@ -8,7 +8,7 @@
 </ion-header>
   
 <ion-content color="dark">
-  <ion-radio-group  lines="none">
+  <ion-radio-group  lines="none" *ngIf="settings" [(ngModel)]="settings.privacity.profilephoto" name="profilephoto" (ionChange)="changeSettings($event)">
     <ion-item color="dark" lines="none">
       <ion-text color="medium">
         <small>Who can see my profile picture?</small>
@@ -19,21 +19,21 @@
       <ion-label>
         All people
       </ion-label>
-      <ion-radio slot="end" mode="md" color="success"></ion-radio>
+      <ion-radio slot="end" mode="md" color="success" value="ALL"></ion-radio>
     </ion-item>
 
     <ion-item color="medium">
       <ion-label>
         My contacts
       </ion-label>
-      <ion-radio slot="end" mode="md" color="success"></ion-radio>
+      <ion-radio slot="end" mode="md" color="success" value="CONTACTS"></ion-radio>
     </ion-item>
 
     <ion-item color="medium">
       <ion-label>
         Anyone
       </ion-label>
-      <ion-radio slot="end" mode="md" color="success"></ion-radio>
+      <ion-radio slot="end" mode="md" color="success" value="ANYONE"></ion-radio>
     </ion-item>
 
   </ion-radio-group>

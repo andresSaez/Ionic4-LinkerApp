@@ -18,7 +18,7 @@
 
 <ng-template #slidingItem>
     <ion-item-sliding>
-        <ion-item color="dark" >
+        <ion-item color="dark">
             <ion-avatar slot="start">
             <img [src]="room.image">
             </ion-avatar>
@@ -27,7 +27,7 @@
                 <ion-text>
                     <h3>{{room.name}}</h3>
                 </ion-text>
-                <div *ngIf="room.chat.messages.length">
+                <div *ngIf="room && room.chat.messages.length">
                     <ion-text class="float-right" color="medium">
                         <small>{{ room.chat.lastmessage.date }}</small>
                     </ion-text>
@@ -42,7 +42,7 @@
         </ion-item>
 
         <ion-item-options side="end">
-            <ion-item-option color="danger">
+            <ion-item-option color="danger" (click)="deleteRoom()"> 
                 <ion-icon slot="icon-only" name="trash"></ion-icon>
             </ion-item-option>
         </ion-item-options>
