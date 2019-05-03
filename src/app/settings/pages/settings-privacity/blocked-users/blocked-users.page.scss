@@ -14,3 +14,17 @@ ion-list {
     padding-top: 0px;
     padding-bottom: 0px;
 }
+
+.text-center {
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    position: absolute;
+    bottom: 55%;
+    height: min-content;
+}
+
+.btn-refresh {
+    font-size: 40px;
+    height: max-content;
+}

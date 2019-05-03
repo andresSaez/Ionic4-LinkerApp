@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, LoadingController } from '@ionic/angular';
 import { ChooseUserComponent } from 'src/app/shared/modals/choose-user/choose-user.component';
 import { ISettings } from 'src/app/interfaces/i-settings.interface';
 import { Subscription } from 'rxjs';
@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.reducer';
 import * as fromActions from '../../../../store/actions';
 import { IUser } from 'src/app/interfaces/i-user.interface';
+import { UsersService } from 'src/app/services/users-service/users.service';
 
 @Component({
   selector: 'app-blocked-users',
@@ -15,16 +16,21 @@ import { IUser } from 'src/app/interfaces/i-user.interface';
 })
 export class BlockedUsersPage implements OnInit, OnDestroy {
   settings: ISettings;
-
+  blockedusers: IUser[] = [];
   subscription: Subscription = new Subscription();
+  loadingFail = false;
 
   constructor(
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private _usersService: UsersService,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
+    this.chargeBlockedUsers();
+
     this.subscription = this.store.select('settings').subscribe(
       settingsState => {
         this.settings = settingsState.settings;
@@ -37,12 +43,7 @@ export class BlockedUsersPage implements OnInit, OnDestroy {
   }
 
   changeSettings(value) {
-    const newSettings: ISettings = {...this.settings,
-                                    privacity: { ...this.settings.privacity,
-                                                  blockedusers: this.settings.privacity.blockedusers.map( (el: any) => el.id )
-                                              }
-                                  };
-    console.log(newSettings);
+    const newSettings: ISettings = {...this.settings};
     this.store.dispatch( new fromActions.SetSettings(newSettings) );
   }
 
@@ -56,9 +57,11 @@ export class BlockedUsersPage implements OnInit, OnDestroy {
 
     const result = await modal.onDidDismiss();
 
-    this.settings.privacity.blockedusers.push(result.data.user);
-    this.changeSettings({});
-    // this.changeSettings({});
+    if (result.data.user) {
+      this.blockedusers.push(result.data.user);
+      this.settings.privacity.blockedusers = this.blockedusers.map( (el: any) => el.id);
+      this.changeSettings({});
+    }
   }
 
   async openAlert( blockeduser: IUser ) {
@@ -82,8 +85,42 @@ export class BlockedUsersPage implements OnInit, OnDestroy {
     const result = await alert.onDidDismiss();
 
     if (result.role === 'ok') {
-      this.settings.privacity.blockedusers = this.settings.privacity.blockedusers.filter( (el: any) => el.id !== blockeduser.id );
+      this.blockedusers = this.blockedusers.filter( (el: any) => el.id !== blockeduser.id );
+      this.settings.privacity.blockedusers = this.blockedusers.map( (el: any) => el.id);
       this.changeSettings({});
     }
+  }
+
+  async chargeBlockedUsers() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
+
+    this._usersService.getBlockedUsers().subscribe(
+      async (resp) => {
+        this.loadingFail = false;
+        await loading.dismiss();
+        this.blockedusers = resp;
+      },
+      async (error) => {
+        await loading.dismiss();
+        (await this.alertCtrl.create({
+          header: 'Oops, something has gone wrong ...',
+          message: 'Please, try again',
+          buttons: [
+            {
+              text: 'Ok',
+              role: 'ok',
+              handler: () => {
+                this.loadingFail = true;
+              }
+            }
+          ]
+        })).present();
+      },
+      () => console.log('users loaded')
+    );
   }
 }

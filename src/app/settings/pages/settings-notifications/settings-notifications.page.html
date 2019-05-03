@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content color="dark">
-  <ion-item-group  lines="none">
+  <ion-item-group  lines="none" *ngIf="settings">
     <ion-item color="dark" lines="none">
       <ion-text color="secondary">
         Notifications for chats
@@ -21,10 +21,20 @@
           <h3>Private chats</h3>
         </ion-text>
         <ion-text color="light">
-          <p><small>Yes, 1 exception</small></p>
+          <p *ngIf="!settings.notifications.private.exceptions.length; else editedPrivate">
+            <small>Touch to change</small>
+          </p>
+          <ng-template #editedPrivate>
+              <p>
+                <small *ngIf="settings.notifications.private.active">Yes</small>
+                <small *ngIf="!settings.notifications.private.active">No</small>
+                <small>, {{ settings.notifications.private.exceptions.length }} exceptions</small>
+              </p>
+          </ng-template>
         </ion-text>
       </ion-label>
-      <ion-toggle slot="end" mode="md" color="success"></ion-toggle>
+      <ion-toggle slot="end" mode="md" color="success" name="privateNotifications" 
+        [(ngModel)]="settings.notifications.private.active" (ionChange)="changeSettings($event)"></ion-toggle>
     </ion-item>
 
     <ion-item color="medium" [routerLink]="['/settings/notifications/rooms']" detail="false">
@@ -33,10 +43,20 @@
           <h3>Rooms</h3>
         </ion-text>
         <ion-text color="light">
-          <p><small>Touch to change</small></p>
+          <p *ngIf="!settings.notifications.rooms.exceptions.length; else editedRoom">
+            <small>Touch to change</small>
+          </p>
+          <ng-template #editedRoom>
+              <p>
+                <small *ngIf="settings.notifications.rooms.active">Yes</small>
+                <small *ngIf="!settings.notifications.rooms.active">No</small>
+                <small>, {{ settings.notifications.rooms.exceptions.length }} exceptions</small>
+              </p>
+          </ng-template>
         </ion-text>
       </ion-label>
-      <ion-toggle slot="end" mode="md" color="success"></ion-toggle>
+      <ion-toggle slot="end" mode="md" color="success" name="roomNotifications" 
+        [(ngModel)]="settings.notifications.rooms.active" (ionChange)="changeSettings($event)"></ion-toggle>
     </ion-item>
 
   </ion-item-group>

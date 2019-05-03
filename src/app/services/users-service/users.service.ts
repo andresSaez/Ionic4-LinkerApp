@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ISettings } from 'src/app/interfaces/i-settings.interface';
+import { IRoom } from 'src/app/interfaces/i-room.interface';
+import { IPrivateRoom } from 'src/app/interfaces/i-private-room.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +43,29 @@ export class UsersService {
         u.avatar = environment.baseUrl + '/' + u.avatar;
         return u;
       }));
+  }
+
+  getBlockedUsers(): Observable<IUser[]> {
+    return this.http.get<{result: IUser[]}>(`${this.BASE_URL}/me/settings/blockedusers`)
+      .pipe(map( resp => resp.result.map( r => {
+        r.avatar = environment.baseUrl + '/' + r.avatar;
+        return r;
+      })));
+  }
+
+  getRoomExceptions(): Observable<IRoom[]> {
+    return this.http.get<{result: IRoom[]}>(`${this.BASE_URL}/me/settings/room-exceptions`)
+      .pipe(map( resp => resp.result.map( r => {
+        r.image = environment.baseUrl + '/' + r.image;
+        return r;
+      })));
+  }
+
+  getPrivateRoomExceptions(): Observable<IPrivateRoom[]> {
+    return this.http.get<{result: IPrivateRoom[]}>(`${this.BASE_URL}/me/settings/proom-exceptions`)
+      .pipe(map( resp => resp.result.map( r => {
+        return r;
+      })));
   }
 
   getMyFriends(): Observable<IUser[]> {
