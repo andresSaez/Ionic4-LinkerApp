@@ -61,9 +61,10 @@ export class UsersService {
       })));
   }
 
-  getPrivateRoomExceptions(): Observable<IPrivateRoom[]> {
-    return this.http.get<{result: IPrivateRoom[]}>(`${this.BASE_URL}/me/settings/proom-exceptions`)
+  getPrivateRoomExceptions(): Observable<IUser[]> {
+    return this.http.get<{result: IUser[]}>(`${this.BASE_URL}/me/settings/proom-exceptions`)
       .pipe(map( resp => resp.result.map( r => {
+        r.avatar = environment.baseUrl + '/' + r.avatar;
         return r;
       })));
   }

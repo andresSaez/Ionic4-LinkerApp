@@ -50,14 +50,14 @@ export class BlockedUsersPage implements OnInit, OnDestroy {
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: ChooseUserComponent,
-      componentProps: {}
+      componentProps: { contacts: false }
     });
 
     await modal.present();
 
     const result = await modal.onDidDismiss();
 
-    if (result.data.user) {
+    if (result.data) {
       this.blockedusers.push(result.data.user);
       this.settings.privacity.blockedusers = this.blockedusers.map( (el: any) => el.id);
       this.changeSettings({});

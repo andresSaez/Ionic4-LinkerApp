@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertController, ModalController, LoadingController } from '@ionic/angular';
-import { ChooseChatComponent } from 'src/app/shared/modals/choose-chat/choose-chat.component';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.reducer';
 import { ISettings } from 'src/app/interfaces/i-settings.interface';
@@ -8,6 +7,8 @@ import { Subscription } from 'rxjs';
 import * as fromActions from '../../../../store/actions';
 import { IPrivateRoom } from 'src/app/interfaces/i-private-room.interface';
 import { UsersService } from 'src/app/services/users-service/users.service';
+import { IUser } from 'src/app/interfaces/i-user.interface';
+import { ChooseUserComponent } from 'src/app/shared/modals/choose-user/choose-user.component';
 
 @Component({
   selector: 'app-private-notifications',
@@ -17,9 +18,10 @@ import { UsersService } from 'src/app/services/users-service/users.service';
 export class PrivateNotificationsPage implements OnInit, OnDestroy {
 
   settings: ISettings;
-  proomsExcepetions: IPrivateRoom[] = [];
+  proomsExcepetions: IUser[] = [];
   loadingFail = false;
   subscription: Subscription = new Subscription();
+  proomExceptionsIds: string[] = [];
 
   constructor(
     private alertCtrl: AlertController,
@@ -49,16 +51,17 @@ export class PrivateNotificationsPage implements OnInit, OnDestroy {
   }
 
   async openModal() {
+    this.getPRoomsExceptionsIds();
     const modal = await this.modalCtrl.create({
-      component: ChooseChatComponent,
-      componentProps: {}
+      component: ChooseUserComponent,
+      componentProps: {contacts: true, proomExceptionsIds: this.proomExceptionsIds }
     });
 
     await modal.present();
     const result = await modal.onDidDismiss();
 
-    if (result.data.room) {
-      this.proomsExcepetions.push(result.data.room);
+    if (result.data) {
+      this.proomsExcepetions.push(result.data.user);
       this.settings.notifications.private.exceptions = this.proomsExcepetions.map( (el: any) => el.id);
       this.changeSettings({});
     }
@@ -122,6 +125,10 @@ export class PrivateNotificationsPage implements OnInit, OnDestroy {
       },
       () => console.log('users loaded')
     );
+  }
+
+  private getPRoomsExceptionsIds() {
+    this.proomExceptionsIds = this.proomsExcepetions.map( (el: any) => el.id);
   }
 
 }

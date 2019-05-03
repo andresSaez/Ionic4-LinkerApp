@@ -9,17 +9,21 @@
   
   <ion-content color="dark">
 
-    <ion-item-group  lines="none">
-      <ion-item color="medium" [routerLink]="['/settings/notifications/private-chats']" detail="false">
+    <ion-item-group  lines="none" *ngIf="settings">
+      <ion-item color="medium" detail="false">
         <ion-label text-wrap>
           <ion-text>
             <h3>Private chats</h3>
           </ion-text>
           <ion-text color="light">
-            <p><small>Yes</small></p>
+            <p>
+              <small *ngIf="settings.notifications.private.active">Yes</small>
+              <small *ngIf="!settings.notifications.private.active">No</small>
+            </p>
           </ion-text>
         </ion-label>
-        <ion-toggle slot="end" mode="md" color="success"></ion-toggle>
+        <ion-toggle slot="end" mode="md" color="success" name="privateroomNotifications" 
+          [(ngModel)]="settings.notifications.private.active" (ionChange)="changeSettings($event)"></ion-toggle>
       </ion-item>
     </ion-item-group>
 
@@ -35,20 +39,34 @@
           </ion-label>
         </ion-item>
 
-        <ion-item color="medium" (click)="activateNotifications()">
-          <ion-avatar slot="start">
-            <img src="../../../../../assets/images/avatar.jpg">
-          </ion-avatar>
-          <ion-label text-wrap>
-            <ion-text>
-              <h3>User 1</h3>
-            </ion-text>
-            <ion-text color="light">
-              <p><small>Silenced</small></p>
-            </ion-text>
-          </ion-label>
-        </ion-item>
+        <div *ngIf="!loadingFail && proomsExcepetions.length">
+          <ion-item color="medium" (click)="activateNotifications( proomexception )" 
+            *ngFor="let proomexception of proomsExcepetions">
+            <ion-avatar slot="start">
+              <img [src]="proomexception.avatar">
+            </ion-avatar>
+            <ion-label text-wrap>
+              <ion-text>
+                <h3>{{ proomexception.nick }}</h3>
+              </ion-text>
+              <ion-text color="light">
+                <p><small>Silenced</small></p>
+              </ion-text>
+            </ion-label>
+          </ion-item>
+        </div>
+        
     </ion-list>
+
+    <div class="text-center" *ngIf="loadingFail">
+      <ion-button color="medium" fill="clear" (click)="chargePrivateRoomExceptions()" class="btn-refresh"><ion-icon slot="icon-only" name="refresh"></ion-icon></ion-button>
+    </div>
+
+    <div class="text-center" *ngIf="!loadingFail && proomsExcepetions.length === 0">
+      <ion-text color="medium">
+        <p>There are no exceptions</p>
+      </ion-text>
+    </div>
   
   </ion-content>
   

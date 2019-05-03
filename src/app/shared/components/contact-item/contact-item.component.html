@@ -1,19 +1,23 @@
 <ion-item color="dark" *ngIf="!sliding; else slidingItem">
     <ion-avatar slot="start">
-    <img src="../../../../../assets/images/avatar.jpg">
+    <img [src]="room.image">
     </ion-avatar>
     <ion-label text-wrap>
-    <ion-text>
-        <h3>User 1</h3>
-    </ion-text>
-    <ion-text class="float-right" color="medium">
-        <small>13 Feb 2019</small>
-    </ion-text>
-    <ion-text color="light">
-        <p><ion-text color="success"><small>Andres:</small></ion-text><small>Silenced</small></p>
-    </ion-text>
+        <ion-text>
+            <h3>{{ room.name }}</h3>
+        </ion-text>
+
+        <div *ngIf="room.chat.lastmessage.id !== null">
+            <ion-text class="float-right" color="medium">
+                <small>{{ room.chat.lastmessage.date }}</small>
+            </ion-text>
+            <ion-text color="light">
+                <p><ion-text color="success"><small>{{ room.chat.lastmessage.creator.nick }}:</small></ion-text><small> {{ room.chat.lastmessage.content.slice(0, 50)}}...</small></p>
+            </ion-text>
+        </div>
+        
     </ion-label>
-    <ion-badge *ngIf="group" color="tertiary" slot="end" class="users">22</ion-badge>
+    <ion-badge *ngIf="group" color="tertiary" slot="end" class="users">{{ room.members.length }}</ion-badge>
 </ion-item>
 
 <ng-template #slidingItem>
@@ -27,12 +31,12 @@
                 <ion-text>
                     <h3>{{room.name}}</h3>
                 </ion-text>
-                <div *ngIf="room && room.chat.messages.length">
+                <div *ngIf="room.chat.lastmessage.id !== null">
                     <ion-text class="float-right" color="medium">
                         <small>{{ room.chat.lastmessage.date }}</small>
                     </ion-text>
                     <ion-text color="light">
-                        <p><ion-text color="success"><small>{{ room.chat.lastmessage.creator.name }}</small></ion-text><small>{{ room.chat.lastmessage.content}}</small></p>
+                        <p><ion-text color="success"><small>{{ room.chat.lastmessage.creator.nick }}</small></ion-text><small>{{ room.chat.lastmessage.content.slice(0, 50)}}...</small></p>
                     </ion-text>
             </div>
             </ion-label>

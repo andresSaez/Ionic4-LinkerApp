@@ -10,7 +10,7 @@
   <ion-content color="dark">
 
     <ion-item-group  lines="none" *ngIf="settings">
-      <ion-item color="medium" [routerLink]="['/settings/notifications/private-chats']" detail="false">
+      <ion-item color="medium" detail="false">
         <ion-label text-wrap>
           <ion-text>
             <h3>Rooms</h3>
@@ -38,7 +38,7 @@
         </ion-item>
 
         <div *ngIf="!loadingFail && roomsExcepetions.length">
-          <ion-item color="medium" (click)="activateNotifications(roomexcpetion)" 
+          <ion-item color="medium" (click)="activateNotifications( roomexcpetion )" 
             *ngFor="let roomexcpetion of roomsExcepetions">
             <ion-avatar slot="start">
               <img [src]="roomexcpetion.image">
@@ -58,6 +58,12 @@
 
     <div class="text-center" *ngIf="loadingFail">
       <ion-button color="medium" fill="clear" (click)="chargeRoomExceptions()" class="btn-refresh"><ion-icon slot="icon-only" name="refresh"></ion-icon></ion-button>
+    </div>
+
+    <div class="text-center" *ngIf="!loadingFail && roomsExcepetions.length === 0">
+      <ion-text color="medium">
+        <p>There are no exceptions</p>
+      </ion-text>
     </div>
   
   </ion-content>

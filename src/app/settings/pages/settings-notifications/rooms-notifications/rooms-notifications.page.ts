@@ -20,6 +20,7 @@ export class RoomsNotificationsPage implements OnInit, OnDestroy {
   roomsExcepetions: IRoom[] = [];
   loadingFail = false;
   subscription: Subscription = new Subscription();
+  roomExceptionsIds: string[] = [];
 
   constructor(
     private alertCtrl: AlertController,
@@ -49,16 +50,17 @@ export class RoomsNotificationsPage implements OnInit, OnDestroy {
   }
 
   async openModal() {
+    this.getRoomsExceptionsIds();
     const modal = await this.modalCtrl.create({
       component: ChooseChatComponent,
-      componentProps: {}
+      componentProps: {roomExceptionsIds: this.roomExceptionsIds}
     });
 
     await modal.present();
 
     const result = await modal.onDidDismiss();
 
-    if (result.data.room) {
+    if (result.data) {
       this.roomsExcepetions.push(result.data.room);
       this.settings.notifications.rooms.exceptions = this.roomsExcepetions.map( (el: any) => el.id);
       this.changeSettings({});
@@ -123,6 +125,10 @@ export class RoomsNotificationsPage implements OnInit, OnDestroy {
       },
       () => console.log('users loaded')
     );
+  }
+
+  private getRoomsExceptionsIds() {
+    this.roomExceptionsIds = this.roomsExcepetions.map( (el: any) => el.id);
   }
 
 }

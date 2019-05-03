@@ -10,13 +10,24 @@
 <ion-content color="dark">
 
   <ion-toolbar color="primary">
-    <ion-searchbar showCancelButton color="light" mode="ios"></ion-searchbar>
+    <ion-searchbar showCancelButton color="light" mode="ios" (ionChange)="filterItems($event)"></ion-searchbar>
   </ion-toolbar>
 
   <div class="list-container">
-    <ion-list class="list-group">
-      <app-contact-item [group]="false" [sliding]="false" (click)="selectChat()"></app-contact-item>
+    <ion-list class="list-group" *ngIf="!loadingFail && filteredRooms.length">
+      <app-contact-item [group]="true" [sliding]="false" [room]="room"
+        (click)="selectRoom( room )" *ngFor="let room of filteredRooms"></app-contact-item>
     </ion-list>
+
+    <div class="text-center" *ngIf="loadingFail">
+      <ion-button color="medium" fill="clear" (click)="chargeRooms()" class="btn-refresh"><ion-icon slot="icon-only" name="refresh"></ion-icon></ion-button>
+    </div>
+
+    <div class="text-center" *ngIf="!filteredRooms.length && !loadingFail">
+      <ion-text color="medium">
+        <p>No rooms to show</p>
+      </ion-text>
+    </div>
   </div>
   
 
