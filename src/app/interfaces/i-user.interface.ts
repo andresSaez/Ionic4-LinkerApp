@@ -1,6 +1,7 @@
 import { IChat } from './i-chat.interface';
 import { IRoom } from './i-room.interface';
 import { IPrivateRoom } from './i-private-room.interface';
+import { ISettings } from './i-settings.interface';
 
 export interface IUser {
     id?: string;
@@ -18,8 +19,9 @@ export interface IUser {
     lastconnection?: string;
     me?: boolean;
     onesignalid?: string;
-    contacts?: IUser[];
-    chats?: IChat[];
-    rooms?: IRoom[];
-    privaterooms?: IPrivateRoom[];
+    contacts?: string[];
+    chats?: string[];
+    rooms?: string[];
+    privaterooms?: string[];
+    settings?: ISettings;
 }

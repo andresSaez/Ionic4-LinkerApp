@@ -16,7 +16,7 @@ export class ProfileResolverService implements Resolve<IUser> {
   ) { }
 
   resolve( route: ActivatedRouteSnapshot): Observable<IUser> {
-    if (route.params['id'] && !isNaN(route.params['id'])) {
+    if (route.params['id'] && isNaN(route.params['id'])) {
       return this._usersService.getUserProfile(route.params['id']).pipe(
         catchError(error => { this.router.navigate(['/home']);
           return of(null);

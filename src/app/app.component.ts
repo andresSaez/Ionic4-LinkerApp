@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform, ModalController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -10,13 +10,19 @@ import { AuthService } from './services/auth-service/auth.service';
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app.reducer';
 import * as fromActions from './store/actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   menuDisabled = true;
+  subscription: Subscription = new Subscription();
+  avatar = '';
+  loaded = false;
+  usersState: any;
+
   public appPages = [
     {
       title: 'Home',
@@ -64,6 +70,15 @@ export class AppComponent {
     );
   }
 
+  ngOnInit() {
+    this.subscription = this.store.select('user').subscribe(
+      userState => {
+        this.loaded = userState.loaded;
+        this.usersState = userState;
+      }
+    );
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -79,7 +94,7 @@ export class AppComponent {
   async showImage() {
     const modal = await this.modalCtrl.create({
       component: ShowImageComponent,
-      componentProps: {},
+      componentProps: { image: this.usersState.user.avatar },
       // cssClass: ['custom-modal', 'eliminate-account-modal'],
       showBackdrop: true,
       backdropDismiss: false,

@@ -53,6 +53,12 @@ export function userReducer( state = initialState, action: fromUser.userActions 
                 }
             };
 
+        case fromUser.SET_USER:
+        return {
+            ...state,
+            user: {...action.user}
+        };
+
         case fromUser.UNSET_USER:
             return {
                 ...state,

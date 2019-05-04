@@ -17,7 +17,7 @@ export class EliminateAccountComponent implements OnInit {
 
 
   eliminateAccount() {
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss({ok: true});
   }
   cancel() {
     this.modalCtrl.dismiss();

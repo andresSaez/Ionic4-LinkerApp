@@ -13,86 +13,156 @@
   
   <ion-content>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button color="secondary" class="edit" (click)="editProfile($event)" *ngIf="user.me">
-        <ion-icon name="create" mode="ios"></ion-icon>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="secondary" class="edit" (click)="editProfile($event)" *ngIf="user.me">
+          <ion-icon name="create" mode="ios"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+
+    <div *ngIf="user.me; else notme">
+
+      <div class="profile-header"></div>
+
+      <ion-avatar class="sidemenu-avatar">
+        <img [src]="user.avatar" (click)="showImage()">
+      </ion-avatar>
+      <ion-fab-button size="small" shape="round" fill="solid" color="light" class="camera" (click)="openActionSheet()">
+        <ion-icon name="camera"></ion-icon>
       </ion-fab-button>
-    </ion-fab>
-
-    <div class="profile-header">
-      
-    </div>
-    <ion-avatar class="sidemenu-avatar">
-      <img [src]="user.avatar" (click)="showImage()">
-    </ion-avatar>
-    <ion-fab-button *ngIf="user.me" size="small" shape="round" fill="solid" color="light" class="camera" (click)="openActionSheet()">
-      <ion-icon name="camera"></ion-icon>
-    </ion-fab-button>
-      
-  
-    <div class="profile-content">
-
-      <ion-text color="secondary">
-        <h1>{{ user.nick }}</h1>
-      </ion-text>
-
-      <ion-button color="light" class="linker-btn" size="small" mode="ios" *ngIf="!user.me && !user.friend"
-        (click)="addFriend()">
-        <ion-icon name="beer" slot="start"></ion-icon>
-        <ion-label>
-          Linker!
-        </ion-label>
-      </ion-button>
-
-      <p *ngIf="!user.me && user.friend">
-        <ion-badge>
-          <ion-label>
-            Friends
-          </ion-label>
-        </ion-badge>
-      </p>
-      
-      <ion-text>
-        <h3>Biography</h3>
-      </ion-text>
-
-      <p>
-          {{ user.biography }}
-      </p>
-
-      <ion-text>
-        <h3>Interests</h3>
-      </ion-text>
-
-      <div class="interest-container">
-          <ion-chip *ngFor="let interest of user.interests">
-            <ion-label>{{ interest }}</ion-label>
-            <ion-icon name="heart"></ion-icon>
-          </ion-chip>
-      </div>
-
-      <div class="personal-info-container">
-          <ion-text>
-            <h3>Personal information</h3>
-          </ion-text>
+        
     
-          <p>
-            <ion-text color="medium"><small>Email: </small></ion-text>
-          </p>
-          <p>
-            {{ user.email }}
-          </p>
-
-          <p>
-            <ion-text color="medium"><small>Name: </small></ion-text>
-          </p>
-          <p>
-            {{ user.name }}
-          </p>
-
-      </div>
+      <div class="profile-content">
+  
+        <ion-text color="secondary">
+          <h1>{{ user.nick }}</h1>
+        </ion-text>
+        
+        <ion-text>
+          <h3>Biography</h3>
+        </ion-text>
+  
+        <p>
+            {{ user.biography }}
+        </p>
+  
+        <ion-text>
+          <h3>Interests</h3>
+        </ion-text>
+  
+        <div class="interest-container">
+            <ion-chip *ngFor="let interest of user.interests">
+              <ion-label>{{ interest }}</ion-label>
+              <ion-icon name="heart"></ion-icon>
+            </ion-chip>
+        </div>
+  
+        <div class="personal-info-container">
+            <ion-text>
+              <h3>Personal information</h3>
+            </ion-text>
       
+            <p>
+              <ion-text color="medium"><small>Email: </small></ion-text>
+            </p>
+            <p>
+              {{ user.email }}
+            </p>
+  
+            <p>
+              <ion-text color="medium"><small>Name: </small></ion-text>
+            </p>
+            <p>
+              {{ user.name }}
+            </p>
+  
+        </div>
+        
+      </div>
+
     </div>
+
+    <ng-template #notme>
+
+        <div class="profile-header"></div>
+
+          <ion-avatar class="sidemenu-avatar">
+            <img [src]="user.avatar" (click)="showImage()">
+            <img src="../../../../assets/images/default-profile2.jpg" (click)="showImage()" *ngIf="user.settings.privacity.profilephoto === 'ANYONE' || ( user.settings.privacity.profilephoto === 'CONTACTS' && !user.friend )">
+          </ion-avatar>
+            
+          <div class="profile-content">
+      
+            <ion-text color="secondary">
+              <h1>{{ user.nick }}</h1>
+            </ion-text>
+      
+            <ion-button color="light" class="linker-btn" size="small" mode="ios" *ngIf="!user.friend"
+              (click)="addFriend()">
+              <ion-icon name="beer" slot="start"></ion-icon>
+              <ion-label>
+                Linker!
+              </ion-label>
+            </ion-button>
+      
+            <p *ngIf="user.friend">
+              <ion-badge>
+                <ion-label>
+                  Friends
+                </ion-label>
+              </ion-badge>
+            </p>
+            
+            <ion-text>
+              <h3>Biography</h3>
+            </ion-text>
+      
+            <p>
+                {{ user.biography }}
+            </p>
+      
+            <ion-text>
+              <h3>Interests</h3>
+            </ion-text>
+      
+            <div class="interest-container">
+                <ion-chip *ngFor="let interest of user.interests">
+                  <ion-label>{{ interest }}</ion-label>
+                  <ion-icon name="heart"></ion-icon>
+                </ion-chip>
+            </div>
+      
+            <div class="personal-info-container" *ngIf="user.settings.privacity.profiledata.show === 'ALL' || 
+              ( user.settings.privacity.profiledata.show === 'CONTACTS' && user.friend )">
+                <ion-text>
+                  <h3>Personal information</h3>
+                </ion-text>
+          
+                <p>
+                  <ion-text color="medium"><small>Email: </small></ion-text>
+                </p>
+                <p *ngIf="user.settings.privacity.profiledata.showemail; else notvisible">
+                  {{ user.email }}
+                </p>
+                <ng-template #notvisible>
+                  <p>
+                    <small>Not visible</small>
+                  </p>
+                </ng-template>
+      
+                <p>
+                  <ion-text color="medium"><small>Name: </small></ion-text>
+                </p>
+                <p *ngIf="user.settings.privacity.profiledata.showname; else notvisible">
+                  {{ user.name }}
+                </p>
+
+      
+            </div>
+            
+          </div>
+
+    </ng-template>
+    
   
   </ion-content>
   

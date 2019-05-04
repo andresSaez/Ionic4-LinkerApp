@@ -7,7 +7,8 @@
         </ion-toolbar>
       </ion-header>
       <ion-avatar class="sidemenu-avatar">
-        <img src="../assets/images/avatar.jpg" (click)="showImage()">
+        <img [src]="usersState.user.avatar" (click)="showImage()" *ngIf="loaded; else genericAvatar">
+        <ng-template #genericAvatar><img src="../assets/images/default-profile2.jpg" (click)="showImage()"></ng-template>
       </ion-avatar>
       <ion-content class="sidemenu-content">
         <ion-list>

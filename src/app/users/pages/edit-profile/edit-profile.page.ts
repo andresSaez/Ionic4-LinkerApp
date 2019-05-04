@@ -1,37 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, ToastController, AlertController, Events, LoadingController } from '@ionic/angular';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { UsersService } from 'src/app/services/users-service/users.service';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.reducer';
+import * as fromActions from '../../../store/actions';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.scss'],
 })
-export class EditProfilePage implements OnInit {
+export class EditProfilePage implements OnInit, OnDestroy {
 // Falta implementar CanDeactivate y controlar con un alert cuando falla el guardarPerfil
   user: IUser;
   skills = '';
   skillList: string[] = [];
+  subscription: Subscription = new Subscription();
+  userState: any;
 
   constructor(
+    private route: ActivatedRoute,
     private navCtrl: NavController,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private geolocation: Geolocation,
     private _usersService: UsersService,
     private events: Events,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private store: Store<AppState>,
   ) { }
 
   ngOnInit() {
     this.resetForm();
     this.geolocate();
-    this.events.subscribe('user', us => {
-      this.user = us;
-      console.log(this.user); // quitar
-    });
+    this.user = this.route.snapshot.data.user;
+
+    this.subscription = this.store.select('user').subscribe(
+      userState => {
+        this.userState = userState.user;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   async submitEditProfileForm() {
@@ -49,6 +65,7 @@ export class EditProfilePage implements OnInit {
           position: 'bottom',
           message: 'Profile updated!'
         })).present();
+        this.changeUserState({});
         this.navCtrl.navigateBack(['/users/profile']);
       },
       async (error) => {
@@ -94,6 +111,19 @@ export class EditProfilePage implements OnInit {
     };
 
     this.skills = '';
+  }
+
+  changeUserState(value) {
+    this.userState.nick = this.user.nick;
+    this.userState.name = this.user.name;
+    this.userState.email = this.user.email;
+    this.userState.interests = [...this.user.interests];
+    this.userState.biography = this.user.biography;
+    this.userState.lat = this.user.lat;
+    this.userState.lng = this.user.lng;
+
+    const newUserState: IUser = {...this.userState};
+    this.store.dispatch( new fromActions.SetUser(newUserState) );
   }
 
 }

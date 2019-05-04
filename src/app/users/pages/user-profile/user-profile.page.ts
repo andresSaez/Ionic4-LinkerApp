@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActionSheetController, ModalController,
   NavController, ToastController, Events, AlertController, LoadingController } from '@ionic/angular';
 import { ShowImageComponent } from 'src/app/shared/modals/show-image/show-image.component';
@@ -9,17 +9,23 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { UsersService } from 'src/app/services/users-service/users.service';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.reducer';
+import { Subscription } from 'rxjs';
+import * as fromActions from '../../../store/actions';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.page.html',
   styleUrls: ['./user-profile.page.scss'],
 })
-export class UserProfilePage implements OnInit {
+export class UserProfilePage implements OnInit, OnDestroy {
 
   user: IUser;
   newAvatarTemp: string;
-  andres: IUser;
+  userState: any;
+  subscription: Subscription = new Subscription();
+
   constructor(
     private route: ActivatedRoute,
     private actionSheetCtrl: ActionSheetController,
@@ -31,37 +37,31 @@ export class UserProfilePage implements OnInit {
     private camera: Camera,
     private _usersService: UsersService,
     private events: Events,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private store: Store<AppState>,
   ) { }
 
   ngOnInit() {
-    // this._usersService.getMyProfile().subscribe(
-    //   user => { this.andres = user;
-    //     console.log(this.andres);
-    //   }
-    // );
-
     this.user = this.route.snapshot.data.user;
-    /** Esto va fuera cuando tenga los servicios implementados*/
-    this.user = {
-      nick: 'Andres90',
-      biography: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-      interests: [ 'Beach', 'Gym', 'Movies' ],
-      name: 'Andrés Sáez Cases',
-      email: 'andsc@email.com',
-      avatar: '../assets/images/avatar.jpg',
-      friend: true,
-      me: true
-    };
-    ///////////////////////////////////////////////
+
+    this.subscription = this.store.select('user').subscribe(
+      userState => {
+        this.userState = userState.user;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   editProfile(event) {
-    this.events.publish('user', this.user); // ESTO NO FUNCIONA, MIRAR!!!!!
-    console.log('object', this.user);
     this.navCtrl.navigateForward(['/users/edit-profile']);
+  }
+
+  changeUserState(value) {
+    const newUserState: IUser = {...this.userState};
+    this.store.dispatch( new fromActions.SetUser(newUserState) );
   }
 
   async addFriend() {
@@ -81,6 +81,8 @@ export class UserProfilePage implements OnInit {
           message: `${this.user.nick} and you are friends`
         })).present();
         this.user.friend = true;
+        this.userState.contacts.push(this.user);
+        this.changeUserState({});
       },
        async (error) => {
         await loading.dismiss();
@@ -131,7 +133,7 @@ export class UserProfilePage implements OnInit {
   async showImage() {
     const modal = await this.modalCtrl.create({
       component: ShowImageComponent,
-      componentProps: {},
+      componentProps: { image: this.user.avatar },
       // cssClass: ['custom-modal', 'eliminate-account-modal'],
       showBackdrop: true,
       backdropDismiss: false,
@@ -190,6 +192,8 @@ export class UserProfilePage implements OnInit {
           message: 'Avatar changed!'
         })).present();
         this.user.avatar = this.newAvatarTemp;
+        this.userState.avatar = this.user.avatar;
+        this.changeUserState({});
         this.newAvatarTemp = '';
       },
       async (error) => {

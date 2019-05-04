@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -7,6 +7,8 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./show-image.component.scss'],
 })
 export class ShowImageComponent implements OnInit {
+
+  @Input() image: string;
 
   constructor(
     public modalCtrl: ModalController
