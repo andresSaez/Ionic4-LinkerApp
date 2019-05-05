@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IRoom } from 'src/app/interfaces/i-room.interface';
 import { ActionSheetController, ModalController, NavController, ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { SelectLocationComponent } from 'src/app/shared/modals/select-location/select-location.component';
@@ -9,6 +9,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.reducer';
 import * as fromActions from '../../../store/actions';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -16,7 +17,7 @@ import * as fromActions from '../../../store/actions';
   templateUrl: './rooms-create.page.html',
   styleUrls: ['./rooms-create.page.scss'],
 })
-export class RoomsCreatePage implements OnInit {
+export class RoomsCreatePage implements OnInit, OnDestroy {
 
   newRoom: IRoom;
   logguedUser: IUser = {
@@ -25,6 +26,8 @@ export class RoomsCreatePage implements OnInit {
   };
   hastag = '';
   hastagList: string[] = [];
+  subscription: Subscription = new Subscription();
+  userState: any;
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
@@ -42,6 +45,16 @@ export class RoomsCreatePage implements OnInit {
   ngOnInit() {
     this.geolocate();
     this.resetForm();
+
+    this.subscription = this.store.select('user').subscribe(
+      userState => {
+        this.userState = userState.user;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   async submitCreateRoomForm() {
@@ -54,14 +67,15 @@ export class RoomsCreatePage implements OnInit {
 
     this._roomService.newRoom( this.newRoom )
       .subscribe(
-        async () => {
+        async (resp) => {
           await loading.dismiss();
           (await this.toastCtrl.create({
             duration: 3000,
             position: 'bottom',
             message: 'Room created!'
           })).present();
-          this.store.dispatch( new fromActions.LoadRoomsMine() );
+          this.userState.rooms.push(resp.id);
+          this.changeUserState({});
           this.navCtrl.navigateBack(['/home/rooms']);
         },
         async (error) => {
@@ -182,6 +196,11 @@ export class RoomsCreatePage implements OnInit {
     }).catch((error) => {
       console.log('Error getting location', error);
     });
+  }
+
+  changeUserState(value) {
+    const newUserState: IUser = {...this.userState};
+    this.store.dispatch( new fromActions.SetUser(newUserState) );
   }
 
 }

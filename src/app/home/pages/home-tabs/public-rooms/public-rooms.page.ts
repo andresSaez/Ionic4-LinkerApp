@@ -4,6 +4,9 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.reducer';
 import * as fromActions from '../../../../store/actions';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { RoomService } from 'src/app/services/room-service/room.service';
+import { IUser } from 'src/app/interfaces/i-user.interface';
 
 @Component({
   selector: 'app-public-rooms',
@@ -12,29 +15,95 @@ import * as fromActions from '../../../../store/actions';
 })
 export class PublicRoomsPage implements OnInit, OnDestroy {
 
-  myRooms: IRoom[];
+  myRooms: IRoom[] = [];
+  userState: any;
   subscription: Subscription = new Subscription();
   loaded = false;
+  loadingFail = false;
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
+    private _roomService: RoomService
   ) { }
 
   ngOnInit() {
-    this.subscription = this.store.select('rooms').subscribe(
-      roomsState => {
-        this.myRooms = roomsState.rooms;
-        this.loaded = roomsState.loaded;
+    // this.chargeRooms();
+    this.subscription = this.store.select('user').subscribe(
+      userState => {
+        this.userState = userState.user;
       }
     );
+  }
+
+  ionViewWillEnter() {
+    this.chargeRooms();
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  delete( room: IRoom ) {
-    this.store.dispatch( new fromActions.UnsetRoom(room.id));
+  async delete( room: IRoom ) {
+    this._roomService.leaveRoom(room.id).subscribe(
+      () => {
+        this.myRooms = this.myRooms.filter( (el: any) => el.id !== room.id );
+        this.userState.rooms = this.myRooms.map( (el: any) => el.id);
+        this.changeUserState({});
+      },
+      async error => {
+        (await this.alertCtrl.create({
+          header: 'Oops, something has gone wrong ...',
+          message: 'Please, try again',
+          buttons: [
+            {
+              text: 'Ok',
+              role: 'ok'
+            }
+          ]
+        })).present();
+      }
+    );
+  }
+
+  async chargeRooms() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
+
+    this._roomService.getRoomsMine().subscribe(
+      async (resp) => {
+        this.loadingFail = false;
+        this.loaded = true;
+        await loading.dismiss();
+        this.myRooms = resp;
+      },
+      async (error) => {
+        await loading.dismiss();
+        (await this.alertCtrl.create({
+          header: 'Oops, something has gone wrong ...',
+          message: 'Please, try again',
+          buttons: [
+            {
+              text: 'Ok',
+              role: 'ok',
+              handler: () => {
+                this.loadingFail = true;
+              }
+            }
+          ]
+        })).present();
+      },
+      () => console.log('rooms loaded')
+    );
+  }
+
+  changeUserState(value) {
+    const newUserState: IUser = {...this.userState};
+    this.store.dispatch( new fromActions.SetUser(newUserState) );
   }
 
 }

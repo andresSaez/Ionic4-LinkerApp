@@ -18,20 +18,20 @@
     </div>
     
       <div class="list-container">
-        <ion-slides pager="true" [options]="slideOpts" class="slide-items">
+        <ion-slides pager="true" [options]="slideOpts" class="slide-items" *ngIf="loaded && filteredRooms.length">
           <ion-slide *ngFor="let room of filteredRooms">
             <app-room-slide-item [room]="room" (click)="openAlert( room )"></app-room-slide-item>
           </ion-slide>             
         </ion-slides>
 
         <div class="text-center" *ngIf="loadingFail">
-          <ion-button color="medium" fill="clear" (click)="getRooms()" class="btn-refresh"><ion-icon slot="icon-only" name="refresh"></ion-icon></ion-button>
+            <ion-button color="medium" fill="clear" (click)="getRooms()" class="btn-refresh"><ion-icon slot="icon-only" name="refresh"></ion-icon></ion-button>
         </div>
-
-        <div class="text-center" *ngIf="!filteredRooms.length && !loadingFail">
-          <ion-text color="medium">
-            <p>No rooms to show</p>
-          </ion-text>
+    
+        <div class="text-center" *ngIf="loaded && !filteredRooms.length && !loadingFail">
+            <ion-text color="medium">
+                <p>No rooms to show</p>
+            </ion-text>
         </div>
       </div>
   </div>

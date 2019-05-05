@@ -28,4 +28,20 @@ export class PrivateRoomService {
         return r;
       })));
   }
+
+  newPrivateRoom( room: IPrivateRoom ): Observable<IPrivateRoom> {
+    return this.http.post<{ result: IPrivateRoom }>( this.BASE_URL, room)
+      .pipe(map( resp => {
+        const r = resp.result;
+        return r;
+      }));
+  }
+
+  leavePrivateRoom( id: string ): Observable<void> {
+    return this.http.put<{result: any}>(`${this.BASE_URL}/${id}/delete-member`, {})
+      .pipe(map(resp => {
+        const r = resp.result;
+        return r;
+      }));
+  }
 }

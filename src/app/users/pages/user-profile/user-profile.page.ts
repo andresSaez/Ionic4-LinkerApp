@@ -51,6 +51,10 @@ export class UserProfilePage implements OnInit, OnDestroy {
     );
   }
 
+  ionViewWillEnter() {
+    this.user = this.route.snapshot.data.user;
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

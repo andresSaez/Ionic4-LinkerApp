@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController, LoadingController } from '@ionic/angular';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AlertController, NavController, LoadingController, ToastController } from '@ionic/angular';
 import { IRoom } from 'src/app/interfaces/i-room.interface';
 import { RoomService } from 'src/app/services/room-service/room.service';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.reducer';
+import { IUser } from 'src/app/interfaces/i-user.interface';
+import * as fromActions from '../../../store/actions';
 
 @Component({
   selector: 'app-rooms-home',
   templateUrl: './rooms-home.page.html',
   styleUrls: ['./rooms-home.page.scss'],
 })
-export class RoomsHomePage implements OnInit {
+export class RoomsHomePage implements OnInit, OnDestroy {
 
   slideOpts = {
     initialSlide: 1,
@@ -18,15 +23,34 @@ export class RoomsHomePage implements OnInit {
   rooms: IRoom[] = [];
   filteredRooms: IRoom[] = [];
   loadingFail = false;
+  subscription: Subscription = new Subscription();
+  userState: any;
+  loaded = false;
 
   constructor(
     private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
     private navCtrl: NavController,
     private loadingCtrl: LoadingController,
-    private _roomService: RoomService
+    private _roomService: RoomService,
+    private store: Store<AppState>
   ) { }
 
   ngOnInit() {
+    this.getRooms();
+
+    this.subscription = this.store.select('user').subscribe(
+      userState => {
+        this.userState = userState.user;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  ionViewWillEnter() {
     this.getRooms();
   }
 
@@ -41,9 +65,11 @@ export class RoomsHomePage implements OnInit {
       .subscribe(
         async (rooms) => {
           this.loadingFail = false;
+          this.loaded = true;
           await loading.dismiss();
           this.rooms = rooms;
           this.filteredRooms = rooms;
+          this.getCorrectedItems();
         },
         async (error) => {
           await loading.dismiss();
@@ -76,7 +102,8 @@ export class RoomsHomePage implements OnInit {
 
     if ( searchText && searchText.trim() !== '') {
       searchText = searchText.trim().toLowerCase();
-      this.filteredRooms = this.rooms.filter( r => r.name.toLowerCase().includes( searchText ));
+      this.filteredRooms = this.rooms.filter( r => r.name.toLowerCase().includes( searchText ) ||
+      r.description.toLowerCase().includes( searchText ) || r.hastags.includes( searchText ));
       await loading.dismiss();
     } else {
       await loading.dismiss();
@@ -106,9 +133,48 @@ export class RoomsHomePage implements OnInit {
     const result = await alert.onDidDismiss();
 
     if (result.role === 'ok') {
-      // DEBERIA METER EN EL SOTORE LA SALA QUE HE ELEGIDO Y NAVEGAR AL CHAT CORRESPONDIENTE
-      this.navCtrl.navigateForward(['/chat', room.id ]);
+      const loading = await this.loadingCtrl.create({
+        message: 'Please wait...',
+      });
+
+      await loading.present();
+
+      this._roomService.addMemberToRoom(room.id).subscribe(
+        async () => {
+          await loading.dismiss();
+          (await this.toastCtrl.create({
+            duration: 3000,
+            position: 'bottom',
+            message: `You have joined to ${room.name}`
+          })).present();
+          this.userState.rooms.push(room.id);
+          this.changeUserState({});
+          this.navCtrl.navigateForward(['/home/rooms']);
+        },
+        async (error) => {
+          await loading.dismiss();
+          (await this.alertCtrl.create({
+            header: 'Oops, something has gone wrong ...',
+            message: 'Please, try again',
+            buttons: [
+              {
+                text: 'Ok',
+                role: 'ok'
+              }
+            ]
+          })).present();
+        }
+      );
     }
+  }
+
+  changeUserState(value) {
+    const newUserState: IUser = {...this.userState};
+    this.store.dispatch( new fromActions.SetUser(newUserState) );
+  }
+
+  private getCorrectedItems() {
+    this.filteredRooms = this.filteredRooms.filter( (el: any) => !this.userState.rooms.includes(el.id));
   }
 
 }

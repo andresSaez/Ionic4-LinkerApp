@@ -7,11 +7,21 @@
         </ion-fab-button>
     </ion-fab>
 
-    <ion-list class="list-group">
+    <ion-list class="list-group" *ngIf="loaded && myRooms.length">
 
         <!-- <app-contact-item [group]="false" [sliding]="true" (click)="openChat()"></app-contact-item>
         <app-contact-item [group]="false" [sliding]="true"  (click)="openChat()"></app-contact-item> -->
 
     </ion-list>
+
+    <div class="text-center" *ngIf="loadingFail">
+        <ion-button color="medium" fill="clear" (click)="chargeRooms()" class="btn-refresh"><ion-icon slot="icon-only" name="refresh"></ion-icon></ion-button>
+    </div>
+
+    <div class="text-center" *ngIf="loaded && !myRooms.length && !loadingFail">
+        <ion-text color="medium">
+            <p>No conversations to show</p>
+        </ion-text>
+    </div>
 
 </ion-content>
