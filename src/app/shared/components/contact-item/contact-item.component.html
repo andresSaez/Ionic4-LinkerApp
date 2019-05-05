@@ -1,6 +1,6 @@
-<ion-item color="dark" *ngIf="!sliding; else slidingItem">
+<ion-item color="dark" *ngIf="!sliding && group">
     <ion-avatar slot="start">
-    <img [src]="room.image">
+    <img [src]="room.image" *ngIf="group">
     </ion-avatar>
     <ion-label text-wrap>
         <ion-text>
@@ -20,36 +20,54 @@
     <ion-badge *ngIf="group" color="tertiary" slot="end" class="users">{{ room.members.length }}</ion-badge>
 </ion-item>
 
-<ng-template #slidingItem>
-    <ion-item-sliding>
-        <ion-item color="dark">
-            <ion-avatar slot="start">
-            <img [src]="room.image">
-            </ion-avatar>
-            
-            <ion-label text-wrap>
-                <ion-text>
-                    <h3>{{room.name}}</h3>
-                </ion-text>
-                <div *ngIf="room.chat.lastmessage.id !== null">
-                    <ion-text class="float-right" color="medium">
-                        <small>{{ room.chat.lastmessage.date }}</small>
-                    </ion-text>
-                    <ion-text color="light">
-                        <p><ion-text color="success"><small>{{ room.chat.lastmessage.creator.nick }}</small></ion-text><small>{{ room.chat.lastmessage.content.slice(0, 50)}}...</small></p>
-                    </ion-text>
-            </div>
-            </ion-label>
-            
-            
-            <ion-badge *ngIf="group" color="tertiary" slot="end" class="users">{{ room.members.length }}</ion-badge>
-        </ion-item>
-
-        <ion-item-options side="end">
-            <ion-item-option color="danger" (click)="deleteRoom()"> 
-                <ion-icon slot="icon-only" name="trash"></ion-icon>
-            </ion-item-option>
-        </ion-item-options>
-    </ion-item-sliding>
+<ion-item-sliding *ngIf="sliding && group">
+    <ion-item color="dark">
+        <ion-avatar slot="start">
+        <img [src]="room.image">
+        </ion-avatar>
         
-</ng-template>
+        <ion-label text-wrap>
+            <ion-text>
+                <h3>{{room.name}}</h3>
+            </ion-text>
+            <div *ngIf="room.chat.lastmessage.id !== null">
+                <ion-text class="float-right" color="medium">
+                    <small>{{ room.chat.lastmessage.date }}</small>
+                </ion-text>
+                <ion-text color="light">
+                    <p><ion-text color="success"><small>{{ room.chat.lastmessage.creator.nick }}</small></ion-text><small>{{ room.chat.lastmessage.content.slice(0, 50)}}...</small></p>
+                </ion-text>
+        </div>
+        </ion-label>
+        
+        
+        <ion-badge *ngIf="group" color="tertiary" slot="end" class="users">{{ room.members.length }}</ion-badge>
+    </ion-item>
+
+    <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteRoom()"> 
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+    </ion-item-options>
+</ion-item-sliding>
+        
+<ion-item color="dark" *ngIf="!sliding && !group">
+    <ion-avatar slot="start">
+    <img [src]="privateRoom.addressee.avatar">
+    </ion-avatar>
+    <ion-label text-wrap>
+        <ion-text>
+            <h3>{{ privateRoom.addressee.nick }}</h3>
+        </ion-text>
+
+        <div *ngIf="privateRoom.chat.lastmessage.id !== null">
+            <ion-text class="float-right" color="medium">
+                <small>{{ privateRoom.chat.lastmessage.date }}</small>
+            </ion-text>
+            <ion-text color="light">
+                <p><ion-text color="success"><small>{{ privateRoom.chat.lastmessage.creator.nick }}:</small></ion-text><small> {{ privateRoom.chat.lastmessage.content.slice(0, 50)}}...</small></p>
+            </ion-text>
+        </div>
+        
+    </ion-label>
+</ion-item>

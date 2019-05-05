@@ -3,7 +3,7 @@
     <ion-menu [disabled]="menuDisabled">
       <ion-header class="sidemenu-header">
         <ion-toolbar color="dark" class="sidemenu-toolbar">
-          <ion-title>Andres</ion-title>
+          <ion-title *ngIf="loaded">{{ usersState.user.nick }}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-avatar class="sidemenu-avatar">

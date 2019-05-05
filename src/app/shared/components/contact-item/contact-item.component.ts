@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IRoom } from 'src/app/interfaces/i-room.interface';
+import { IPrivateRoom } from 'src/app/interfaces/i-private-room.interface';
 
 @Component({
   selector: 'app-contact-item',
@@ -11,6 +12,7 @@ export class ContactItemComponent implements OnInit {
   @Input() group: boolean;
   @Input() sliding: boolean;
   @Input() room: IRoom;
+  @Input() privateRoom: IPrivateRoom;
   @Output() deleted = new EventEmitter<void>();
 
   constructor() { }

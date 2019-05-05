@@ -9,8 +9,9 @@
 
     <ion-list class="list-group" *ngIf="loaded && myRooms.length">
 
-        <!-- <app-contact-item [group]="false" [sliding]="true" (click)="openChat()"></app-contact-item>
-        <app-contact-item [group]="false" [sliding]="true"  (click)="openChat()"></app-contact-item> -->
+        <app-contact-item [group]="false" [sliding]="false" (click)="openChat()"
+            *ngFor="let proom of myRooms" [privateRoom]="proom">
+        </app-contact-item>
 
     </ion-list>
 

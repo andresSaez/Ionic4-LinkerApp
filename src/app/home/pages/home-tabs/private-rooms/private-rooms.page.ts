@@ -30,6 +30,8 @@ export class PrivateRoomsPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.chargeRooms();
+
     this.subscription = this.store.select('user').subscribe(
       userState => {
         this.userState = userState.user;
