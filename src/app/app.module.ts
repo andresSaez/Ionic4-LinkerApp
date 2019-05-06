@@ -23,6 +23,7 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 
 // Authentification
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Facebook } from '@ionic-native/facebook/ngx';
 
 // Interceptors
 import { AuthTokenInterceptor } from './interceptors/auth-token/auth-token.interceptor';
@@ -76,7 +77,8 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     Geolocation,
     Vibration,
     LaunchNavigator,
-    GooglePlus
+    GooglePlus,
+    Facebook
   ],
   bootstrap: [AppComponent]
 })

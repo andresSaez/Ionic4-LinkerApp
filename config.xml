@@ -96,4 +96,8 @@
         <variable name="WEB_APPLICATION_CLIENT_ID" value="83592756611-cd5bhd8g7le8uq6q28ql85vpjpf209a6.apps.googleusercontent.com" />
         <variable name="PLAY_SERVICES_VERSION" value="11.8.0" />
     </plugin>
+    <plugin name="cordova-plugin-facebook4" spec="1.7.4">
+        <variable name="APP_ID" value="375181239932310" />
+        <variable name="APP_NAME" value="IonicNative" />
+    </plugin>
 </widget>
