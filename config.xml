@@ -91,4 +91,9 @@
         <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="AIzaSyBy-KvqxBJrHVWA9kpuocrye2xArzQ3fMk" />
         <variable name="OKHTTP_VERSION" value="3.12.0" />
     </plugin>
+    <plugin name="cordova-plugin-googleplus" spec="7.0.1">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.83592756611-ht9514hb3qkmpdkea2si6m247i5shmrb" />
+        <variable name="WEB_APPLICATION_CLIENT_ID" value="83592756611-cd5bhd8g7le8uq6q28ql85vpjpf209a6.apps.googleusercontent.com" />
+        <variable name="PLAY_SERVICES_VERSION" value="11.8.0" />
+    </plugin>
 </widget>

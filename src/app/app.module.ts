@@ -21,6 +21,9 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 
+// Authentification
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+
 // Interceptors
 import { AuthTokenInterceptor } from './interceptors/auth-token/auth-token.interceptor';
 import { BaseUrlInterceptor } from './interceptors/base-url/base-url.interceptor';
@@ -72,7 +75,8 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     Camera,
     Geolocation,
     Vibration,
-    LaunchNavigator
+    LaunchNavigator,
+    GooglePlus
   ],
   bootstrap: [AppComponent]
 })
