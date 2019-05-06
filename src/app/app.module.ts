@@ -19,6 +19,7 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { Camera } from '@ionic-native/camera/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
+import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 
 // Interceptors
 import { AuthTokenInterceptor } from './interceptors/auth-token/auth-token.interceptor';
@@ -70,7 +71,8 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     },
     Camera,
     Geolocation,
-    Vibration
+    Vibration,
+    LaunchNavigator
   ],
   bootstrap: [AppComponent]
 })

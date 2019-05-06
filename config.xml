@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.andres.ionicnative" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Linker</name>
     <description>An Ionic/Cordova app to chat with people about common issues.</description>
     <author email="andsc0830900@gmail.com" href="https://github.com/andresSaez/Ionic4-LinkerApp">Andres Saez</author>
@@ -87,4 +87,8 @@
     <plugin name="cordova-plugin-geolocation" spec="4.0.1" />
     <plugin name="cordova-plugin-vibration" spec="3.1.0" />
     <engine name="android" spec="7.1.4" />
+    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="5.0.4">
+        <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="AIzaSyBy-KvqxBJrHVWA9kpuocrye2xArzQ3fMk" />
+        <variable name="OKHTTP_VERSION" value="3.12.0" />
+    </plugin>
 </widget>

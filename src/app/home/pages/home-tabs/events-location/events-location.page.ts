@@ -9,6 +9,7 @@ import { AppState } from 'src/app/store/app.reducer';
 import { RoomService } from 'src/app/services/room-service/room.service';
 import * as fromActions from '../../../../store/actions';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
 
 @Component({
   selector: 'app-events-location',
@@ -44,7 +45,7 @@ export class EventsLocationPage implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private ionRouterOutlet: IonRouterOutlet,
     private route: ActivatedRoute,
-    // private launchNavigator: LaunchNavigator,
+    private launchNavigator: LaunchNavigator,
     private loadingCtrl: LoadingController,
     private _roomService: RoomService,
     private toastCtrl: ToastController,
@@ -189,9 +190,9 @@ export class EventsLocationPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async navigate( room: IRoom ) {
-    // const options: LaunchNavigatorOptions = {};
+    const options: LaunchNavigatorOptions = {};
 
-    // await this.launchNavigator.navigate([room.lat, room.lng], options);
+    await this.launchNavigator.navigate([room.lat, room.lng], options);
   }
 
   changeUserState(value) {
