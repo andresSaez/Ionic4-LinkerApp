@@ -47,8 +47,8 @@ export class PrivateRoomsPage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  openChat() {
-    this.navCtrl.navigateForward(['/chat']);
+  openChat( proom: IPrivateRoom ) {
+    this.navCtrl.navigateForward(['/chat/private', proom.id ]);
   }
 
   async delete( room: IPrivateRoom ) {

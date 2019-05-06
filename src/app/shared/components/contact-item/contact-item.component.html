@@ -21,7 +21,7 @@
 </ion-item>
 
 <ion-item-sliding *ngIf="sliding && group">
-    <ion-item color="dark">
+    <ion-item color="dark" (click)="openChat( room )">
         <ion-avatar slot="start">
         <img [src]="room.image">
         </ion-avatar>

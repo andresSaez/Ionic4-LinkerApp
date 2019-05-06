@@ -9,6 +9,11 @@ const routes: Routes = [
         resolve: { room: RoomDetailsResolverService }
     },
     {
+        path: 'map/:id',
+        loadChildren: './../home/pages/home-tabs/events-location/events-location.module#EventsLocationPageModule',
+        resolve: { room: RoomDetailsResolverService }
+    },
+    {
         path: 'create',
         loadChildren: './pages/rooms-create/rooms-create.module#RoomsCreatePageModule'
     },

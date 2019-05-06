@@ -16,6 +16,21 @@ export class PrivateRoomService {
     private http: HttpClient
   ) { }
 
+  getPrivateRoom( id: string ): Observable<IPrivateRoom> {
+    return this.http.get<{ result: IPrivateRoom }>(`${this.BASE_URL}/${id}`)
+      .pipe(
+        map(resp => {
+          const r = resp.result;
+          r.addressee.avatar = environment.baseUrl + '/' + r.addressee.avatar;
+          r.members = r.members.map( (member: any) => {
+            member.avatar = environment.baseUrl + '/' + member.avatar;
+            return member;
+          });
+          return r;
+        })
+      );
+  }
+
   getPrivateRooms(): Observable<IPrivateRoom[]> {
     return this.http.get<{ result: IPrivateRoom[] }>(this.BASE_URL)
       .pipe(map( resp => resp.result.map( r => {

@@ -3,11 +3,12 @@ import { IRoom } from 'src/app/interfaces/i-room.interface';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 import { MapComponent } from 'ngx-mapbox-gl';
 import { Subscription } from 'rxjs';
-import { NavController, LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { NavController, LoadingController, ToastController, AlertController, IonRouterOutlet } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.reducer';
 import { RoomService } from 'src/app/services/room-service/room.service';
 import * as fromActions from '../../../../store/actions';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-events-location',
@@ -17,6 +18,7 @@ import * as fromActions from '../../../../store/actions';
 export class EventsLocationPage implements OnInit, AfterViewInit, OnDestroy {
 
   zoom = 10;
+  centerRoom: IRoom = null;
 
   rooms: IRoom[] = [];
   loguedUser: IUser;
@@ -29,10 +31,19 @@ export class EventsLocationPage implements OnInit, AfterViewInit, OnDestroy {
     lng: 0
   };
 
+  // Routes Management
+  routerEvents: any;
+  previousUrl: string;
+  currentUrl: string;
+  canGoBack: boolean;
+
   @ViewChild(MapComponent) mapComp: MapComponent;
 
   constructor(
     private navCtrl: NavController,
+    private router: Router,
+    private ionRouterOutlet: IonRouterOutlet,
+    private route: ActivatedRoute,
     // private launchNavigator: LaunchNavigator,
     private loadingCtrl: LoadingController,
     private _roomService: RoomService,
@@ -42,16 +53,34 @@ export class EventsLocationPage implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.canGoBack    = this.ionRouterOutlet.canGoBack();
+      this.currentUrl   = this.router.url;
+      this.routerEvents = this.router.events.subscribe(event => {
+          if (event instanceof NavigationEnd) {
+              this.previousUrl = this.currentUrl;
+              this.currentUrl  = event.url;
+          }
+      });
+
     this.getRooms();
+
+    this.centerRoom = this.route.snapshot.data.room;
 
     this.subscription = this.store.select('user').subscribe(
       userState => {
         this.userState = userState.user;
 
-        this.center = {
-          lat: this.userState.lat,
-          lng: this.userState.lng
-        };
+        if (this.centerRoom) {
+          this.center = {
+            lat: this.centerRoom.lat,
+            lng: this.centerRoom.lng
+          };
+        } else {
+          this.center = {
+            lat: this.userState.lat,
+            lng: this.userState.lng
+          };
+        }
       }
     );
   }
@@ -66,6 +95,7 @@ export class EventsLocationPage implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.routerEvents.unsubscribe();
   }
 
   async getRooms() {

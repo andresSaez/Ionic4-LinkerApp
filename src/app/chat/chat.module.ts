@@ -11,12 +11,26 @@ import { ChatMessageComponent } from './components/chat-message/chat-message.com
 import { MessageInputComponent } from './components';
 import { PrivateChatMenuPopoverComponent } from './popovers/private-chat-menu-popover/private-chat-menu-popover.component';
 import { RoomChatMenuPopoverComponent } from './popovers/room-chat-menu-popover/room-chat-menu-popover.component';
+import { RoomDetailsResolverService } from '../rooms/resolvers/room-details-resolver.service';
+import { PrivateRoomResolverService } from '../shared/resolvers/private-room-resolver.service';
 
 const routes: Routes = [
   {
-    path: '',
-    component: ChatPage
+    path: 'private/:id',
+    component: ChatPage,
+    data: { show: 'private' },
+    resolve: { room: PrivateRoomResolverService }
+  },
+  {
+    path: 'room/:id',
+    component: ChatPage,
+    data: { show: 'room' },
+    resolve: { room: RoomDetailsResolverService }
   }
+  // {
+  //   path: '',
+  //   component: ChatPage
+  // }
 ];
 
 @NgModule({

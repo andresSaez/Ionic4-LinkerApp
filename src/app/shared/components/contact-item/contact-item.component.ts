@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IRoom } from 'src/app/interfaces/i-room.interface';
 import { IPrivateRoom } from 'src/app/interfaces/i-private-room.interface';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-contact-item',
@@ -15,13 +16,19 @@ export class ContactItemComponent implements OnInit {
   @Input() privateRoom: IPrivateRoom;
   @Output() deleted = new EventEmitter<void>();
 
-  constructor() { }
+  constructor(
+    private navCtrl: NavController
+  ) { }
 
   ngOnInit() {
   }
 
   deleteRoom() {
     this.deleted.emit();
+  }
+
+  openChat( room: IRoom ) {
+    this.navCtrl.navigateForward(['/chat/room', room.id ]);
   }
 
 }

@@ -1,3 +1,15 @@
+<ion-header *ngIf="centerRoom">
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+        <ion-back-button defaultHref="previousUrl" text="" *ngIf="canGoBack"></ion-back-button>
+        </ion-buttons>
+    
+        <ion-title>
+        Location
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
 <ion-content color="dark">
 
     <mgl-map [style]="'mapbox://styles/mapbox/streets-v11'"

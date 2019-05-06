@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { HomeTabsPage } from './home-tabs.page';
+import { resolve } from 'q';
+import { RoomDetailsResolverService } from 'src/app/rooms/resolvers/room-details-resolver.service';
 
 const routes: Routes = [
   {
