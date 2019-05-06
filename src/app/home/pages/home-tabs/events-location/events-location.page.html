@@ -1,9 +1,31 @@
 <ion-content color="dark">
 
     <mgl-map [style]="'mapbox://styles/mapbox/streets-v11'"
-        [zoom]="[zoom]" [center]="[loguedUser.lng, loguedUser.lat]">
+        [zoom]="[zoom]" [center]="[center.lng, center.lat]">
 
-        <mgl-marker *ngFor="let room of rooms" [lngLat]="[room.lng, room.lat]"></mgl-marker>
+        <div *ngIf="loaded && rooms.length">
+            <div *ngFor="let room of rooms">
+                <mgl-marker #myMarker [lngLat]="[room.lng, room.lat]">
+                    <div class="marker" [style.background-image]="'url(' + room.image + ')'"></div>
+                </mgl-marker>
+        
+                <mgl-popup [marker]="myMarker" [offset]="25" 
+                    [closeButton]="true" class="popup">
+                    <div class="popup">
+                        <h4>{{room.name}}</h4>
+                        <p>{{room.description}}</p>
+                        <ion-button color="secondary" expand="block" *ngIf="userState.rooms.includes(room.id)" (click)="navigate( room )">
+                            <ion-icon name="navigate" slot="icon-only"></ion-icon>
+                        </ion-button>
+
+                        <ion-button color="success" expand="block" *ngIf="!userState.rooms.includes(room.id)" (click)="openAlert( room )">
+                            <ion-label>Join!</ion-label>
+                        </ion-button>
+                    </div>
+                </mgl-popup>
+            </div>
+            
+        </div>
         
     </mgl-map>
 

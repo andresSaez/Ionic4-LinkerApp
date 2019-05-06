@@ -87,4 +87,47 @@ ion-toolbar.no-border-toolbar {
     --box-shadow: none;
 }
 
+.mapboxgl-popup-content {
+    background: #263238 !important;
+    color: white;
+}
 
+// .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+
+// }
+
+// .mapboxgl-popup--blue .mapboxgl-popup-content{
+//     background-color: rgb(66,111,175);
+//     padding:20px;
+//     color: white;
+//     max-width:none;
+// }
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip{
+    border-top-color: #263238 !important;
+}
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip{
+    border-bottom-color: #263238 !important;
+}
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip{
+    border-right-color: #263238 !important;
+}
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip{
+    border-left-color: #263238 !important;
+}
+
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip{
+    border-bottom-color: #263238 !important;
+}
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip{
+    border-bottom-color: #263238 !important;
+}
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip{
+    border-top-color: #263238 !important;
+}
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip{
+    border-top-color: #263238 !important;
+}
+
+.mapboxgl-popup-close-button {
+    color: white;
+}
