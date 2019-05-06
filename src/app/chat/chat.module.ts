@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'private/:id',
     component: ChatPage,
     data: { show: 'private' },
-    resolve: { room: PrivateRoomResolverService }
+    resolve: { proom: PrivateRoomResolverService }
   },
   {
     path: 'room/:id',

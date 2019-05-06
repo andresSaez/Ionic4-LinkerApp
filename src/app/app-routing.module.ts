@@ -29,11 +29,6 @@ const routes: Routes = [
     loadChildren: './rooms/rooms.module#RoomsModule'
   },
   {
-    path: 'list',
-    canActivate: [LoginActivateGuard],
-    loadChildren: './list/list.module#ListPageModule'
-  },
-  {
     path: 'chat',
     canActivate: [LoginActivateGuard],
     loadChildren: './chat/chat.module#ChatPageModule'

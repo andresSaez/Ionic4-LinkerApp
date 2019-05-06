@@ -1,41 +1,41 @@
 <ion-header>
-    <ion-toolbar color="primary" *ngIf="show === 'room'; else private">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/home/rooms" text=""></ion-back-button>
-      </ion-buttons>
+  <ion-toolbar color="primary" *ngIf="show === 'room'; else private">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home/rooms" text=""></ion-back-button>
+    </ion-buttons>
 
-      <div class="table">
-        <div class="cell">
-            <ion-avatar class="avatar-room">
-              <img src="../../assets/images/avatar.jpg">
-            </ion-avatar>
-        </div>
-        <div class="cell">
-            <ion-title class="float-rigth">
-              Grupo1
-            </ion-title>
-        </div>
+    <div class="table">
+      <div class="cell">
+          <ion-avatar class="avatar-room">
+            <img [src]="room.image">
+          </ion-avatar>
       </div>
-      
-      <ion-buttons slot="end">
-        <ion-button (click)="showPopoverRoom( $event )"><ion-icon slot="icon-only" name="more"></ion-icon></ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-
-    <ng-template #private>
-      <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-          <ion-back-button defaultHref="/home/private-rooms" text=""></ion-back-button>
-        </ion-buttons>
-        <ion-buttons slot="end">
-          <ion-button (click)="showPopoverPrivate( $event )"><ion-icon slot="icon-only" name="more"></ion-icon></ion-button>
-        </ion-buttons>
-
-        <ion-title>Daniel</ion-title>
-      </ion-toolbar>
-    </ng-template>
+      <div class="cell">
+          <ion-title class="float-rigth">
+            {{ room.name }}
+          </ion-title>
+      </div>
+    </div>
     
-  </ion-header>
+    <ion-buttons slot="end">
+      <ion-button (click)="showPopoverRoom( $event )"><ion-icon slot="icon-only" name="more"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ng-template #private>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home/private-rooms" text=""></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="showPopoverPrivate( $event )"><ion-icon slot="icon-only" name="more"></ion-icon></ion-button>
+      </ion-buttons>
+
+      <ion-title>{{ privateRoom.addressee.nick }}</ion-title>
+    </ion-toolbar>
+  </ng-template>
+    
+</ion-header>
   
   <ion-content>
   
