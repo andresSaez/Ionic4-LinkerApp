@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { RoomDetailsResolverService } from './resolvers/room-details-resolver.service';
 
 const routes: Routes = [
     {
-        path: 'details',
-        loadChildren: './pages/rooms-details/rooms-details.module#RoomsDetailsPageModule'
+        path: 'details/:id',
+        loadChildren: './pages/rooms-details/rooms-details.module#RoomsDetailsPageModule',
+        resolve: { room: RoomDetailsResolverService }
     },
     {
         path: 'create',

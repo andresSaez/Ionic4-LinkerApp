@@ -1,10 +1,15 @@
 <div class="room-slide-container">
-  <h3>{{ room.name }}</h3>
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+      <ion-fab-button color="secondary" mode="ios">
+          <ion-label>Join!</ion-label>
+      </ion-fab-button>
+    </ion-fab>
+  <h2>{{ room.name }}</h2>
   
   <img [src]="room.image" class="room-img">
 
   <ion-item no-border color="dark">
-    <ion-label><ion-text color="success">{{ room.creator }}</ion-text></ion-label>
+    <ion-label><ion-text color="success">{{ room.creator.nick }}</ion-text></ion-label>
     <ion-badge slot="end" color="tertiary" slot="end" class="users"><ion-icon size="small" name="people"></ion-icon> {{ room.members.length }} </ion-badge>
   </ion-item>
 

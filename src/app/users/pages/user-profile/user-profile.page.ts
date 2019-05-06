@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActionSheetController, ModalController,
-  NavController, ToastController, Events, AlertController, LoadingController } from '@ionic/angular';
+  NavController, ToastController, Events, AlertController, LoadingController, IonRouterOutlet } from '@ionic/angular';
 import { ShowImageComponent } from 'src/app/shared/modals/show-image/show-image.component';
 import { myEnterAnimation } from 'src/app/animations/modal-animations/enter';
 import { myLeaveAnimation } from 'src/app/animations/modal-animations/leave';
@@ -8,7 +8,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { UsersService } from 'src/app/services/users-service/users.service';
 import { IUser } from 'src/app/interfaces/i-user.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.reducer';
 import { Subscription } from 'rxjs';
@@ -26,7 +26,15 @@ export class UserProfilePage implements OnInit, OnDestroy {
   userState: any;
   subscription: Subscription = new Subscription();
 
+   // Routes Management
+   routerEvents: any;
+   previousUrl: string;
+   currentUrl: string;
+   canGoBack: boolean;
+
   constructor(
+    private router: Router,
+    private ionRouterOutlet: IonRouterOutlet,
     private route: ActivatedRoute,
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController,
@@ -42,6 +50,15 @@ export class UserProfilePage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.canGoBack    = this.ionRouterOutlet.canGoBack();
+      this.currentUrl   = this.router.url;
+      this.routerEvents = this.router.events.subscribe(event => {
+          if (event instanceof NavigationEnd) {
+              this.previousUrl = this.currentUrl;
+              this.currentUrl  = event.url;
+          }
+      });
+
     this.user = this.route.snapshot.data.user;
 
     this.subscription = this.store.select('user').subscribe(
@@ -57,6 +74,7 @@ export class UserProfilePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.routerEvents.unsubscribe();
   }
 
   editProfile(event) {

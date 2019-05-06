@@ -34,7 +34,7 @@ const routes: Routes = [
     loadChildren: './list/list.module#ListPageModule'
   },
   {
-    path: 'chat',
+    path: 'chat/:id',
     canActivate: [LoginActivateGuard],
     loadChildren: './chat/chat.module#ChatPageModule'
   },

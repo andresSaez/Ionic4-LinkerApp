@@ -31,6 +31,10 @@ export class RoomService {
           const r = resp.result;
           r.image = environment.baseUrl + '/' + r.image;
           r.creator.avatar = environment.baseUrl + '/' + r.creator.avatar;
+          r.members = r.members.map( (member: any) => {
+            member.avatar = environment.baseUrl + '/' + member.avatar;
+            return member;
+          });
           return r;
         })
       );

@@ -37,7 +37,7 @@ export class ChatPage implements OnInit {
     }
 
     if (result.data === 'details') {
-      this.navCtrl.navigateForward('/rooms/details');
+      this.navCtrl.navigateForward(['/rooms/details', '5ccfd948760b5f1234bae0cf' ]);
     }
   }
 
