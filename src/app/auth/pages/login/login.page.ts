@@ -8,6 +8,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { ILoginGoogleFbRequest } from '../../../interfaces/i-login-google-fb-request';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { TwitterConnect, TwitterConnectResponse } from '@ionic-native/twitter-connect/ngx';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
@@ -30,7 +31,8 @@ export class LoginPage implements OnInit {
     private geolocation: Geolocation,
     private loadingCtrl: LoadingController,
     public fb: Facebook,
-    public gplus: GooglePlus
+    public gplus: GooglePlus,
+    public twitter: TwitterConnect
   ) { }
 
   ngOnInit() {
@@ -155,7 +157,44 @@ export class LoginPage implements OnInit {
   }
 
   async loginTwitter() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
 
+    await loading.present();
+
+    try {
+      const res = await this.twitter.login();
+        this.response = res;
+        console.log(res);
+        this.requestLoginGoogleFB = {
+          token: this.response.token,
+          lat: this.user.lat,
+          lng: this.user.lng
+        };
+        console.log(this.requestLoginGoogleFB);
+        this._authService.loginTwitter(this.requestLoginGoogleFB).subscribe(
+          async (us) => {
+            await loading.dismiss();
+            ( await this.toastCtrl.create({
+              duration: 3000,
+              position: 'bottom',
+              message: 'Welcome!'
+            })).present();
+            this.navCtrl.navigateForward(['/home']);
+          },
+          async error => {
+            await loading.dismiss();
+            (await this.alertCtrl.create({
+              header: 'Login error',
+              message: 'Try again',
+              buttons: ['Ok']
+            })).present();
+          }
+        );
+      } catch (err) {
+        console.error(err);
+      }
   }
 
   geolocate() {
