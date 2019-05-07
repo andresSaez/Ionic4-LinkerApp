@@ -4,6 +4,10 @@ import { IUser } from 'src/app/interfaces/i-user.interface';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+import { ILoginGoogleFbRequest } from '../../../interfaces/i-login-google-fb-request';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -14,6 +18,9 @@ export class RegisterPage implements OnInit {
   newUser: IUser;
   email2: string;
   password2: string;
+  accessToken = '';
+  requestLoginGoogleFB: ILoginGoogleFbRequest;
+  response = null;
 
   constructor(
     private _authService: AuthService,
@@ -21,7 +28,9 @@ export class RegisterPage implements OnInit {
     private toastCtrl: ToastController,
     private geolocation: Geolocation,
     private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    public fb: Facebook,
+    public gplus: GooglePlus
   ) { }
 
   ngOnInit() {
@@ -77,10 +86,81 @@ export class RegisterPage implements OnInit {
   }
 
   async loginGoogle() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
 
+    await loading.present();
+
+    try {
+      const res = await this.gplus.login({'webClientId': '83592756611-cd5bhd8g7le8uq6q28ql85vpjpf209a6.apps.googleusercontent.com'});
+        this.response = res;
+        console.log(res);
+        this.requestLoginGoogleFB = {
+          token: this.response.idToken,
+          lat: this.newUser.lat,
+          lng: this.newUser.lng
+        };
+        console.log(this.requestLoginGoogleFB);
+        this._authService.loginGoogle(this.requestLoginGoogleFB).subscribe(
+          async (us) => {
+            await loading.dismiss();
+            ( await this.toastCtrl.create({
+              duration: 3000,
+              position: 'bottom',
+              message: 'Welcome!'
+            })).present();
+            this.navCtrl.navigateForward(['/home']);
+          },
+          async error => {
+            await loading.dismiss();
+            (await this.alertCtrl.create({
+              header: 'Login error',
+              message: 'Try again',
+              buttons: ['Ok']
+            })).present();
+          }
+        );
+      } catch (err) {
+        console.error(err);
+      }
   }
 
   async loginFB() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
+
+    const resp = await this.fb.login(['public_profile', 'email']);
+    if (resp.status === 'connected') {
+      this.accessToken = resp.authResponse.accessToken;
+      this.requestLoginGoogleFB = {
+        token: this.accessToken,
+        lat: this.newUser.lat,
+        lng: this.newUser.lng
+      };
+      this._authService.loginFacebook(this.requestLoginGoogleFB).subscribe(
+        async (us) => {
+          await loading.dismiss();
+          ( await this.toastCtrl.create({
+            duration: 3000,
+            position: 'bottom',
+            message: 'Welcome!'
+          })).present();
+          this.navCtrl.navigateForward(['/home']);
+        },
+        async error => {
+          await loading.dismiss();
+          (await this.alertCtrl.create({
+            header: 'Login error',
+            message: 'Try again',
+            buttons: ['Ok']
+          })).present();
+        }
+      );
+    }
 
   }
 

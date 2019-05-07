@@ -132,22 +132,50 @@ export class AuthService {
 
   loginGoogle(peticion: ILoginGoogleFbRequest): Observable<void> {
     return this.http.post<ResponseLogin>(`${this.BASE_URL}/google`, peticion)
-      .pipe(map(resp => {
-        localStorage.setItem(environment.TOKEN, resp.accessToken);
-        this.logged = true;
-        this.loginChange$.emit(true);
-      }
-      ));
+      .pipe(switchMap( async r => {
+        try {
+          await this.storage.set(environment.TOKEN, r.accessToken);
+          this.setLogged(true);
+        } catch (e) {
+          throw new Error(`Can't save authentication token in storage!`);
+        }
+      })
+      );
   }
 
   loginFacebook(peticion: ILoginGoogleFbRequest): Observable<void> {
     return this.http.post<ResponseLogin>(`${this.BASE_URL}/facebook`, peticion)
-      .pipe(map(resp => {
-        localStorage.setItem(environment.TOKEN, resp.accessToken);
-        this.logged = true;
-        this.loginChange$.emit(true);
-      }
-      ));
+      .pipe(switchMap( async r => {
+        try {
+          await this.storage.set(environment.TOKEN, r.accessToken);
+          this.setLogged(true);
+        } catch (e) {
+          throw new Error(`Can't save authentication token in storage!`);
+        }
+      })
+      );
+  }
+
+  loginTwitter( request: ILoginGoogleFbRequest ): Observable<void> {
+    return this.http.post<ResponseLogin>(`${this.BASE_URL}/twitter`, request)
+      .pipe(switchMap( async r => {
+        try {
+          await this.storage.set(environment.TOKEN, r.accessToken);
+          this.setLogged(true);
+        } catch (e) {
+          throw new Error(`Can't save authentication token in storage!`);
+        }
+      })
+      );
+
+      // <meta-data
+      // android:name="io.fabric.ApiKey"
+      // android:value="d595b8aee0de1d1c5677ad0fbd083d7ac0746f66"
+
+//       Consumer API keys
+// d3dVGp7aGIYoDtyQikX21HCbx (API key)
+
+// nbSLVCI87oYRbgfb0gEgu0rTF1gI8GUQgLGlnJhcCNVV89rTBs (API secret key)
   }
 
 }
