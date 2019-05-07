@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { IMessage } from 'src/app/interfaces/i-message.interface';
 
 @Component({
   selector: 'app-chat-message',
@@ -8,6 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ChatMessageComponent implements OnInit {
 
   @Input() mine: boolean;
+  @Input() message: IMessage;
 
   constructor() { }
 

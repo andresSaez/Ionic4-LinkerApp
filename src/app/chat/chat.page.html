@@ -39,7 +39,7 @@
   
   <ion-content>
   
-    <div class="chat-content">
+    <div class="chat-content" id="chat-container">
       <!-- https://codepen.io/Founts/pen/gmhcl/ -->
       <!-- https://www.materialpalette.com/colors -->
 <!--   
@@ -53,11 +53,21 @@
         </ion-chip>
       </div>
       
-      <app-chat-message [mine]="false"></app-chat-message>
+      <!-- <app-chat-message [mine]="false"></app-chat-message>
       <app-chat-message [mine]="true"></app-chat-message>
       <app-chat-message [mine]="true"></app-chat-message>
-      <app-chat-message [mine]="false"></app-chat-message>
-      <app-chat-message [mine]="true"></app-chat-message>
+      <app-chat-message [mine]="false"></app-chat-message> -->
+      <!-- <app-chat-message [mine]="true"></app-chat-message> -->
+
+      <div class="text-center" *ngIf="!loaded && !messages.length; else chat">
+        <ion-text color="medium">
+          <p>No rooms to show</p>
+        </ion-text>      
+      </div>
+
+      <ng-template #chat>
+        <app-chat-message *ngFor="let message of messages" [message]="message"></app-chat-message>
+      </ng-template>
 
 
       <!-- <div class="talk-bubble tri-right round right-in mine">
@@ -78,7 +88,8 @@
         </div>
       </div>
     </div> -->
-    <app-message-input class="message-bar"></app-message-input>
+    <app-message-input *ngIf="loaded && show === 'room'" class="message-bar" [idChat]="room.chat" (sendMessage)="pushMessage( $event )"></app-message-input>
+    <app-message-input *ngIf="loaded && show === 'private'" class="message-bar" [idChat]="privateRoom.chat" (sendMessage)="pushMessage( $event )"></app-message-input>
     
   </div>
     

@@ -3,12 +3,12 @@
   <div class="cell">
       <ion-item color="dark">
           <ion-button color="light" fill="clear" item-left><ion-icon name="happy" slot="icon-only"></ion-icon></ion-button>
-          <ion-input type="text" placeholder="Write a message"></ion-input>
+          <ion-input type="text" placeholder="Write a message" [(ngModel)]="text" name="text"></ion-input>
           <ion-button color="light" fill="clear" item-right><ion-icon name="camera" slot="icon-only"></ion-icon></ion-button>
       </ion-item>
   </div>
   <div class="cell">
-      <ion-button id="send-button" size="small" shape="round" color="success" fill="solid"><ion-icon name="send"></ion-icon></ion-button>
+      <ion-button id="send-button" size="small" shape="round" color="success" fill="solid" (click)="send()"><ion-icon name="send"></ion-icon></ion-button>
   </div>
 </div>
 
