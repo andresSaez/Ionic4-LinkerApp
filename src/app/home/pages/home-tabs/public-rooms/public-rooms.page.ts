@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.reducer';
 import * as fromActions from '../../../../store/actions';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, Events } from '@ionic/angular';
 import { RoomService } from 'src/app/services/room-service/room.service';
 import { IUser } from 'src/app/interfaces/i-user.interface';
 
@@ -22,6 +22,7 @@ export class PublicRoomsPage implements OnInit, OnDestroy {
   loadingFail = false;
 
   constructor(
+    private events: Events,
     private store: Store<AppState>,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
@@ -38,6 +39,9 @@ export class PublicRoomsPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
+    // this.events.subscribe('changes', () => {
+    //   this.chargeRooms();
+    // });
     this.chargeRooms();
   }
 

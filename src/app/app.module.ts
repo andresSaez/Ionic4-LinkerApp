@@ -40,6 +40,12 @@ import { effectsArray } from './store/effects';
 // Environtment
 import { environment } from '../environments/environment'; // Angular CLI environemnt
 
+// Socket-io
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = {
+  url: environment.wsUrl, options: {}
+};
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -58,7 +64,8 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     SharedModule,
     NgxMapboxGLModule.withConfig({
       accessToken: 'pk.eyJ1IjoiYW5kc2MiLCJhIjoiY2p1c2k4cHl5MGp4eDQzcDVxMTUzdHQ5cSJ9.rCgKIFzn2MwFBb0RweW56A'
-    })
+    }),
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     StatusBar,

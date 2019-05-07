@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:5000/api/v1',
+  wsUrl: 'http://localhost:5000',
   // baseUrl: 'http://vps644561.ovh.net:5000/api/v1',
   TOKEN: 'token'
 };

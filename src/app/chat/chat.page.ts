@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PopoverController, NavController, LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { PrivateChatMenuPopoverComponent } from './popovers/private-chat-menu-popover/private-chat-menu-popover.component';
 import { RoomChatMenuPopoverComponent } from './popovers/room-chat-menu-popover/room-chat-menu-popover.component';
@@ -8,19 +8,21 @@ import { IPrivateRoom } from '../interfaces/i-private-room.interface';
 import { ChatService } from '../services/chat-service/chat.service';
 import { IMessage } from '../interfaces/i-message.interface';
 import { IChat } from '../interfaces/i-chat.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
 })
-export class ChatPage implements OnInit {
+export class ChatPage implements OnInit, OnDestroy {
 
   show = '';
   room: IRoom = null;
   privateRoom: IPrivateRoom = null;
   messages: IMessage[] = [];
   chat: IChat = null;
+  messagesSubscription: Subscription;
 
   loadingFail = false;
   loaded = false;
@@ -47,6 +49,19 @@ export class ChatPage implements OnInit {
     } else {
       this.getChat(<any>this.privateRoom.chat);
     }
+
+    this.messagesSubscription = this._chatService.getMessages().subscribe(
+      (msg: any) => {
+        // console.log('escuchando: ' + msg);
+        let mens = msg.message;
+        console.log(mens);
+        // this.pushMessage( msg.message );
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.messagesSubscription.unsubscribe();
   }
 
   // Lo siguiente que me toca hacer es obtener el chat llamando al servicio.

@@ -18,6 +18,7 @@ export class HomeTabsPage implements OnInit {
   }
 
   changeTab(event) {
+    // this.events.publish('changes', {});
   }
 
 }

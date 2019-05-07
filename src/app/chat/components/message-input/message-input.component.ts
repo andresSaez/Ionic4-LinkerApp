@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MessagesService } from 'src/app/services/messages-service/messages.service';
 import { IMessage } from 'src/app/interfaces/i-message.interface';
 import { AlertController } from '@ionic/angular';
+import { ChatService } from 'src/app/services/chat-service/chat.service';
 
 @Component({
   selector: 'app-message-input',
@@ -10,7 +11,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class MessageInputComponent implements OnInit {
 
-  @Output() sendMessage = new EventEmitter<IMessage>();
+  // @Output() sendMessage = new EventEmitter<IMessage>();
   @Input() idChat: string;
   text = '';
   newMessage: IMessage;
@@ -18,7 +19,8 @@ export class MessageInputComponent implements OnInit {
 
   constructor(
     private alertCtrl: AlertController,
-    private _messagesService: MessagesService
+    private _messagesService: MessagesService,
+    public _chatService: ChatService
   ) { }
 
   ngOnInit() {
@@ -35,7 +37,8 @@ export class MessageInputComponent implements OnInit {
     this._messagesService.newMessage(this.newMessage, this.idChat).subscribe(
       resp => {
         console.log(resp);
-        this.sendMessage.emit(resp);
+        // this.sendMessage.emit(resp);
+        this._chatService.sendMessage( resp, this.idChat );
         this.text = '';
         this.resetMessage();
       },

@@ -88,7 +88,7 @@
         </div>
       </div>
     </div> -->
-    <app-message-input *ngIf="loaded && show === 'room'" class="message-bar" [idChat]="room.chat" (sendMessage)="pushMessage( $event )"></app-message-input>
+    <app-message-input *ngIf="loaded && show === 'room'" class="message-bar" [idChat]="room.chat"></app-message-input>
     <app-message-input *ngIf="loaded && show === 'private'" class="message-bar" [idChat]="privateRoom.chat" (sendMessage)="pushMessage( $event )"></app-message-input>
     
   </div>
