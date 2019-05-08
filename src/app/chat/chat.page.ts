@@ -23,6 +23,8 @@ export class ChatPage implements OnInit, OnDestroy {
   messages: IMessage[] = [];
   chat: IChat = null;
   messagesSubscription: Subscription;
+  idChat: any;
+  currentDate = new Date();
 
   loadingFail = false;
   loaded = false;
@@ -45,17 +47,19 @@ export class ChatPage implements OnInit, OnDestroy {
     this.privateRoom = this.route.snapshot.data.proom;
 
     if (this.show === 'room') {
+      this.idChat = <any>this.room.chat;
       this.getChat(<any>this.room.chat);
     } else {
-      this.getChat(<any>this.privateRoom.chat);
+      this.idChat = <any>this.privateRoom.chat.id;
+      this.getChat(<any>this.privateRoom.chat.id);
     }
 
     this.messagesSubscription = this._chatService.getMessages().subscribe(
       (msg: any) => {
         // console.log('escuchando: ' + msg);
-        let mens = msg.message;
-        console.log(mens);
-        // this.pushMessage( msg.message );
+        if (msg.chat === this.idChat) {
+          this.pushMessage( msg.message );
+        }
       }
     );
   }

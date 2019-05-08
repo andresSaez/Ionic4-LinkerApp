@@ -21,7 +21,7 @@ export class MessagesService {
       .pipe(map(resp => {
         const m = resp.result;
 
-        if (m.image !== '') {
+        if (m.image) {
           m.image = environment.baseUrl + '/' + m.image;
         }
         return m;

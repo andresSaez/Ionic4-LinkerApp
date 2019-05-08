@@ -27,6 +27,9 @@ export class ChatService {
         // chat.lastmessage.creator.avatar = environment.baseUrl + '/' + chat.lastmessage.creator.avatar;
         chat.messages.map( m => {
           m.creator.avatar = environment.baseUrl + '/' + m.creator.avatar;
+          if (m.image) {
+            m.image = environment.baseUrl + '/' + m.image;
+          }
           return m;
         });
         return chat;
@@ -48,7 +51,7 @@ export class ChatService {
       chat: idChat
     };
 
-    this.wsService.emit('message', JSON.stringify(payload) );
+    this.wsService.emit('message', payload );
   }
 
   getMessages() {

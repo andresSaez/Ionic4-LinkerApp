@@ -49,15 +49,9 @@
 
       <div class="date-container">
         <ion-chip color="light" class="date">
-          <ion-label>Junio 2019</ion-label>
+          <ion-label>{{ currentDate | date }}</ion-label>
         </ion-chip>
       </div>
-      
-      <!-- <app-chat-message [mine]="false"></app-chat-message>
-      <app-chat-message [mine]="true"></app-chat-message>
-      <app-chat-message [mine]="true"></app-chat-message>
-      <app-chat-message [mine]="false"></app-chat-message> -->
-      <!-- <app-chat-message [mine]="true"></app-chat-message> -->
 
       <div class="text-center" *ngIf="!loaded && !messages.length; else chat">
         <ion-text color="medium">
@@ -69,27 +63,8 @@
         <app-chat-message *ngFor="let message of messages" [message]="message"></app-chat-message>
       </ng-template>
 
-
-      <!-- <div class="talk-bubble tri-right round right-in mine">
-        <div class="talktext">
-          <p>Moving our way back up the right side indented. Uses .round and .right-in</p>
-        </div>
-        <div class="bubble-hour-right">
-            <small class="b-hour">10:53</small><small class="check">✔</small>
-        </div>
-      </div>
-    
-      <div class="talk-bubble tri-left round left-in">
-        <div class="talktext">
-          <p>Moving our way back up the right side indented. Uses .round and .right-in</p>
-        </div>
-        <div class="bubble-hour-right">
-            <small class="b-hour">10:53</small>
-        </div>
-      </div>
-    </div> -->
     <app-message-input *ngIf="loaded && show === 'room'" class="message-bar" [idChat]="room.chat"></app-message-input>
-    <app-message-input *ngIf="loaded && show === 'private'" class="message-bar" [idChat]="privateRoom.chat" (sendMessage)="pushMessage( $event )"></app-message-input>
+    <app-message-input *ngIf="loaded && show === 'private'" class="message-bar" [idChat]="privateRoom.chat.id"></app-message-input>
     
   </div>
     

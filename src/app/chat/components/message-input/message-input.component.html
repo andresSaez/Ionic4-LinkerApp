@@ -1,10 +1,14 @@
-
+<div class="image-container">
+    <ion-img [src]="newMessage.image" *ngIf="newMessage.image" class="image"></ion-img>
+    <!-- <ion-img src="../../../../assets/images/avatar.jpg" class="image"></ion-img> -->
+</div>
 <div class="table">
   <div class="cell">
       <ion-item color="dark">
           <ion-button color="light" fill="clear" item-left><ion-icon name="happy" slot="icon-only"></ion-icon></ion-button>
           <ion-input type="text" placeholder="Write a message" [(ngModel)]="text" name="text"></ion-input>
-          <ion-button color="light" fill="clear" item-right><ion-icon name="camera" slot="icon-only"></ion-icon></ion-button>
+          <ion-button *ngIf="!newMessage.image" color="light" fill="clear" item-right (click)="openActionSheet()"><ion-icon name="camera" slot="icon-only"></ion-icon></ion-button>
+          <ion-button *ngIf="newMessage.image" color="light" fill="clear" item-right (click)="resetMessage()"><ion-icon name="close" slot="icon-only"></ion-icon></ion-button>
       </ion-item>
   </div>
   <div class="cell">
