@@ -99,5 +99,10 @@
         <variable name="APP_ID" value="375181239932310" />
         <variable name="APP_NAME" value="IonicNative" />
     </plugin>
+    <!-- <plugin name="twitter-connect-plugin" source="npm" spec="0.5.0">
+        <variable name="FABRIC_KEY" value="d595b8aee0de1d1c5677ad0fbd083d7ac0746f66" />
+        <variable name="TWITTER_KEY" value="d3dVGp7aGIYoDtyQikX21HCbx" />
+        <variable name="TWITTER_SECRET" value="nbSLVCI87oYRbgfb0gEgu0rTF1gI8GUQgLGlnJhcCNVV89rTBs" />
+    </plugin> -->
     <engine name="android" spec="7.1.4" />
 </widget>

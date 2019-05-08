@@ -28,8 +28,10 @@
         position: relative;
         left: -20px;
         &.mine{
-            left: unset;
-            right: -15px;
+            position: unset;
+            text-align: right;
+            // left: unset;
+            // right: 100px;
         }
     }
 }

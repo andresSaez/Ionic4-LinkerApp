@@ -1,12 +1,3 @@
-<!-- <div *ngIf="mine" class="talk-bubble round mine" [ngClass]="{ 'tri-right': mine, 'right-in': mine, 'mine': mine, 'tri-left': !mine, 'left-in': !mine }">
-  <span *ngIf="!mine" class="username">Andres</span>
-  <div class="talktext" [ngClass]="{ 'mine': mine }">
-    <p>Moving our way back up the right side indented. Uses .round and .right-in</p>
-  </div>
-  <div class="bubble-hour-right">
-      <small class="b-hour">10:53</small><small *ngIf="mine" class="check">✔</small>
-  </div>
-</div> -->
 
 <div class="talk-bubble round mine" [ngClass]="{ 'tri-right': messageBubble.mine, 'right-in': messageBubble.mine, 'mine': messageBubble.mine, 'tri-left': !messageBubble.mine, 'left-in': !messageBubble.mine }">
   <span *ngIf="!messageBubble.mine" class="username"><small>{{ messageBubble.creator.nick }}</small></span>

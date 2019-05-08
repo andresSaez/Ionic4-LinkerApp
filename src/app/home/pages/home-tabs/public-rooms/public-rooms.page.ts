@@ -39,9 +39,6 @@ export class PublicRoomsPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    // this.events.subscribe('changes', () => {
-    //   this.chargeRooms();
-    // });
     this.chargeRooms();
   }
 
