@@ -153,6 +153,8 @@ export class LoginPage implements OnInit {
           })).present();
         }
       );
+    } else {
+      await loading.dismiss();
     }
   }
 
@@ -166,7 +168,7 @@ export class LoginPage implements OnInit {
     try {
       const res = await this.twitter.login();
         this.response = res;
-        console.log(res);
+        console.log('res:   '  + res);
         this.requestLoginGoogleFB = {
           token: this.response.token,
           lat: this.user.lat,
@@ -193,7 +195,8 @@ export class LoginPage implements OnInit {
           }
         );
       } catch (err) {
-        console.error(err);
+        console.error('error:  ' + err);
+        await loading.dismiss();
       }
   }
 

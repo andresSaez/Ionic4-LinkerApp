@@ -95,14 +95,14 @@
         <variable name="WEB_APPLICATION_CLIENT_ID" value="83592756611-cd5bhd8g7le8uq6q28ql85vpjpf209a6.apps.googleusercontent.com" />
         <variable name="PLAY_SERVICES_VERSION" value="11.8.0" />
     </plugin>
-    <plugin name="cordova-plugin-facebook4" spec="1.7.4">
+    <plugin name="cordova-plugin-facebook4" spec="4.1.0">
         <variable name="APP_ID" value="375181239932310" />
         <variable name="APP_NAME" value="IonicNative" />
     </plugin>
-    <!-- <plugin name="twitter-connect-plugin" source="npm" spec="0.5.0">
+    <plugin name="twitter-connect-plugin" source="npm" spec="0.5.0">
         <variable name="FABRIC_KEY" value="d595b8aee0de1d1c5677ad0fbd083d7ac0746f66" />
         <variable name="TWITTER_KEY" value="d3dVGp7aGIYoDtyQikX21HCbx" />
         <variable name="TWITTER_SECRET" value="nbSLVCI87oYRbgfb0gEgu0rTF1gI8GUQgLGlnJhcCNVV89rTBs" />
-    </plugin> -->
+    </plugin>
     <engine name="android" spec="7.1.4" />
 </widget>
