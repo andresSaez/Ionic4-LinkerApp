@@ -95,6 +95,14 @@ export class LoginPage implements OnInit {
           lat: this.user.lat,
           lng: this.user.lng
         };
+
+        try {
+          const oneSignalId = (await this.oneSignal.getIds()).userId;
+          this.requestLoginGoogleFB.onesignalid = oneSignalId;
+        } catch (e) {
+          console.log(e);
+        }
+
         console.log(this.requestLoginGoogleFB);
         this._authService.loginGoogle(this.requestLoginGoogleFB).subscribe(
           async (us) => {
@@ -135,6 +143,14 @@ export class LoginPage implements OnInit {
         lat: this.user.lat,
         lng: this.user.lng
       };
+
+      try {
+        const oneSignalId = (await this.oneSignal.getIds()).userId;
+        this.requestLoginGoogleFB.onesignalid = oneSignalId;
+      } catch (e) {
+        console.log(e);
+      }
+
       this._authService.loginFacebook(this.requestLoginGoogleFB).subscribe(
         async (us) => {
           await loading.dismiss();

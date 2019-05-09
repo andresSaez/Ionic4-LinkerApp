@@ -7,6 +7,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { ILoginGoogleFbRequest } from '../../../interfaces/i-login-google-fb-request';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,8 @@ export class RegisterPage implements OnInit {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     public fb: Facebook,
-    public gplus: GooglePlus
+    public gplus: GooglePlus,
+    private oneSignal: OneSignal,
   ) { }
 
   ngOnInit() {
@@ -101,6 +103,14 @@ export class RegisterPage implements OnInit {
           lat: this.newUser.lat,
           lng: this.newUser.lng
         };
+
+        try {
+          const oneSignalId = (await this.oneSignal.getIds()).userId;
+          this.requestLoginGoogleFB.onesignalid = oneSignalId;
+        } catch (e) {
+          console.log(e);
+        }
+
         console.log(this.requestLoginGoogleFB);
         this._authService.loginGoogle(this.requestLoginGoogleFB).subscribe(
           async (us) => {
@@ -141,6 +151,14 @@ export class RegisterPage implements OnInit {
         lat: this.newUser.lat,
         lng: this.newUser.lng
       };
+
+      try {
+        const oneSignalId = (await this.oneSignal.getIds()).userId;
+        this.requestLoginGoogleFB.onesignalid = oneSignalId;
+      } catch (e) {
+        console.log(e);
+      }
+
       this._authService.loginFacebook(this.requestLoginGoogleFB).subscribe(
         async (us) => {
           await loading.dismiss();
