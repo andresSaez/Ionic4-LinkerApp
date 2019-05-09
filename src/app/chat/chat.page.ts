@@ -11,6 +11,7 @@ import { IChat } from '../interfaces/i-chat.interface';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducer';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat',
@@ -71,6 +72,7 @@ export class ChatPage implements OnInit, OnDestroy {
       (msg: any) => {
         // console.log('escuchando: ' + msg);
         if (msg.chat === this.idChat) {
+          msg.message.creator.avatar = environment.baseUrl + '/' + msg.message.creator.avatar;
           if (msg.message.creator.id  !== this.userState.id) {
             msg.message.mine = false;
           }
