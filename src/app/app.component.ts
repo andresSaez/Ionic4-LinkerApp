@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform, ModalController, NavController } from '@ionic/angular';
+import { Platform, ModalController, NavController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { myEnterAnimation } from './animations/modal-animations/enter';
@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from './store/app.reducer';
 import * as fromActions from './store/actions';
 import { Subscription } from 'rxjs';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
   selector: 'app-root',
@@ -53,6 +54,8 @@ export class AppComponent implements OnInit {
     private modalCtrl: ModalController,
     private _authService: AuthService,
     private nav: NavController,
+    private oneSignal: OneSignal,
+    private toastCtrl: ToastController,
     private store: Store<AppState>
   ) {
     this.initializeApp();
@@ -83,6 +86,32 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.oneSignal.startInit('ea9a1f32-879f-4c2a-8e35-f4123c5b06c0', '990723395777');
+      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
+
+      this.oneSignal.handleNotificationOpened().subscribe(
+        notif => {
+          if (notif.notification.payload.additionalData.proomId) {
+            console.log(notif.notification.payload.additionalData.proomId);
+            this.nav.navigateForward([`/chat/private/${notif.notification.payload.additionalData.proomId}`]);
+          }
+        }
+      );
+      this.oneSignal.handleNotificationReceived().subscribe(
+        async notif => {
+          console.log('estoy en handleReceived:' + notif);
+          if (!notif.shown) { // The user did not see the notification
+            const toast = await this.toastCtrl.create({
+              duration: 2000,
+              position: 'bottom',
+              message: notif.payload.title
+            });
+            toast.present();
+          }
+        }
+      );
+      this.oneSignal.endInit();
     });
   }
 

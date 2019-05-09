@@ -9,7 +9,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { ILoginGoogleFbRequest } from '../../../interfaces/i-login-google-fb-request';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { TwitterConnect, TwitterConnectResponse } from '@ionic-native/twitter-connect/ngx';
-// import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +32,8 @@ export class LoginPage implements OnInit {
     private loadingCtrl: LoadingController,
     public fb: Facebook,
     public gplus: GooglePlus,
-    public twitter: TwitterConnect
+    public twitter: TwitterConnect,
+    private oneSignal: OneSignal,
   ) { }
 
   ngOnInit() {
@@ -42,12 +43,12 @@ export class LoginPage implements OnInit {
 
   async submitLoginForm() {
     console.log('login');
-    // try {
-    //   const oneSignalId = (await this.oneSignal.getIds()).userId;
-    //   this.user.oneSignalId = oneSignalId;
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    try {
+      const oneSignalId = (await this.oneSignal.getIds()).userId;
+      this.user.onesignalid = oneSignalId;
+    } catch (e) {
+      console.log(e);
+    }
 
     // console.log('haciendo login');
     const loading = await this.loadingCtrl.create({

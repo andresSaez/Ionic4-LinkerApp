@@ -20,6 +20,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 // Authentification
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
@@ -87,7 +88,8 @@ const config: SocketIoConfig = {
     LaunchNavigator,
     GooglePlus,
     Facebook,
-    TwitterConnect
+    TwitterConnect,
+    OneSignal
   ],
   bootstrap: [AppComponent]
 })
