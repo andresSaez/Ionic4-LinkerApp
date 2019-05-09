@@ -20,6 +20,9 @@ export class BlockedUsersPage implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   loadingFail = false;
 
+  userState: any;
+  subscriptionUser: Subscription = new Subscription();
+
   constructor(
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
@@ -36,10 +39,17 @@ export class BlockedUsersPage implements OnInit, OnDestroy {
         this.settings = settingsState.settings;
       }
     );
+
+    this.subscription = this.store.select('user').subscribe(
+      userState => {
+        this.userState = userState.user;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subscriptionUser.unsubscribe();
   }
 
   changeSettings(value) {
@@ -50,7 +60,7 @@ export class BlockedUsersPage implements OnInit, OnDestroy {
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: ChooseUserComponent,
-      componentProps: { contacts: false }
+      componentProps: { contacts: false, userId: this.userState.id }
     });
 
     await modal.present();

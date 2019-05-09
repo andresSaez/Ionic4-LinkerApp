@@ -9,6 +9,8 @@ import { ChatService } from '../services/chat-service/chat.service';
 import { IMessage } from '../interfaces/i-message.interface';
 import { IChat } from '../interfaces/i-chat.interface';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/app.reducer';
 
 @Component({
   selector: 'app-chat',
@@ -26,6 +28,10 @@ export class ChatPage implements OnInit, OnDestroy {
   idChat: any;
   currentDate = new Date();
 
+  userState: any;
+  subscription: Subscription = new Subscription();
+
+
   loadingFail = false;
   loaded = false;
   chatContainer: HTMLElement;
@@ -37,7 +43,8 @@ export class ChatPage implements OnInit, OnDestroy {
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private _chatService: ChatService
+    private _chatService: ChatService,
+    private store: Store<AppState>,
   ) { }
 
   ngOnInit() {
@@ -45,6 +52,12 @@ export class ChatPage implements OnInit, OnDestroy {
     this.show = this.route.snapshot.data.show;
     this.room = this.route.snapshot.data.room;
     this.privateRoom = this.route.snapshot.data.proom;
+
+    this.subscription = this.store.select('user').subscribe(
+      userState => {
+        this.userState = userState.user;
+      }
+    );
 
     if (this.show === 'room') {
       this.idChat = <any>this.room.chat;
@@ -58,6 +71,9 @@ export class ChatPage implements OnInit, OnDestroy {
       (msg: any) => {
         // console.log('escuchando: ' + msg);
         if (msg.chat === this.idChat) {
+          if (msg.message.creator.id  !== this.userState.id) {
+            msg.message.mine = false;
+          }
           this.pushMessage( msg.message );
         }
       }
@@ -66,6 +82,7 @@ export class ChatPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.messagesSubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   // Lo siguiente que me toca hacer es obtener el chat llamando al servicio.

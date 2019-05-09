@@ -15,6 +15,7 @@ export class ChooseUserComponent implements OnInit {
   loadingFail = false;
   @Input() contacts: boolean;
   @Input() proomExceptionsIds: string[];
+  @Input() userId: string;
 
   constructor(
     public modalCtrl: ModalController,
@@ -47,7 +48,9 @@ export class ChooseUserComponent implements OnInit {
     if (search && search.trim() !== '') {
       search = search.trim().toLowerCase();
       this.filteredUsers = this.users.filter( u => u.name.toLowerCase().includes( search ));
-      if (this.contacts) { this.getCorrectedItems(); }
+      if (this.contacts) {
+        this.getCorrectedItems();
+      } else { this.filterLogguedUser(); }
       await loading.dismiss();
     } else {
       await loading.dismiss();
@@ -70,6 +73,7 @@ export class ChooseUserComponent implements OnInit {
           this.users = resp;
           console.log(resp);
           this.filteredUsers = resp;
+          this.filterLogguedUser();
           console.log(this.filteredUsers);
         },
         async (error) => {
@@ -123,5 +127,9 @@ export class ChooseUserComponent implements OnInit {
 
   private getCorrectedItems() {
     this.filteredUsers = this.filteredUsers.filter( (el: any) => !this.proomExceptionsIds.includes(el.id));
+  }
+
+  private filterLogguedUser() {
+    this.filteredUsers = this.filteredUsers.filter( (el: any) => el.id !== this.userId);
   }
 }
